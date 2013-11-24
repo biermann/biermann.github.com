@@ -12,7 +12,7 @@
     },
     "developer": {
         "name": "biermann",
-        "url": "https://github.com/biermann/NetMusicPlayer"
+        "url": "https://github.com/biermann/"
     },
     "installs_allowed_from": ["*"],
     "default_locale": "en",

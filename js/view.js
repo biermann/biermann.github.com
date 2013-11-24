@@ -6,8 +6,8 @@ nmp.view.update = function (view) {
  var element = document.getElementById(elementId);
  var className = 'nmpView';
  var text = "";
- var current = fxosnetzradio.localstorage.currentGet ();
- //console.log(":fxosnetzradio.view.update request=",view);
+ var current = nmp.storage.currentGet ();
+ console.log("nmp.view.update request=",view);
  fxosnetzradio.browserdb.statusSet ();
  //updateControl ();
   if (view == "n/a") {view = "top";}	
@@ -84,9 +84,9 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "status" && fxosnetzradio.browserdb.ok() ) {
+    if (view == "status") {
     current.view = "status";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -145,7 +145,7 @@ nmp.view.update = function (view) {
 
     if (view == "recent" && fxosnetzradio.browserdb.ok()) {
     current.view = "recent";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       console.log(":fxosnetzradio.view.update: " ,current.view);
       while (element.firstChild) {
@@ -260,7 +260,7 @@ nmp.view.update = function (view) {
 
     if (view == "myRadio" && fxosnetzradio.browserdb.ok()) {
     current.view = "myRadio";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
     element = document.getElementById(elementId);
     console.log(":fxosnetzradio.view.update: " ,current.view);
     while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -348,7 +348,7 @@ nmp.view.update = function (view) {
  
     if (view == "form" && fxosnetzradio.browserdb.ok()) {
     current.view = "form";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) {
   	element.removeChild(element.firstChild);
@@ -401,7 +401,7 @@ fxosnetzradio.view.renderbuttonControl = function (id) {
        www.setAttribute('type','button');
        www.setAttribute('id','www');
        www.setAttribute('class','fxosnetzradioview');
-       www.dataset.www = fxosnetzradio.localstorage.currentGet().www;
+       www.dataset.www = nmp.storage.currentGet().www;
        //www.innerHTML = fxosnetzradio.localstorage.currentGet().www; 
        www.innerHTML = "www"; 
        www.addEventListener("click", function(e) {
@@ -410,7 +410,7 @@ fxosnetzradio.view.renderbuttonControl = function (id) {
        playPause.addEventListener("click", function(e) {
 	  if (audio.paused || audio.ended){
              var a = audio.src.substr(0,20) ;
-             var b = fxosnetzradio.localstorage.currentGet().src.substr(0,20) ;
+             var b = nmp.storage.currentGet().src.substr(0,20) ;
              if (a == b) {audio.play();} 
              updateControl ();
           }
@@ -495,7 +495,7 @@ if (fxosnetzradio.browserdb.radioValid(obj) && obj.objId !== null) {
 
 fxosnetzradio.view.renderStatus = function (id) {
   var element = document.getElementById(id);
- var current = fxosnetzradio.localstorage.currentGet ();
+ var current = nmp.storage.currentGet ();
   var a = document.createElement("a");
   var hr = document.createElement("hr");
   var p = document.createElement("p");

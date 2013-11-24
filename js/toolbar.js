@@ -6,7 +6,7 @@ nmp.app.toolbar = function (e) {
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
         	menu.onclick = function () {			
-	        var oldObj = fxosnetzradio.localstorage.currentGet();
+	        var oldObj = nmp.storage.currentGet();
 		var newObj =[];
 		var next = 0;
 		var last = nmp.view.option.length - 1;
@@ -20,23 +20,23 @@ nmp.app.toolbar = function (e) {
 		   if (nmp.view.option[i] == oldObj.view){
 			newObj.view = nmp.view.option[next];
     			console.log('view found='+nmp.view.option[i]+' - set='+newObj.view);
-			fxosnetzradio.localstorage.currentSet(newObj);
-			update();
+			nmp.storage.currentSet(newObj);
+			nmp.app.update();
 			break;
 		   }	
     		}
        		if (nmp.view.option[last] == oldObj.view) {
 			newObj.view = nmp.view.option[0];
     			console.log('view found='+nmp.view.option[last]+' - set='+newObj.view);
-			fxosnetzradio.localstorage.currentSet(newObj);
-			update();
+			nmp.storage.currentSet(newObj);
+			nmp.app.update();
 			fxosnetzradio.browserdb.statusSet ();
        		}
        		if (oldObj.view === undefined || !exist) {
 			newObj.view = "myfirst";
     			console.log('view found=undefined - set='+newObj.view);
-			fxosnetzradio.localstorage.currentSet(newObj);
-			update();
+			nmp.storage.currentSet(newObj);
+			nmp.app.update();
        		}
         };
     }

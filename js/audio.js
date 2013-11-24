@@ -29,13 +29,13 @@ nmp.audio.play = function(e) {
    var audio = document.querySelector("#audio");
    var audioSrcStr = audio.src.toString() ;
    var audioVolume = audio.volume ;
-   var currentSrcStr = fxosnetzradio.localstorage.currentGet().src.toString() ;
-   var currentVolume = fxosnetzradio.localstorage.currentGet().volume ;
-   var currentTypeStr = fxosnetzradio.localstorage.currentGet().type.toString() ;
+   var currentSrcStr = nmp.storage.currentGet().src.toString() ;
+   var currentVolume = nmp.storage.currentGet().volume ;
+   var currentTypeStr = nmp.storage.currentGet().type.toString() ;
    var fastlaneSrcStr;
    if (typeof e !== 'undefined') {fastlaneSrcStr = e.toString();}
    var a = audio.src.substr(0,20) ;
-   var b = fxosnetzradio.localstorage.currentGet().src.substr(0,20) ;
+   var b = nmp.storage.currentGet().src.substr(0,20) ;
    if (updateValidator () && audio ) {
       if (currentVolume <= 1 && currentVolume > 0 && audioVolume !== currentVolume) {
          audio.setAttribute('volume',currentVolume);
@@ -61,13 +61,13 @@ nmp.audio.prepare = function(e) {
    var audio = document.querySelector("#audio");
    var audioSrcStr = audio.src.toString() ;
    var audioVolume = audio.volume ;
-   var currentSrcStr = fxosnetzradio.localstorage.currentGet().src.toString() ;
-   var currentVolume = fxosnetzradio.localstorage.currentGet().volume ;
-   var currentTypeStr = fxosnetzradio.localstorage.currentGet().type.toString() ;
+   var currentSrcStr = nmp.storage.currentGet().src.toString() ;
+   var currentVolume = nmp.storage.currentGet().volume ;
+   var currentTypeStr = nmp.storage.currentGet().type.toString() ;
    var fastlaneSrcStr;
    if (typeof e !== 'undefined') {fastlaneSrcStr = e.toString();}
    var a = audio.src.substr(0,20) ;
-   var b = fxosnetzradio.localstorage.currentGet().src.substr(0,20) ;
+   var b = nmp.storage.currentGet().src.substr(0,20) ;
       	 console.log( 'fxosnetzradio.audio.play.volume=' +currentVolume );
    if (updateValidator () && audio ) {
       	 //console.log( 'fxosnetzradio.audio.prepare.volume=' +currentVolume );

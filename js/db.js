@@ -86,7 +86,7 @@ fxosnetzradio.browserdb.open = function() {
 
   };
   openRequest.onsuccess = function(event) {
-    console.log('Datenbank geöffnet', event);
+    console.log('Datenbank geöffnet');
     fxosnetzradio.browserdb.db = event.target.result;
     fxosnetzradio.browserdb.statusSet ();
     //var trans = fxosnetzradio.browserdb.db.transaction([radioDBstore], "readwrite");
@@ -125,7 +125,7 @@ fxosnetzradio.browserdb.ok = function () {
   if (typeof db !== 'undefined' && db !== null && db.objectStoreNames.contains(radioDBrecent) && db.objectStoreNames.contains(radioDBstore) ) {
      result = true;
   }
-  //console.log("browserdb.ok=" +result);
+  console.log("browserdb.ok?" +result);
   return result;
 };
 

@@ -33,7 +33,7 @@ function update () {
       //  navigator.vibrate(100);
     //}
     if (updateValidator() ) {
-        radioCurrent = fxosnetzradio.localstorage.currentGet();
+        radioCurrent = nmp.storage.currentGet();
 	//srcStr = '' + radioCurrent.src;
         //descStr = '' + fxosnetzradio.localstorage.currentGet().desc;
         //wwwStr = '' + radioCurrent.www;
@@ -51,7 +51,7 @@ function update () {
     }
 
 if (fxosnetzradioViewStatus && updateValidator()){
-  var current = fxosnetzradio.localstorage.currentGet ();
+  var current = nmp.storage.currentGet ();
   fxosnetzradioViewStatus.textContent = "desc="+current.desc+" - view="+current.view;
 }; 
  
@@ -143,8 +143,6 @@ if (fxosnetzradioViewStatus && updateValidator()){
 //radioStatusUpdate ('test');
 //radioStatusEventListener ('radioCurrent','radioStatus');
 
-radioListDropDown();
-radioListFormRadio();
 //radioListList();
 //radioListListEventListener('radioList','tuneInButton');
 //radioListListEventListener('radioList','wwwButton');
@@ -161,7 +159,7 @@ radioListEventListener('radioCurrent','radioStatussrc');
 radioListEventListener('radioCurrent','radioStatusdescription');
 radioListEventListener('radioCurrent','radioStatuspause');
 radioListEventListener('radioCurrent','radioStatusdelete');
-fxosnetzradio.localstorage.statusSet ();
+nmp.storage.statusSet ();
 };
 
 
@@ -245,6 +243,9 @@ function updateValidator() {
 		if (typeof radioCurrent !== 'undefined' && radioCurrent !== null) {
             		result = true;
         	}
+		else {
+           		console.log( 'updateValidator problem');
+		}
         }
     return result;
 };
@@ -355,37 +356,6 @@ function radioStatusEventListener (array,className){
 
 
  
-function radioListDropDown () {
-	var 	radioListArray = JSON.parse(localStorage.getItem("radioList")),
-    		radioListSelect = document.querySelector("#radioListSelect"),
-    		radioListDisplay = document.querySelector("#radioListDisplay"),
-    		radioCurrentArray = JSON.parse(localStorage.getItem("radioCurrent")),
-		radioCurrent = radioCurrentArray[0],
-    		radioListSelect = document.querySelector("#radioListSelect");
-	if (radioListSelect) {
-    		while (radioListSelect.firstChild) {
-  		radioListSelect.removeChild(radioListSelect.firstChild);
-    		}	
-		for (var i=0; i<radioListArray.length; i++){
-    			var radioList = radioListArray[i];
-    			//console.log("Array: " + i, " description: " + radioList.description + " src: " + radioList.src);
-			var arrayStr = '' + i;
-			var srcStr = '' + radioList.src;
-                	var descriptionStr = '' + radioList.description;
-			var newEvent = document.createElement('option');
-			newEvent.innerHTML = descriptionStr ;
-			newEvent.id = descriptionStr ;
-			newEvent.value = srcStr ;
-			if (radioCurrent && radioCurrent !== 'undefined' && radioCurrent !== null) {
-				if (radioList.description == radioCurrent.description) {
-					newEvent.selected=true;
-				}
-			}
-			radioListSelect.appendChild(newEvent);
-		}  
-    	}  
-
-};
 
 
 function radioCurrentSetAudio () {

@@ -131,6 +131,7 @@ nmp.audio.init1();
 nmp.app.init();
 nmp.app.toolbar();
 nmp.db.init();
+nmp.storage.init();
 nmp.audio.init2();
 nmp.audio.prepare();
 nmp.app.update();
