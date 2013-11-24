@@ -1,0 +1,40 @@
+
+.fxosnetzradioview button {
+    width: 45%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+
+
+.fxosnetzradioview [type=button]:active {
+}
+
+.fxosnetzradioview [checked=checked] {
+}
+
+.nmpView  ul {
+    display:inline-block;
+    text-align: center;
+    width: 100%;
+    vertical-align: top;
+    font-size: 24px;
+}
+
+.fxosnetzradioview  a {
+	font-size: 24px;
+}
+
+.fxosnetzradioview input {
+    font-size: 24px;
+}
+
+
+.nmpView [id=fxosnetzradioViewStatus] {
+      text-align:right;	
+      font-size: 16px;
+direction:rtl;
+  float: right;
+}
+
+
