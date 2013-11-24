@@ -8,7 +8,7 @@ nmp.view.update = function (view) {
  var text = "";
  var current = nmp.storage.currentGet ();
  console.log("nmp.view.update request=",view);
- fxosnetzradio.browserdb.statusSet ();
+ nmp.db.statusSet ();
  //updateControl ();
   if (view == "n/a") {view = "top";}	
   if (view == "admin") {
@@ -59,7 +59,7 @@ nmp.view.update = function (view) {
   var db = nmp.db.db;
       //console.log( 'view.update: ', view);
 
-    if (view == "myfirst" && fxosnetzradio.browserdb.ok() ) {
+    if (view == "myfirst" && nmp.db.ok() ) {
     current.view = "myfirst";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -97,21 +97,21 @@ nmp.view.update = function (view) {
 
 
 
-    if (view == "list" && fxosnetzradio.browserdb.ok() ) {
+    if (view == "list" && nmp.db.ok() ) {
       current.view = "list";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
-      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
       var keyRange = IDBKeyRange.lowerBound(0);
       var cursorRequest = store.openCursor(keyRange);
       cursorRequest.onsuccess = function(e) {
            var result = e.target.result;
            if(!!result == false) return;
-    	   //console.log("fxosnetzradio.view.update: " ,view, result.value);
+    	   console.log("fxosnetzradio.view.update: " ,view, result.value);
     	result.value.view = "list" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+	fxosnetzradio.view.renderlist(elementId,result.value,nmp.db.radio.name);
            result.continue();
       };
     }
