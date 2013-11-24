@@ -6,7 +6,7 @@ function update () {
 	wwwButton = document.querySelector("#wwwButton"),
 	radioListSelect = document.querySelector("#radioListSelect"),
 	audio = document.querySelector("#audio"),
-	fxosnetzradioViewStatus = document.querySelector("#fxosnetzradioViewStatus"),
+	nmpViewStatus = document.querySelector("#nmpViewStatus"),
      	toolbarPlayPause = document.querySelector("#toolbarPlayPause"),
 	volume = audio.volume,
 	src =  audio.src,
@@ -50,9 +50,9 @@ function update () {
        }
     }
 
-if (fxosnetzradioViewStatus && updateValidator()){
+if (nmpViewStatus && updateValidator()){
   var current = nmp.storage.currentGet ();
-  fxosnetzradioViewStatus.textContent = "desc="+current.desc+" - view="+current.view;
+  nmpViewStatus.textContent = "desc="+current.desc+" - view="+current.view;
 }; 
  
     if (updateValidator()&& volume) {

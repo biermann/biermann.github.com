@@ -344,9 +344,12 @@ fxosnetzradio.browserdb.recentObjectAdd = function (obj) {
           };
   } 
 }
+fxosnetzradio.browserdb.radioValid = function (obj) {
+	nmp.db.radioValid (obj);
+}
 
 //if (fxosnetzradio.browserdb.radioValid(obj)) {
-fxosnetzradio.browserdb.radioValid = function (obj) {
+nmp.db.radioValid = function (obj) {
   var result=false;
   var resultCount=0;
   for (var prop in obj) {

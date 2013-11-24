@@ -174,8 +174,8 @@ nmp.storage.currentUpdate = function (objId,objStore) {
    var newObj = [];
    var obj = [];
    newObj.volume = audio.volume;
-   if (fxosnetzradio.browserdb.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
-      var db = fxosnetzradio.browserdb.db;
+   if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
+      var db = nmp.db.db;
       var store = db.transaction(objStore).objectStore(objStore);
       var request = store.get(objId);
       request.onsuccess = function(e) {
@@ -185,7 +185,7 @@ nmp.storage.currentUpdate = function (objId,objStore) {
          }
          else {
             //console.log( 'fxosnetzradio.localstorage.currentUpdate: ' ,obj,objId,objStore);
-            var newObj = fxosnetzradio.localstorage.currentGet ();
+            var newObj = nmp.storage.currentGet ();
             for (var prop in obj) {
                if (obj.hasOwnProperty(prop)) {
 	          newObj[prop] = obj[prop] ;
