@@ -38,6 +38,12 @@ Object.defineProperty(nmp.view, 'list', {
   value: ["desc"], 
   configurable: false
 });
+Object.defineProperty(nmp.view, 'class', {
+  enumerable: true, 
+  writable: false, 
+  value: 'nmpView', 
+  configurable: false
+});
 
 nmp.db = {};
 Object.defineProperty(nmp.db, 'version', {

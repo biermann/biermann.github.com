@@ -4,7 +4,7 @@ nmp.view.update = function (view) {
  //var elementId = "fxosnetzradio.view.top"; 
  var elementId = "nmpView"; 
  var element = document.getElementById(elementId);
- var className = 'nmpView';
+ var className = nmp.view.class;
  var text = "";
  var current = nmp.storage.currentGet ();
  console.log("nmp.view.update request=",view);
@@ -13,7 +13,7 @@ nmp.view.update = function (view) {
   if (view == "n/a") {view = "top";}	
   if (view == "admin") {
     current.view = "admin";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
     element = document.getElementById(elementId);
     //while (element.firstChild) {
       //element.removeChild(element.firstChild);
@@ -56,12 +56,12 @@ nmp.view.update = function (view) {
 
     }	
  
-  var db = fxosnetzradio.browserdb.db;
+  var db = nmp.db.db;
       //console.log( 'view.update: ', view);
 
     if (view == "myfirst" && fxosnetzradio.browserdb.ok() ) {
     current.view = "myfirst";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -91,7 +91,7 @@ nmp.view.update = function (view) {
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
       fxosnetzradio.view.renderAudioStatus (elementId);	
-      fxosnetzradio.view.renderBrowserdbStatus (elementId);	
+      nmp.view.renderBrowserdbStatus (elementId);	
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
     }
 
@@ -99,7 +99,7 @@ nmp.view.update = function (view) {
 
     if (view == "list" && fxosnetzradio.browserdb.ok() ) {
       current.view = "list";
-      var result = fxosnetzradio.localstorage.currentSet(current);
+      var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -119,7 +119,7 @@ nmp.view.update = function (view) {
 
     if (view == "edit" && fxosnetzradio.browserdb.ok() ) {
       current.view = "edit";
-      var result = fxosnetzradio.localstorage.currentSet(current);
+      var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -178,7 +178,7 @@ nmp.view.update = function (view) {
 
     if (view == "recent10" && fxosnetzradio.browserdb.ok()) {
     current.view = "recent10";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
     	   console.log(":fxosnetzradio.view.update: " ,current.view);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -216,7 +216,7 @@ nmp.view.update = function (view) {
 
     if (view == "biermann" && fxosnetzradio.browserdb.ok()) {
     current.view = "biermann";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -238,7 +238,7 @@ nmp.view.update = function (view) {
 
     if (view == "audioogg" && fxosnetzradio.browserdb.ok()) {
     current.view = "audioogg";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -285,7 +285,7 @@ nmp.view.update = function (view) {
 
     if (view == "top" && fxosnetzradio.browserdb.ok()) {
     current.view ="top";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
     	   console.log(":fxosnetzradio.view.update: " ,current.view);
       while (element.firstChild) {
@@ -307,7 +307,7 @@ nmp.view.update = function (view) {
            result.continue();
       }
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
-      fxosnetzradio.view.renderBrowserdbStatus (elementId);	
+      nmp.view.renderBrowserdbStatus (elementId);	
     }
 
 
@@ -320,7 +320,7 @@ nmp.view.update = function (view) {
 
     if (view == "edit" && fxosnetzradio.browserdb.ok()) {
     current.view = "form";
-    var result = fxosnetzradio.localstorage.currentSet(current);
+    var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) {element.removeChild(element.firstChild);}	
       fxosnetzradio.view.renderStatus (elementId);	
@@ -336,7 +336,7 @@ nmp.view.update = function (view) {
            result.continue();
       };
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
-      fxosnetzradio.view.renderBrowserdbStatus (elementId);	
+      nmp.view.renderBrowserdbStatus (elementId);	
 
     }
 
@@ -366,7 +366,7 @@ nmp.view.update = function (view) {
            result.continue();
       };
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
-      fxosnetzradio.view.renderBrowserdbStatus (elementId);	
+      nmp.view.renderBrowserdbStatus (elementId);	
 
     }
 }
@@ -390,17 +390,17 @@ fxosnetzradio.view.renderbuttonControl = function (id) {
       var volumeDown = document.createElement("button");
       var www = document.createElement("button");
        playPause.setAttribute('type','button');
-       playPause.setAttribute('class','fxosnetzradioview');
+       playPause.setAttribute('class',nmp.view.class);
        playPause.setAttribute('id','playPause');
        volumeDown.setAttribute('id','volumeDown');
        volumeDown.setAttribute('type','button');
-       volumeDown.setAttribute('class','fxosnetzradioview');
+       volumeDown.setAttribute('class',nmp.view.class);
        volumeUp.setAttribute('type','button');
        volumeUp.setAttribute('id','volumeUp');
-       volumeUp.setAttribute('class','fxosnetzradioview');
+       volumeUp.setAttribute('class',nmp.view.class);
        www.setAttribute('type','button');
        www.setAttribute('id','www');
-       www.setAttribute('class','fxosnetzradioview');
+       www.setAttribute('class',nmp.view.class);
        www.dataset.www = nmp.storage.currentGet().www;
        //www.innerHTML = fxosnetzradio.localstorage.currentGet().www; 
        www.innerHTML = "www"; 
@@ -436,7 +436,7 @@ fxosnetzradio.view.renderbuttonControl = function (id) {
        }, false);
        element.appendChild(br);
        element.appendChild(playPause);
-       if (fxosnetzradio.localstorage.currentGet().www) {
+       if (nmp.storage.currentGet().www) {
           element.appendChild(www);
        }
        element.appendChild(volumeDown);
@@ -473,9 +473,10 @@ if (fxosnetzradio.browserdb.radioValid(obj) && obj.objId !== null) {
        button.dataset.desc = obj.desc; 
        button.dataset.store = objStore; 
        button.setAttribute('type','button');
-       button.setAttribute('class','fxosnetzradioView');
+       button.setAttribute('class',nmp.view.class);
        button.setAttribute('id',buttonId);
-       if (obj.desc == fxosnetzradio.localstorage.currentGet().desc) {
+       if (obj.desc == nmp.storage.currentGet().desc) {
+
           button.setAttribute('checked','checked');
        }
        button.addEventListener("click", function(e) {
@@ -502,8 +503,8 @@ fxosnetzradio.view.renderStatus = function (id) {
   var br = document.createElement("br");
   var span = document.createElement("span");
   a.textContent = "desc="+current.desc+" - view="+current.view;
-  a.setAttribute('id','fxosnetzradioViewStatus');
-  a.setAttribute('class','fxosnetzradioView');
+  a.setAttribute('id','nmpViewStatus');
+  a.setAttribute('class',nmp.view.class);
   element.appendChild(a);
   //element.appendChild(hr);
   element.appendChild(br);
@@ -518,13 +519,16 @@ fxosnetzradio.view.renderStatus = function (id) {
 fxosnetzradio.view.renderAudioStatus = function (id) {
   var element = document.getElementById(id);
   var a = document.createElement("a");
+  var li = document.createElement("li");
   var hr = document.createElement("hr");
   var br = document.createElement("br");
   a.textContent = nmp.audio.status;
   a.setAttribute('id','radioStatus');
+  a.setAttribute('class',nmp.view.class);
   element.appendChild(a);
   element.appendChild(br);
-  //element.appendChild(hr);
+  li.appendChild(a);
+  element.appendChild(li);
 }
 
 fxosnetzradio.view.renderLocalstorageStatus = function (id) {
@@ -533,24 +537,26 @@ fxosnetzradio.view.renderLocalstorageStatus = function (id) {
   var li = document.createElement("li");
   var hr = document.createElement("hr");
   var br = document.createElement("br");
+  nmp.storage.statusSet ();
   a.setAttribute('id','localstorageStatus');
+  a.setAttribute('class',nmp.view.class);
   element.appendChild(a);
-  fxosnetzradio.localstorage.statusSet ();
   li.appendChild(a);
   element.appendChild(li);
 }
 
-fxosnetzradio.view.renderBrowserdbStatus = function (id) {
+nmp.view.renderBrowserdbStatus = function (id) {
   var element = document.getElementById(id);
   var a = document.createElement("a");
   var li = document.createElement("li");
   var hr = document.createElement("hr");
   var text = "";
-  text += "" +fxosnetzradio.browserdb.status;
-  text += " updatevalidator=" +updateValidator() ;
-  text += " fxosnetzradio.browserdb.ok=" +fxosnetzradio.browserdb.ok() ;
+  text += "" +nmp.db.status;
+  text += " updatevalidator?" +updateValidator() ;
+  text += " nmp.db.ok?" +nmp.db.ok() ;
   a.textContent = text;
-  li.setAttribute('id','browserdbStatus');
+  a.setAttribute('id','browserdbStatus');
+  a.setAttribute('class',nmp.view.class);
   li.appendChild(a);
   element.appendChild(li);
 }

@@ -181,8 +181,8 @@ var	playPause = document.querySelector("#playPause");
    var audio = document.querySelector("#audio");
    var volume = audio.volume;
    var volumeInteger = 0;
-   if (www && fxosnetzradio.localstorage.currentGet().www) {
-      www.innerHTML = fxosnetzradio.localstorage.currentGet().www ;
+   if (www && nmp.storage.currentGet().www) {
+      www.innerHTML = nmp.storage.currentGet().www ;
    }
    if (audio) {
       var volume = audio.volume;
@@ -203,8 +203,8 @@ var	playPause = document.querySelector("#playPause");
        if (playPause && audio.played) {
 	  playPause.innerHTML = '| |' ;
        }
-       if (playPause && audio.played && fxosnetzradio.localstorage.currentGet().desc) {
-	  playPause.innerHTML = '| | '+ fxosnetzradio.localstorage.currentGet().desc ;
+       if (playPause && audio.played && nmp.storage.currentGet().desc) {
+	  playPause.innerHTML = '| | '+ nmp.storage.currentGet().desc ;
        }
        if (playPause && audio.paused && audio.readyState) {
           playPause.innerHTML = '>';
@@ -215,8 +215,8 @@ var	playPause = document.querySelector("#playPause");
        if (toolbarPlayPause && audio.paused && audio.src) {
     	  toolbarPlayPause.style.backgroundImage="url('images/toolbars/icons/play.png')"; 
        }
-       if (playPause && audio.paused && fxosnetzradio.localstorage.currentGet().desc && audio.readyState) {
-          playPause.textContent = '> ' + fxosnetzradio.localstorage.currentGet().desc ;
+       if (playPause && audio.paused && nmp.storage.currentGet().desc && audio.readyState) {
+          playPause.textContent = '> ' + nmp.storage.currentGet().desc ;
        }
     }
 
@@ -252,7 +252,7 @@ function updateValidator() {
 
 
 function radioStatusUpdate (eventDescription) {
-        var	radioCurrent = fxosnetzradio.localstorage.currentGet ();
+        var	radioCurrent = nmp.storage.currentGet ();
 	var	elementId = 'fxosnetzradio.view.botton';
 	//var	elementId = 'radioStatus';
 	var	className = 'fxosnetzradioView';

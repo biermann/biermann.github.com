@@ -29,7 +29,7 @@ const radioData = [
 fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","biermann", "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3",  "IRF", "http://www.internationalradiofestival.com",  "MP3", "" ,"" );
 
 
-fxosnetzradio.browserdb.open = function() {
+nmp.db.open = function() {
   console.log("db open:"+nmp.db.name+' '+nmp.db.version);
   var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
   var updateStr = "db.open.";
@@ -87,25 +87,27 @@ fxosnetzradio.browserdb.open = function() {
   };
   openRequest.onsuccess = function(event) {
     console.log('Datenbank geöffnet');
-    fxosnetzradio.browserdb.db = event.target.result;
-    fxosnetzradio.browserdb.statusSet ();
+    nmp.db.db = event.target.result;
+    //fxosnetzradio.browserdb.db = event.target.result;
+    nmp.db.statusSet ();
     //var trans = fxosnetzradio.browserdb.db.transaction([radioDBstore], "readwrite");
     //var store = trans.objectStore(radioDBstore);
     //fxosnetzradio.browserdb.radioAdd(fxosnetzradio.radioData);
     //var db = fxosnetzradio.browserdb.db;
     for (var i in nmp.db.radio.readonlyObj) {
       //radioData[i].timeStamp =  new Date().getTime();
-      fxosnetzradio.browserdb.objectAdd (nmp.db.radio.readonlyObj[i]);
+      nmp.db.objectAdd (nmp.db.radio.readonlyObj[i]);
       //var request = store.put(radioData[i]);
     }
-fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","biermann","http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3",  "IRF", "http://www.internationalradiofestival.com",  "MP3", "" ,"" );
-    fxosnetzradio.browserdb.objectAdd (fxosnetzradio.browserdb.db,fxosnetzradio.browserdb.myradio);
+//fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","biermann","http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3",  "IRF", "http://www.internationalradiofestival.com",  "MP3", "" ,"" );
+    //fxosnetzradio.browserdb.objectAdd (fxosnetzradio.browserdb.db,fxosnetzradio.browserdb.myradio);
     //fxosnetzradio.browserdb.getAllTodoItems();
   };
   openRequest.onerror = function(e) {
       console.log("Database error: " + e.target.errorCode);
     updateStr += 'onerror: ' +openRequest.errorCode ;
-    fxosnetzradio.browserdb.statusupdate (updateStr);
+    nmp.db.statusupdate (updateStr);
+    alert("db open error");
   };
   openRequest.onblocked = function(event) {
 
@@ -117,12 +119,14 @@ fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","bierman
 
 };
 
-
-
 fxosnetzradio.browserdb.ok = function () {
+	nmp.db.ok();
+};
+
+nmp.db.ok = function () {
   var result=false;
-  var db = fxosnetzradio.browserdb.db;
-  if (typeof db !== 'undefined' && db !== null && db.objectStoreNames.contains(radioDBrecent) && db.objectStoreNames.contains(radioDBstore) ) {
+  var db = nmp.db.db;
+  if (typeof db !== 'undefined' && db !== null && db.objectStoreNames.contains(nmp.db.radio.name) ) {
      result = true;
   }
   console.log("browserdb.ok?" +result);
@@ -130,10 +134,14 @@ fxosnetzradio.browserdb.ok = function () {
 };
 
 
+nmp.db.statusSet = function () {
+	fxosnetzradio.browserdb.statusSet ();
+};
 
-//fxosnetzradio.browserdb.statusSet ();
+
+
 fxosnetzradio.browserdb.statusSet = function () {
-   var db = fxosnetzradio.browserdb.db;
+   var db = nmp.db.db;
    var 	currentdate = new Date(); 
    var text = "";
    text +=  currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds() + " ";
@@ -143,17 +151,17 @@ fxosnetzradio.browserdb.statusSet = function () {
     	 var store = trans.objectStore(radioDBstore);
          var request = store.count();
          request.onsuccess = function(e) {
-	    var test = fxosnetzradio.browserdb.status;
+	    var test = nmp.db.status;
 	    text += 'db.version='+db.version;
 	    text += ' db.name='+db.name+' ';
 	    text += nmp.db.radio.name+ '.count='+request.result ;
 	    text += ' '+nmp.db.radio.name+'.index.count='+store.indexNames.length;
-            fxosnetzradio.browserdb.status = text;
+            nmp.db.status = text;
           }
           request.onerror = function(e) {
 	     var test = fxosnetzradio.browserdb.status;
 	     text += 'onerror' +request ;
-	     fxosnetzradio.browserdb.status = text;
+	     nmp.db.status = text;
           }
       }
    }
@@ -162,7 +170,7 @@ fxosnetzradio.browserdb.statusSet = function () {
     	   text += "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.";
     	}
 	text += 'no db';
-	fxosnetzradio.browserdb.status = text;
+	nmp.db.status = text;
      }
 }
 
@@ -171,7 +179,7 @@ fxosnetzradio.browserdb.statusSet = function () {
 //fxosnetzradio.browserdb.objectDel(row.id,objStore);
 fxosnetzradio.browserdb.objectDel = function(key,objStore) {
    if (fxosnetzradio.browserdb.ok() && objStore && key){
-      var db = fxosnetzradio.browserdb.db;
+      var db = nmp.db.db;
       var trans = db.transaction([objStore], "readwrite");
       var store = trans.objectStore(objStore);
       console.log(objStore+ "readwrite");
@@ -193,7 +201,7 @@ nmp.db.objectUpdateStats = function(key,objStore) {
    if (fxosnetzradio.browserdb.ok() && objStore !== null && key !== null){
       //var db = fxosnetzradio.browserdb.db;
       //var store = db.transaction(objStore, "readwrite").objectStore(objStore);
-      var db = fxosnetzradio.browserdb.db;
+      var db = nmp.db.db;
       var trans = db.transaction(objStore, "readwrite");
       var store = trans.objectStore(objStore);
 
@@ -241,7 +249,7 @@ nmp.db.objectUpdateStats = function(key,objStore) {
 fxosnetzradio.browserdb.objectGet = function(key,objStore) {
       var obj = [];	
    if (fxosnetzradio.browserdb.ok() && objStore !== null && key !== null){
-      var db = fxosnetzradio.browserdb.db;
+      var db = nmp.db.db;
      var store = db.transaction(objStore).objectStore(objStore);
       var request = store.get(key);
       request.onsuccess = function(e) {
@@ -322,7 +330,7 @@ fxosnetzradio.browserdb.statusupdate = function (eventDescription) {
 //fxosnetzradio.browserdb.recentObjectAdd (obj);
 
 fxosnetzradio.browserdb.recentObjectAdd = function (obj) {
-  var db = fxosnetzradio.browserdb.db;
+  var db = nmp.db.db;
   if (fxosnetzradio.browserdb.ok()) {
     var trans = db.transaction([radioDBrecent], "readwrite");
     var store = trans.objectStore(radioDBrecent);
@@ -355,17 +363,25 @@ fxosnetzradio.browserdb.radioValid = function (obj) {
   return result;
 };
 
+
 fxosnetzradio.browserdb.objectAdd = function (obj) {
+	nmp.db.objectAdd (obj);
+};
+
+
+nmp.db.objectAdd = function (obj) {
   var objStore = nmp.db.radio.name
-  var db = fxosnetzradio.browserdb.db;
-  if (fxosnetzradio.browserdb.ok() && fxosnetzradio.browserdb.radioValid(obj)) {
+  var db = nmp.db.db;
+  if (nmp.db.ok() && fxosnetzradio.browserdb.radioValid(obj)) {
     var store = db.transaction(objStore, "readwrite").objectStore(objStore);
     var request = store.put(obj);
     request.onsuccess = function(e) {
-      //console.log("obj put:");
+      //var result = e.target.result;
+      //console.log("obj put:",result);
     }
     request.onerror = function(e) {
-      //console.log(e.value);
+      var result = e.target.result;
+      console.log('db obj add error:',result);
     }
   }
 }
@@ -376,7 +392,7 @@ fxosnetzradio.browserdb.objectAdd = function (obj) {
 //fxosnetzradio.browserdb.objectAdd (fxosnetzradio.browserdb.db,fxosnetzradio.browserdb.myradio);
 //fxosnetzradio.browserdb.objectAdd = function (db,obj) {
 fxosnetzradio.browserdb.objectAddoos = function (obj) {
-  var db = fxosnetzradio.browserdb.db;
+  var db = nmp.db.db;
   if (fxosnetzradio.browserdb.ok() && fxosnetzradio.browserdb.radioValid(obj)) {
     //var trans = db.transaction([radioDBstore], "readwrite");
     //var store = trans.objectStore(radioDBstore);
@@ -549,7 +565,7 @@ fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
   var updateStr = "";
   var oldObj = [];
   if (fxosnetzradio.browserdb.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
-    var db = fxosnetzradio.browserdb.db;
+    var db = nmp.db.db;
     var store = db.transaction(objStore).objectStore(objStore);
     store.get(objId).onsuccess = function(e) {
        oldObj  = e.target.result;
@@ -597,7 +613,7 @@ fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
 	        }
              }
 
-         var db = fxosnetzradio.browserdb.db;
+         var db = nmp.db.db;
          var store = db.transaction(objStore, "readwrite").objectStore(objStore);
 	 var request = store.put(newObj);
          request.onsuccess = function(e) {
@@ -621,6 +637,6 @@ fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
 
 
 nmp.db.init= function(e) {
-    fxosnetzradio.browserdb.open();
+    nmp.db.open();
 }
 

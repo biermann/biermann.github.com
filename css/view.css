@@ -1,5 +1,5 @@
 
-.fxosnetzradioview button {
+.nmpView button {
     width: 45%;
     margin-right: 10px;
     margin-left: 10px;
@@ -7,10 +7,12 @@
 
 
 
-.fxosnetzradioview [type=button]:active {
+.nmpView [type=button]:active {
+  background-color: #008aaa;
 }
 
-.fxosnetzradioview [checked=checked] {
+.nmpView [checked=checked] {
+  background-color: #008aaa;
 }
 
 .nmpView  ul {
@@ -21,20 +23,20 @@
     font-size: 24px;
 }
 
-.fxosnetzradioview  a {
+.nmpView  a {
 	font-size: 24px;
 }
 
-.fxosnetzradioview input {
+.nmpView input {
     font-size: 24px;
 }
 
 
-.nmpView [id=fxosnetzradioViewStatus] {
+.nmpView [id=nmpViewStatus] {
       text-align:right;	
       font-size: 16px;
-direction:rtl;
-  float: right;
+	direction:rtl;
+  	float: right;
 }
 
 
