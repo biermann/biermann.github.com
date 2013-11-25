@@ -16,7 +16,7 @@
     },
     "installs_allowed_from": ["*"],
     "default_locale": "en",
-    "fullscreen": "false",
+    "fullscreen": "true",
     "permissions": {
         "desktop-notification": {
             "description" : "To show notifications"
