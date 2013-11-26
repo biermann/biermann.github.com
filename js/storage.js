@@ -85,6 +85,7 @@ fxosnetzradio.localstorage.statusSet = function () {
 
 //fxosnetzradio.localstorage.currentSet (fxosnetzradio.localstorage.mycurrentobject);
 nmp.storage.currentSet = function (obj) {
+                 //console.log( 'nmp.storage.currentSet'+obj);
    var array = fxosnetzradio.localstorage.currentarray;
    var oldObjects = JSON.parse(localStorage.getItem(array));
    if (oldObjects) {
@@ -202,6 +203,12 @@ nmp.storage.currentUpdate = function (objId,objStore) {
    
    newObj = nmp.storage.currentGet ();
    newObj.volume = audio.volume;
+	var temp ={};
+   for (var i in nmp.app.settings) {
+       console.log (nmp.app[nmp.app.settings[i]],nmp.app.settings[i]);
+	temp[i]= nmp.app.settings[i];
+       console.log (temp);
+}
             //console.log( '3fxosnetzradio.localstorage.currentUpdate.new: ' ,newObj.src);
    if (fxosnetzradio.localstorage.currentobjectValid(newObj)) {nmp.storage.currentSet(newObj);}
             console.log( '1fxosnetzradio.localstorage.currentUpdate.new: src='+newObj.src+' vol='+newObj.volume);
@@ -261,7 +268,7 @@ fxosnetzradio.localstorage.radioCurrentSetAudio = function(e) {
    var b = fxosnetzradio.localstorage.currentGet().src.substr(0,20) ;
    if (updateValidator () && audio && b) {
       //var srcStr = '' + radioCurrent.src;
-      if (fxosnetzradio.localstorage.currentGet().src.volume <= 1 && fxosnetzradio.localstorage.currentGet().src.volume > 0) {audio.volume = fxosnetzradio.localstorage.currentGet().src.volume;}
+      if (nmp.storage.currentGet().volume <= 1 && nmp.storage.currentGet().volume > 0) {audio.volume = nmp.storage.currentGet().volume;}
       //console.log( 'fxosnetzradio.localstorage.radioCurrentSetAudio: ' +String(radioCurrent.src) );
       if (a !== b) {audio.setAttribute('src',fxosnetzradio.localstorage.currentGet().src.toString());
       console.log( 'fxosnetzradio.localstorage.radioCurrentSetAudio: ' +String(audio.src) );

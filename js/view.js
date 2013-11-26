@@ -95,6 +95,16 @@ nmp.view.update = function (view) {
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
     }
 
+    if (view == "settings") {
+    current.view = "settings";
+    var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      nmp.view.renderStatus (elementId);	
+      nmp.view.renderSettings (elementId);	
+    }
+
+
 
 
     if (view == "list" && nmp.db.ok() ) {
@@ -447,6 +457,32 @@ nmp.view.renderbuttonControl = function (id) {
 } 
 
 
+nmp.view.renderSettings = function (id) {
+   var element = document.getElementById(id);
+    if (element) {
+      //console.log("fxosnetzradio.view.render: " ,id, object,fxosnetzradio.localstorage.currentGet());
+                for (var i in nmp.app.settings) {
+		     var temp = nmp.app.settings[i];
+        	      //console.log('edit mode: ' +prop+': ' +oldObj[prop]+nmp.db.radio.formField[i]);
+  		      var newElement = document.createElement("button");
+  		      //newElement.dataset.this = obj[prop]; 
+  		      //newElement.dataset.view = view; 
+  		      //newElement.name = prop;
+  		      //newElement.defaultValue =nmp.app[nmp.app.settings[i]];
+  		      newElement.id = nmp.app.settings[i] ;
+		      newElement.innerHTML = nmp.app.settings[i] ;
+       if (nmp.app[nmp.app.settings[i]]) { newElement.setAttribute('checked','checked'); }
+       	newElement.addEventListener("click", function(e) {
+       		if (nmp.app[nmp.app.settings[i]]) { nmp.app[nmp.app.settings[i]]=false; } 
+       		else { nmp.app[nmp.app.settings[i]]=true; 
+		} 
+                 nmp.storage.currentUpdate ();
+		nmp.app.update();
+    	}, false);
+  	element.appendChild(newElement);
+} 
+} 
+} 
 
 
 
@@ -459,7 +495,6 @@ fxosnetzradio.view.renderbutton = function (id,obj,objStore) {
 
 
 nmp.view.renderbutton = function (id,obj,objStore) {
-   //var radioListArray = JSON.parse(localStorage.getItem("radioList"));
 if (nmp.db.radioValid(obj) && obj.objId !== null) {
    var element = document.getElementById(id);
 

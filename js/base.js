@@ -7,6 +7,18 @@ Object.defineProperty(nmp.app, 'vibrateOn', {
   value: "true", 
   configurable: false
 });
+Object.defineProperty(nmp.app, 'settings', {
+  enumerable: true, 
+  writable: false, 
+  value: ["vibrator"], 
+  configurable: false
+});
+Object.defineProperty(nmp.app, 'vibrator', {
+  enumerable: true, 
+  writable: true, 
+  value: "true", 
+  configurable: false
+});
 
 nmp.audio = {};
 Object.defineProperty(nmp.audio, 'status', {
@@ -23,13 +35,25 @@ Object.defineProperty(nmp.storage, 'status', {
   value: "", 
   configurable: false
 });
+Object.defineProperty(nmp.storage, 'field', {
+  enumerable: true, 
+  writable: false, 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrator"], 
+  configurable: false
+});
+Object.defineProperty(nmp.storage, 'object', {
+  enumerable: true, 
+  writable: false, 
+  value: {"objId":"","objOwner":"","src":"","desc":"","www":"","type":"","volume":"","vibrator":""}, 
+  configurable: false
+});
 
 
 nmp.view = {};
 Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
-  value: ["recent10","myfirst","list","form","top","biermann","myRadio","recent","audioogg","status"], 
+  value: ["recent10","myfirst","list","form","top","biermann","myRadio","recent","audioogg","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
