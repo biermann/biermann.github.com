@@ -230,7 +230,8 @@ nmp.view.update = function (view) {
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
-      var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
+      //var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
+      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("biermann");
       var index = store.index("objOwner");
       var cursorRequest = index.openCursor(keyRange);
