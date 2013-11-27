@@ -138,7 +138,7 @@ nmp.storage.currentGet = function () {
      if (typeof obj !== 'undefined' && obj !== null) {
         for (var i in nmp.db.radio.field) {
             //console.log(nmp.db.radio.field[i]+': '+obj[nmp.db.radio.field[i]]);
-	   if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = '';console.log('problem: '+obj[nmp.db.radio.field[i]]);}
+	   if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = '';console.log('problem: '+i+'='+obj[nmp.db.radio.field[i]]);}
         }
      	if (fxosnetzradio.localstorage.currentobjectValid (obj)) {
      		return obj;
