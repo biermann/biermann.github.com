@@ -95,6 +95,7 @@ nmp.db.open = function() {
     //fxosnetzradio.browserdb.radioAdd(fxosnetzradio.radioData);
     //var db = fxosnetzradio.browserdb.db;
     for (var i in nmp.db.radio.readonlyObj) {
+     console.log('radio add:',i, event,nmp.db.radio.readonlyObj[i]);
       //radioData[i].timeStamp =  new Date().getTime();
       nmp.db.objectAdd (nmp.db.radio.readonlyObj[i]);
       //var request = store.put(radioData[i]);
@@ -375,12 +376,12 @@ fxosnetzradio.browserdb.objectAdd = function (obj) {
 nmp.db.objectAdd = function (obj) {
   var objStore = nmp.db.radio.name
   var db = nmp.db.db;
-  if (nmp.db.ok() && fxosnetzradio.browserdb.radioValid(obj)) {
+  if (nmp.db.ok() && nmp.db.radioValid(obj)) {
     var store = db.transaction(objStore, "readwrite").objectStore(objStore);
     var request = store.put(obj);
     request.onsuccess = function(e) {
-      //var result = e.target.result;
-      //console.log("obj put:",result);
+      var result = e.target.result;
+      console.log("obj put:",result);
     }
     request.onerror = function(e) {
       var result = e.target.result;

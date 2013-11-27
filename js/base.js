@@ -39,7 +39,7 @@ Object.defineProperty(nmp.storage, 'status', {
 Object.defineProperty(nmp.storage, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","volume","vibrate"], 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view"], 
   configurable: false
 });
 Object.defineProperty(nmp.storage, 'object', {
