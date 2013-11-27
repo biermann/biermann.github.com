@@ -26,7 +26,6 @@ const radioData = [
 
 
 
-fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","biermann", "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3",  "IRF", "http://www.internationalradiofestival.com",  "MP3", "" ,"" );
 
 
 nmp.db.open = function() {

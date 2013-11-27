@@ -304,8 +304,11 @@ nmp.storage.init= function(e) {
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
         console.log( 'storage init: obj undefined');
-	nmp.storage.mycurrentobject = new fxosnetzradio.localstorage.currentobject ("http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3","MP3","IRF","http://www.internationalradiofestival.com","biermann","biermann","0.12345","","1");
-            nmp.storage.currentSet(nmp.storage.mycurrentobject);
+        for (var i in nmp.storage.field) {
+            console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
+        }
+            nmp.storage.currentSet(obj);
      }
      else {
         console.log( 'storage init: obj defined');
@@ -326,9 +329,12 @@ nmp.storage.init= function(e) {
    }
    else {
         console.log( 'storage init: no objects');
-	nmp.storage.mycurrentobject = new fxosnetzradio.localstorage.currentobject ("http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3","MP3","IRF","http://www.internationalradiofestival.com","biermann","biermann","0.12345","","1");
+        for (var i in nmp.storage.field) {
+            console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
+        }
      	    var newObjects = [];
-            newObjects.push(nmp.storage.mycurrentobject);
+            newObjects.push(obj);
             localStorage.removeItem(array);
             localStorage.setItem(array, JSON.stringify(newObjects));
 
