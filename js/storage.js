@@ -131,7 +131,7 @@ nmp.storage.currentSet = function (obj) {
 
 
 nmp.storage.currentGet = function () {
-   var array = fxosnetzradio.localstorage.currentarray;
+   var array = nmp.storage.name;
    var objects = JSON.parse(localStorage.getItem(array));
    if (objects) {
      var obj = objects[0];
