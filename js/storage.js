@@ -1,7 +1,6 @@
 
 
 
-
 fxosnetzradio.localstorage.currentobject = function (src,type,desc,www,objOwner,view,volume,objId,property){
    this.src=src;
    this.type=type;
@@ -330,7 +329,8 @@ nmp.storage.init= function(e) {
    else {
         console.log( 'storage init: no objects');
         for (var i in nmp.storage.field) {
-            console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
+            var obj = [];
+            //console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
 	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
         }
      	    var newObjects = [];
