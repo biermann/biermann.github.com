@@ -25,12 +25,12 @@ fxosnetzradio.localstorage.currentobjectValid = function (obj) {
 	if (prop == "src") {resultCount = resultCount +10;}
 	if (prop == "objOwner") {resultCount = resultCount +100;}
 	if (prop == "volume" && obj["volume"] < 1) {resultCount = resultCount +1000;}
-	if (prop == "vibrate") {resultCount = resultCount +10000;}
+
 	this[prop] = obj[prop];
         //console.log(resultCount+ 'fxosnetzradio.localstorage.currentobjectValid.' +prop+': ' +this[prop]);
      } 
   } 
-  if (resultCount > 11113) {result = true;}
+  if (resultCount > 1113) {result = true;}
   else {result = false;console.log('current obj validation: count='+resultCount +' '+result);}
   return result;
 };
