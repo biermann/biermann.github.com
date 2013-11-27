@@ -1,4 +1,3 @@
-
 nmp.app.toolbar = function (e) {
 	var audio = document.querySelector("#audio");
 
@@ -32,7 +31,7 @@ nmp.app.toolbar = function (e) {
 			nmp.app.update();
 			fxosnetzradio.browserdb.statusSet ();
        		}
-       		if (oldObj.view === undefined || !exist) {
+       		if (oldObj.view === undefined || !exist || oldObj.view == '') {
 			newObj.view = "myfirst";
     			console.log('view found=undefined - set='+newObj.view);
 			nmp.storage.currentSet(newObj);
