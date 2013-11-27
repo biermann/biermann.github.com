@@ -1,22 +1,17 @@
 var nmp = {};
 
 nmp.app = {};
-Object.defineProperty(nmp.app, 'vibrateOn', {
-  enumerable: true, 
-  writable: true, 
-  value: "true", 
-  configurable: false
-});
-Object.defineProperty(nmp.app, 'settings', {
+nmp.app.settings = {};
+Object.defineProperty(nmp.app.settings, 'vibrate', {
   enumerable: true, 
   writable: false, 
-  value: ["vibrator"], 
+  value: "boolean", 
   configurable: false
 });
-Object.defineProperty(nmp.app, 'vibrator', {
+Object.defineProperty(nmp.app.settings, 'large', {
   enumerable: true, 
   writable: true, 
-  value: "true", 
+  value: "boolean", 
   configurable: false
 });
 
@@ -29,6 +24,12 @@ Object.defineProperty(nmp.audio, 'status', {
 });
 
 nmp.storage = {};
+Object.defineProperty(nmp.storage, 'name', {
+  enumerable: true, 
+  writable: false, 
+  value: "radiocurrent", 
+  configurable: false
+});
 Object.defineProperty(nmp.storage, 'status', {
   enumerable: true, 
   writable: true, 
@@ -38,7 +39,7 @@ Object.defineProperty(nmp.storage, 'status', {
 Object.defineProperty(nmp.storage, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","volume","vibrator"], 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate"], 
   configurable: false
 });
 Object.defineProperty(nmp.storage, 'object', {
