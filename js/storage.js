@@ -340,10 +340,10 @@ nmp.storage.init= function(e) {
       for (var i in nmp.storage.field) {
 	 if (typeof obj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
       }
-      var newObjects = [];
-      newObjects.push(obj);
+      var newArray = [];
+      newArray.push(obj);
       localStorage.removeItem(array);
-      localStorage.setItem(array, JSON.stringify(newObjects));	
+      localStorage.setItem(array, JSON.stringify(newArray));	
    }
    if (objects) {
      console.log( 'storage init: objects');
