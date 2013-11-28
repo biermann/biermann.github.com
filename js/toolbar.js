@@ -32,7 +32,7 @@ nmp.app.toolbar = function (e) {
 			fxosnetzradio.browserdb.statusSet ();
        		}
        		if (oldObj.view === undefined || !exist || oldObj.view == '') {
-			newObj.view = "myfirst";
+			newObj.view = "status";
     			console.log('view found=undefined - set='+newObj.view);
 			nmp.storage.currentSet(newObj);
 			nmp.app.update();

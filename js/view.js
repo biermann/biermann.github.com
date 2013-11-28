@@ -475,7 +475,7 @@ nmp.view.renderSettings = function (id) {
   		      newElement.id = i ;
 		      newElement.innerHTML = prop+'='+current[prop] ;
                       newElement.dataset.prop = prop ; 
-       		      if (current[prop] && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked'); i}
+       		      if (current[prop] && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
        		      if (nmp.app.settings[i] == "boolean") { 
                          newElement.dataset.boolean = current[prop] ; 
 		         newElement.addEventListener("click", function(e) {
@@ -492,8 +492,9 @@ nmp.view.renderSettings = function (id) {
     				//var result = nmp.storage.currentSet(current);
         	      //console.log('setting click else: '+this.getAttribute('data-prop')+': '+current[prop]);
 			    } 
-        	      //console.log('setting click: '+newObj);
-			nmp.storage.currentSet(newObj);
+	               var newObjStr=JSON.stringify(newObj);
+        	      console.log('setting click: '+newObjStr);
+			nmp.storage.currentSet(this.getAttribute('data-boolean')+this.getAttribute('data-prop')+newObj);
 			nmp.app.update();
 
     		      }, false);

@@ -25,6 +25,7 @@ fxosnetzradio.localstorage.currentobjectValid = function (obj) {
 	if (prop == "src") {resultCount = resultCount +10;}
 	if (prop == "objOwner") {resultCount = resultCount +100;}
 	if (prop == "volume" && obj["volume"] < 1) {resultCount = resultCount +1000;}
+        //console.log(obj["volume"]);
 
 	this[prop] = obj[prop];
         //console.log(resultCount+ 'fxosnetzradio.localstorage.currentobjectValid.' +prop+': ' +this[prop]);
@@ -78,30 +79,52 @@ fxosnetzradio.localstorage.statusSet = function () {
 
 
 
-
-
-//fxosnetzradio.localstorage.currentSet (fxosnetzradio.localstorage.mycurrentobject);
 nmp.storage.currentSet = function (obj) {
-                 //console.log( 'nmp.storage.currentSet'+obj);
-   var array = fxosnetzradio.localstorage.currentarray;
+   var array = nmp.storage.name;
    var oldObjects = JSON.parse(localStorage.getItem(array));
+   var current = nmp.storage.currentGet ();
+   console.log( 'nmp.storage.currentSet');
+   for (var i in nmp.storage.field) {
+      for (var prop in current) {
+         if (current.hasOwnProperty(prop)) {
+	    if ( prop == nmp.storage.field[i]){
+                console.log('nmp.storage.currentSet.current ' +prop+'='+current[prop]);
+            console.log('nmp.storage.currentSet.request ' +prop+'='+obj[prop]);
+      //console.log('nmp.storage.currentSet: '+i+'=' +nmp.storage.field[i]);
+               if (typeof obj[prop] !== 'undefined' && obj[prop] !== null) {
+		current[prop] = obj[prop];
+                console.log('nmp.storage.currentSet.new ' +prop+'='+current[prop]);
+	       }
+	    }
+         }
+       }
+   }
+   var newObjects = [];
+   newObjects.push(current);
+   localStorage.removeItem(array);
+   localStorage.setItem(array, JSON.stringify(newObjects));
+
+
    if (oldObjects) {
+      //console.log( 'nmp.storage.currentSet: ' + nmp.storage.name+' found');
       var oldObject = oldObjects[0];
       if (typeof oldObject !== 'undefined' && oldObject !== null) {
-         if (fxosnetzradio.localstorage.currentobjectValid (obj) ) {
-     	    var newObjects = [];
-            var newObject = obj;
-            newObjects.push(newObject);
-            localStorage.removeItem(array);
-            localStorage.setItem(array, JSON.stringify(newObjects));
-     //for (var prop in obj) {
-        //if (obj.hasOwnProperty(prop)) {
-          //this[prop] = obj[prop];
-          //console.log( 'fxosnetzradio.localstorage.currentset: ' +prop+': ' +this[prop]);
-        //} 
-     //}
-            console.log( 'fxosnetzradio.localstorage.currentSet: src=' +newObject.src+' view=' +newObject.view+' vol=' +newObject.volume);
-         }
+      //console.log( 'nmp.storage.currentSet: ' + nmp.storage.name+'[0] found');
+         var newObjects = [];
+         var newObject = obj;
+         for (var i in nmp.storage.field) {
+	       if (typeof newObject[nmp.storage.field[i]] == 'undefined' || newObject[nmp.storage.field[i]] == null ){
+	    newObject[nmp.storage.field[i]] = oldObject[nmp.storage.field[i]];
+	       }
+	    //if (newObject[nmp.storage.field[i]] !== oldObject[nmp.storage.field[i]]){
+	    //}
+            //console.log('nmp.storage.currentSet: ' + newObject[nmp.storage.field[i]]);
+            //console.log('nmp.storage.currentSet:  '+oldObject[nmp.storage.field[i]]);
+	    }
+         //newObjects.push(newObject);
+         //localStorage.removeItem(array);
+         //localStorage.setItem(array, JSON.stringify(newObjects));
+	 }
 	 else {
      	    var newObjects = [];
             var newObject = oldObject;
@@ -110,19 +133,15 @@ nmp.storage.currentSet = function (obj) {
 		// validation missing
 		 newObject[prop] = obj[prop];
                  newObjects.push(newObject);
-                 localStorage.removeItem(array);
-                 localStorage.setItem(array, JSON.stringify(newObjects));
+                 //localStorage.removeItem(array);
+                 //localStorage.setItem(array, JSON.stringify(newObjects));
                  console.log( 'nmp.storage.currentSet view='+newObject[prop]);
 	      }
 	    }
 	 }
-         fxosnetzradio.localstorage.statusSet ();
-         if (!fxosnetzradio.localstorage.currentobjectValid (obj) && typeof obj.view !== 'undefined'){
-          //console.log( 'fxosnetzradio.localstorage.currentSet request obj.view=' +obj.view);
-}
-     }
-  } 
-}
+         nmp.storage.statusSet();
+  }
+  }; 
 
 
 
@@ -133,24 +152,44 @@ nmp.storage.currentSet = function (obj) {
 nmp.storage.currentGet = function () {
    var array = nmp.storage.name;
    var objects = JSON.parse(localStorage.getItem(array));
+   console.log( 'nmp.storage.currentGet');
    if (objects) {
      var obj = objects[0];
+     var current = objects[0];
+     var test ={};
      if (typeof obj !== 'undefined' && obj !== null) {
-        for (var i in nmp.db.radio.field) {
+        for (var i in nmp.storage.field) {
+            //console.log('nmp.storage.currentGet: 1 '+nmp.storage.field[i]);
+	      test[nmp.storage.field[i]]="n/a";
+	      testStr=JSON.stringify(test);
+              //console.log('storage init problem2: '+testStr);
+	
+           for (var prop in current) {
+                //console.log('nmp.storage.currentGet.current 2 ' +prop+'='+current[prop]);
+              if (current.hasOwnProperty(prop)) {
+                //console.log('nmp.storage.currentGet.current 3 ' +prop+'='+current[prop]);
+	           if ( prop == i){
+                //console.log('nmp.storage.currentGet.current 4 ' +prop+'='+current[prop]);
+	}}}
             //console.log(nmp.db.radio.field[i]+': '+obj[nmp.db.radio.field[i]]);
-	   if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = '';console.log('problem: '+i+'='+obj[nmp.db.radio.field[i]]);}
+	   //if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';
+	//console.log('problem: '+i+'='+obj[nmp.db.radio.field[i]]);
+	//}
         }
+	
      	if (fxosnetzradio.localstorage.currentobjectValid (obj)) {
      		return obj;
      	} 
-     	obj.objOwner="currentGet"
+     	//obj.objOwner="currentGet"
 	return obj;
      }
      else {
-	obj =[];
-        for (var i in nmp.db.radio.field) {
+	obj ={};
+        for (var i in nmp.storage.field) {
             //console.log(nmp.db.radio.field[i]+': '+obj[nmp.db.radio.field[i]]);
-	   if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = '';console.log('problem: '+obj[nmp.db.radio.field[i]]);}
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';
+		//console.log('problem: '+obj[nmp.db.radio.field[i]]);
+	}
         }
      		return obj;
 	
@@ -158,10 +197,10 @@ nmp.storage.currentGet = function () {
      //return fxosnetzradio.localstorage.currentGet ();
      }
    }
-	obj =[];
-        for (var i in nmp.db.radio.field) {
+	obj ={};
+        for (var i in nmp.storage.field) {
             //console.log(nmp.db.radio.field[i]+': '+obj[nmp.db.radio.field[i]]);
-	   if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = 'status';console.log('problem: '+obj[nmp.db.radio.field[i]]);}
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'status';console.log('problem: '+obj[nmp.storage.field[i]]);}
         }
      		return obj;
 }
@@ -296,47 +335,52 @@ nmp.storage.init= function(e) {
    var objects = JSON.parse(localStorage.getItem(array));
    console.log( 'storage init');
    if (objects) {
-        console.log( 'storage init: objects');
+     console.log( 'storage init: objects');
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
         console.log( 'storage init: obj undefined');
+	obj={};
         for (var i in nmp.storage.field) {
-            console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
-	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){
+              obj[nmp.storage.field[i]]  = 'n/a';
+              console.log('problem: '+obj[nmp.storage.field[i]]);
+	   }
         }
-            nmp.storage.currentSet(obj);
+        nmp.storage.currentSet(obj);
      }
      else {
         console.log( 'storage init: obj defined');
-
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){
+              obj[nmp.storage.field[i]]  = 'n/a';
+	      testStr=JSON.stringify(obj);
+              //console.log('storage init problem1: '+testStr);
+	   }
+	var test={};
         for (var i in nmp.storage.field) {
-            console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
-	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
-           if (typeof obj[nmp.storage.field["view"]] == ''){obj[nmp.storage.field["view"]]  = 'status';console.log('problem: '+obj[nmp.storage.field[i]]);}
+	      test[nmp.storage.field[i]]="n/a";
+	      testStr=JSON.stringify(test);
+              //console.log('storage init problem2: '+testStr);
         }
-           
-            nmp.storage.currentSet(obj);
-	
-
-
-
-	
-     }
-
-     
+      var newObjects = [];
+      //newObjects.push(test);
+      //localStorage.removeItem(array);
+      //localStorage.setItem(array, JSON.stringify(newObjects));
+   }
    }
    else {
-        console.log( 'storage init: no objects');
-        for (var i in nmp.storage.field) {
-            var obj = [];
-            //console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
-	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = '';console.log('problem: '+obj[nmp.storage.field[i]]);}
-        }
-     	    var newObjects = [];
-            newObjects.push(obj);
-            localStorage.removeItem(array);
-            localStorage.setItem(array, JSON.stringify(newObjects));
-
-}
-}
+      console.log( 'storage init: no objects');
+      for (var i in nmp.storage.field) {
+         var obj = {};
+         //console.log(nmp.storage.field[i]+': '+obj[nmp.storage.field[i]]);
+	 if (typeof obj[nmp.storage.field[i]] == 'undefined'){
+	    obj[nmp.storage.field[i]]  = 'n/a';
+            console.log('storage init problem: '+obj[nmp.storage.field[i]]);
+	 }
+      }
+      var newObjects = [];
+      newObjects.push(obj);
+      localStorage.removeItem(array);
+      localStorage.setItem(array, JSON.stringify(newObjects));
+   }
+};
 

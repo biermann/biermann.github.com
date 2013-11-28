@@ -42,12 +42,12 @@ Object.defineProperty(nmp.storage, 'field', {
   value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view"], 
   configurable: false
 });
-Object.defineProperty(nmp.storage, 'object', {
-  enumerable: true, 
-  writable: false, 
-  value: {"objId":"","objOwner":"","src":"","desc":"","www":"","type":"","volume":"","vibrator":""}, 
-  configurable: false
-});
+//Object.defineProperty(nmp.storage, 'object', {
+//  enumerable: true, 
+//  writable: false, 
+//  value: {"objId":"","objOwner":"","src":"","desc":"","www":"","type":"","volume":"","vibrator":""}, 
+//  configurable: false
+//});
 
 
 nmp.view = {};
