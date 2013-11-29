@@ -23,7 +23,7 @@ function update () {
         descriptionStr = '',
         descStr = '',
         wwwStr = '',
-	radioCurrent = [],
+	radioCurrent = {},
 	volumeInteger = 0,
     	radioListDisplay = document.querySelector("#radioListDisplay");
     if (volume) {

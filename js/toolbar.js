@@ -6,7 +6,8 @@ nmp.app.toolbar = function (e) {
     	if (audio && menu) {
         	menu.onclick = function () {			
 	        var oldObj = nmp.storage.currentGet();
-		var newObj =[];
+	        var current = nmp.storage.currentGet();
+		var newObj ={};
 		var next = 0;
 		var last = nmp.view.option.length - 1;
 		var exist = false;
@@ -18,8 +19,9 @@ nmp.app.toolbar = function (e) {
 		next++;
 		   if (nmp.view.option[i] == oldObj.view){
 			newObj.view = nmp.view.option[next];
-    			console.log('view found='+nmp.view.option[i]+' - set='+newObj.view);
-			nmp.storage.currentSet(newObj);
+	                current = nmp.storage.currentGet();
+			current.view = nmp.view.option[next];
+			nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
 			break;
@@ -27,16 +29,15 @@ nmp.app.toolbar = function (e) {
     		}
        		if (nmp.view.option[last] == oldObj.view) {
 			newObj.view = nmp.view.option[0];
-    			console.log('view found='+nmp.view.option[last]+' - set='+newObj.view);
-			nmp.storage.currentSet(newObj);
+			current.view = nmp.view.option[0];
+			nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
-			fxosnetzradio.browserdb.statusSet ();
+			nmp.db.statusSet ();
        		}
-       		if (oldObj.view === undefined || !exist || oldObj.view == '') {
-			newObj.view = "biermann";
-    			console.log('view found=undefined - set='+newObj.view);
-			nmp.storage.currentSet(newObj);
+       		if (current.view === undefined || !exist || oldObj.view == '') {
+			current.view = "biermann";
+			nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
        		}
