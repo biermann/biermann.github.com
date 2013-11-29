@@ -8,10 +8,10 @@ Object.defineProperty(nmp.app.settings, 'vibrate', {
   value: "boolean", 
   configurable: false
 });
-Object.defineProperty(nmp.app.settings, 'large', {
+Object.defineProperty(nmp.app.settings, 'reset', {
   enumerable: true, 
-  writable: true, 
-  value: "boolean", 
+  writable: false, 
+  value: "click", 
   configurable: false
 });
 

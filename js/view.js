@@ -463,49 +463,42 @@ nmp.view.renderSettings = function (id) {
    var current = nmp.storage.currentGet ();
     if (element && updateValidator() ) {
        for (var i in nmp.app.settings) {
-        	      //console.log('setting: '+i+'=' +nmp.app.settings.boolean[i]);
+          var newElement = document.createElement("button");
+          newElement.id = i ;
+          if (nmp.app.settings[i] == "click") { newElement.innerHTML = i+' '+nmp.app.settings[i];}
           for (var prop in current) {
-             if (current.hasOwnProperty(prop)) {
-        	   //console.log('setting: ' +prop+': '+current[prop]);
-	           if ( prop == i){
-        	      //console.log('setting: '+prop+': '+current[prop]);
-        	      //console.log('setting: '+i+'='+nmp.app.settings[i]);
-  		      //nmp.app.settings.boolean[i] = current[prop];
-		      var newElement = document.createElement("button");
-  		      newElement.id = i ;
-		      newElement.innerHTML = prop+'='+current[prop] ;
-                      newElement.dataset.prop = prop ; 
-       		      if (current[prop] && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
+             if (current.hasOwnProperty(prop) && prop == i) {
+		newElement.innerHTML = prop+'='+current[prop] ;
+                newElement.dataset.prop = prop ;
+             }
+             if (current[prop] == true && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
+            if (nmp.app.settings[i] == "boolean") { newElement.dataset.boolean = current[prop]; } 
+          }
        		      if (nmp.app.settings[i] == "boolean") { 
-                         newElement.dataset.boolean = current[prop] ; 
 		         newElement.addEventListener("click", function(e) {
 		            var newObj = nmp.storage.currentGet ();
-      			    if (this.getAttribute('data-boolean')){
-				//current[prop]=false;
-		               newObj[this.getAttribute('data-prop')] = false;
-        	      //console.log('setting click if: '+this.getAttribute('data-prop')+': '+current[prop]);
-				
-			    }
-                            else {
-		               newObj[this.getAttribute('data-prop')] = true;
-				//current[prop]=true;
-    				//var result = nmp.storage.currentSet(current);
-        	      //console.log('setting click else: '+this.getAttribute('data-prop')+': '+current[prop]);
-			    } 
+      			    if (this.getAttribute('data-boolean')){ newObj[this.getAttribute('data-prop')] = false;}
+                            else { newObj[this.getAttribute('data-prop')] = true; } 
 	               var newObjStr=JSON.stringify(newObj);
         	      console.log('setting click: '+newObjStr);
 			nmp.storage.currentSet(this.getAttribute('data-boolean')+this.getAttribute('data-prop')+newObj);
 			nmp.app.update();
-
-    		      }, false);
-		   }
-  	element.appendChild(newElement);
-		   }
-}
-}
-}
-} 
-} 
+    		         }, false);
+		     }
+      if (nmp.app.settings[i] == "click" && i == "reset") { 
+         newElement.addEventListener("click", function(e) {
+         var array = nmp.storage.name;
+         var newObj = {};
+         var newArray = [];
+         newArray.push(newObj);
+         localStorage.removeItem(array);
+         localStorage.setItem(array, JSON.stringify(newArray));	
+        }, false);
+      }
+      element.appendChild(newElement);
+      }
+   } 
+}; 
 
 
 

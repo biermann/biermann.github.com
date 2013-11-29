@@ -21,6 +21,7 @@ nmp.app.toolbar = function (e) {
     			console.log('view found='+nmp.view.option[i]+' - set='+newObj.view);
 			nmp.storage.currentSet(newObj);
 			nmp.app.update();
+                        nmp.storage.statusSet();
 			break;
 		   }	
     		}
@@ -29,13 +30,15 @@ nmp.app.toolbar = function (e) {
     			console.log('view found='+nmp.view.option[last]+' - set='+newObj.view);
 			nmp.storage.currentSet(newObj);
 			nmp.app.update();
+                        nmp.storage.statusSet();
 			fxosnetzradio.browserdb.statusSet ();
        		}
        		if (oldObj.view === undefined || !exist || oldObj.view == '') {
-			newObj.view = "status";
+			newObj.view = "biermann";
     			console.log('view found=undefined - set='+newObj.view);
 			nmp.storage.currentSet(newObj);
 			nmp.app.update();
+                        nmp.storage.statusSet();
        		}
         };
     }
@@ -51,7 +54,7 @@ nmp.app.toolbar = function (e) {
                 }
 		else	{
 			nmp.audio.pause();
-                        updateControl ();
+                        nmp.storage.statusSet();
 			}		
         };
     }
@@ -75,6 +78,7 @@ nmp.app.toolbar = function (e) {
 		audio.volume = volume;
 		nmp.storage.currentUpdate();
                 updateControl ();
+                nmp.storage.statusSet();
         };
     }
 
@@ -93,6 +97,7 @@ nmp.app.toolbar = function (e) {
 		audio.volume = volume;
 		nmp.storage.currentUpdate();
                 updateControl ();
+                nmp.storage.statusSet();
         }
 
     }
@@ -116,6 +121,7 @@ nmp.app.toolbar = function (e) {
 			nmp.audio.pause();
             		audio.src = '';       
 			nmp.app.updateControl ();
+                        nmp.storage.statusSet();
         	}
     	}
 
