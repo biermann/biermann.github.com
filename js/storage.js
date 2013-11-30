@@ -341,7 +341,7 @@ nmp.storage.init= function(e) {
       console.log( 'storage init: no objects');
       var newObj = {};
       for (var i in nmp.storage.field) {
-	 if (typeof obj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
+	 if (typeof newObj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
       }
       var newArray = [];
       newArray.push(newObj);
