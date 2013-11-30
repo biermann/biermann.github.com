@@ -166,7 +166,7 @@ nmp.storage.init();
 nmp.audio.init2();
 //nmp.audio.prepare();
 nmp.app.update();
-
+nmp.view.update();
 
 };
 

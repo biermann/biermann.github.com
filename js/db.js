@@ -129,7 +129,7 @@ nmp.db.ok = function () {
   if (typeof db !== 'undefined' && db !== null && db.objectStoreNames.contains(nmp.db.radio.name) ) {
      result = true;
   }
-  console.log("browserdb.ok?" +result);
+  //console.log("browserdb.ok?" +result);
   return result;
 };
 
@@ -380,7 +380,7 @@ nmp.db.objectAdd = function (obj) {
     var request = store.put(obj);
     request.onsuccess = function(e) {
       var result = e.target.result;
-      console.log("obj put:",result);
+//      console.log("obj put:",result);
     }
     request.onerror = function(e) {
       var result = e.target.result;

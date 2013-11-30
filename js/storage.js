@@ -30,7 +30,7 @@ nmp.storage.currentobjectValid = function (obj) {
 	}
 	if (prop == "volume" && obj["volume"] < 1) { resultCount = resultCount +1000; }
 	if (obj["volume"] == "n/a") { resultCount = resultCount -1; }
-        //console.log(obj["volume"]);
+	if (obj[nmp.storage.field[i]] == "n/a") { resultCount = resultCount -1; }
      } 
   } 
   if (resultCount > 91) {result = true;}
@@ -117,21 +117,32 @@ nmp.storage.currentSet = function (obj) {
       for (var i in nmp.storage.field) {
          if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';}
       }
+   console.log( 'nmp.storage.currentSet objectinvalid request' +JSON.stringify(obj));
    }
    if (!nmp.storage.currentobjectValid (obj) && current) {
       var newObjects = [];
       for (var prop in current) {
          if (current.hasOwnProperty(prop) && current[prop] !== "n/a" ) {
-	  obj[prop] = current[prop];
+          //console.log( 'nmp.storage.currentSet objectinvalid request' +JSON.stringify(obj));
+	  //obj[prop] = current[prop];
          }
       }
          newObjects.push(obj);
-         localStorage.removeItem(array);
-         localStorage.setItem(array, JSON.stringify(newObjects));
-   var newObjStr=JSON.stringify(obj);
-   console.log('nmp.storage.currentSet '+newObjStr);
+         //localStorage.removeItem(array);
+         //localStorage.setItem(array, JSON.stringify(newObjects));
+   console.log( 'nmp.storage.currentSet objectinvalid request' +JSON.stringify(obj));
+   console.log( 'nmp.storage.currentSet objectinvalid current' +JSON.stringify(current));
    }
-
+   if (!nmp.storage.currentobjectValid (obj) && !nmp.storage.currentobjectValid (current)) {
+      var newObj = {};
+      for (var i in nmp.storage.field) {
+	 if (typeof newObj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
+      }
+      var newArray = [];
+      newArray.push(newObj);
+      localStorage.removeItem(array);
+      localStorage.setItem(array, JSON.stringify(newArray));	
+   }
    if (oldObjects) {
       //console.log( 'nmp.storage.currentSet: ' + nmp.storage.name+' found');
       var oldObject = oldObjects[0];
@@ -171,8 +182,16 @@ nmp.storage.currentSet = function (obj) {
 
 
 
+nmp.storage.currentReset = function () {
+         var array = nmp.storage.name;
+         var newObj = {};
+         var newArray = [];
+         newArray.push(newObj);
+         localStorage.removeItem(array);
+         localStorage.setItem(array, JSON.stringify(newArray));	
 
 
+}; 
 
 
 nmp.storage.currentGet = function () {

@@ -10,7 +10,7 @@ nmp.view.update = function (view) {
  console.log("nmp.view.update request=",view);
  nmp.db.statusSet ();
  //updateControl ();
-  if (view == "n/a") {view = "top";}	
+  if (view == "n/a") {view = "myfirst";}	
   if (view == "admin") {
     current.view = "admin";
     var result = nmp.storage.currentSet(current);
@@ -470,30 +470,26 @@ nmp.view.renderSettings = function (id) {
              if (current.hasOwnProperty(prop) && prop == i) {
 		newElement.innerHTML = prop+'='+current[prop] ;
                 newElement.dataset.prop = prop ;
+                newElement.dataset.boolean = current[prop] ;
              }
-             if (current[prop] == true && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
-            if (nmp.app.settings[i] == "boolean") { newElement.dataset.boolean = current[prop]; } 
+             if (current[prop] == "true" && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
+            //if (nmp.app.settings[i] == "boolean") { newElement.dataset.boolean = current[prop]; } 
           }
        		      if (nmp.app.settings[i] == "boolean") { 
 		         newElement.addEventListener("click", function(e) {
-		            var newObj = nmp.storage.currentGet ();
-      			    if (this.getAttribute('data-boolean')){ newObj[this.getAttribute('data-prop')] = false;}
-                            else { newObj[this.getAttribute('data-prop')] = true; } 
-	               var newObjStr=JSON.stringify(newObj);
-        	      console.log('setting click: '+newObjStr);
-			nmp.storage.currentSet(this.getAttribute('data-boolean')+this.getAttribute('data-prop')+newObj);
+	                    var current = nmp.storage.currentGet();
+			    var temp = '' +this.getAttribute('data-boolean');
+      			    if (temp == "false" ){ current[this.getAttribute('data-prop')] = "true";}
+                            else { current[this.getAttribute('data-prop')] = "false"; } 
+                        console.log( 'nmp.view.renderSettings ' +JSON.stringify(current));
+			nmp.storage.currentSet(current);
 			nmp.app.update();
     		         }, false);
 		     }
       if (nmp.app.settings[i] == "click" && i == "reset") { 
          newElement.addEventListener("click", function(e) {
-         var array = nmp.storage.name;
-         var newObj = {};
-         var newArray = [];
-         newArray.push(newObj);
-         localStorage.removeItem(array);
-         localStorage.setItem(array, JSON.stringify(newArray));	
-        }, false);
+            nmp.storage.currentReset();
+         }, false);
       }
       element.appendChild(newElement);
       }
