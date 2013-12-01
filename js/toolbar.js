@@ -54,8 +54,9 @@ nmp.app.toolbar = function (e) {
                         updateControl ();
                 }
 		else	{
-			nmp.audio.pause();
+			nmp.audio.pause('pause');
                         nmp.storage.statusSet();
+                        updateControl ();
 			}		
         };
     }
@@ -119,8 +120,7 @@ nmp.app.toolbar = function (e) {
     	if (audio && stop) {
         	stop.onclick = function () {			
 			nmp.app.vibrate();
-			nmp.audio.pause();
-            		audio.src = '';       
+			nmp.audio.pause("stop");
 			nmp.app.updateControl ();
                         nmp.storage.statusSet();
         	}
