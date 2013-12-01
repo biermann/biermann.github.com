@@ -210,10 +210,10 @@ var	playPause = document.querySelector("#playPause");
           playPause.innerHTML = '>';
        }
        if (toolbarPlayPause && audio.played && audio.src) {
-    	  toolbarPlayPause.style.backgroundImage="url('images/toolbars/icons/pause.png')"; 
+    	  toolbarPlayPause.style.backgroundImage="url('image/toolbar/icons/pause.png')"; 
        }
        if (toolbarPlayPause && audio.paused && audio.src) {
-    	  toolbarPlayPause.style.backgroundImage="url('images/toolbars/icons/play.png')"; 
+    	  toolbarPlayPause.style.backgroundImage="url('image/toolbar/icons/play.png')"; 
        }
        if (playPause && audio.paused && nmp.storage.currentGet().desc && audio.readyState) {
           playPause.textContent = '> ' + nmp.storage.currentGet().desc ;
