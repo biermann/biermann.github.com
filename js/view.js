@@ -269,7 +269,7 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "myRadio" && fxosnetzradio.browserdb.ok()) {
+    if (view == "myRadio" && nmp.db.ok()) {
     current.view = "myRadio";
     var result = nmp.storage.currentSet(current);
     element = document.getElementById(elementId);
@@ -278,7 +278,7 @@ nmp.view.update = function (view) {
       fxosnetzradio.view.renderStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("browser");
-      var index = store.index("objOwnerIndex");
+      var index = store.index("objOwner");
       var cursorRequest = index.openCursor(keyRange);
       var count = 0;
       cursorRequest.onsuccess = function(e) {
@@ -636,26 +636,6 @@ nmp.view.renderlist = function (id,obj,objStore) {
     var radioListAll = element;
   }
   if (nmp.db.radioValid(obj) && id !== null) {
-          for (var prop in obj) {
-             if (obj.hasOwnProperty(prop)) {
-                for (var i in nmp.db.radio.formField) {
-	           if ( prop == nmp.view.list[i]){
-                      //console.log('nmp.view.renderlist: ' +prop+': ' +obj[prop]);
-        	      //console.log('edit mode: ' +prop+': ' +oldObj[prop]+nmp.db.radio.formField[i]);
-  		      var newElement = document.createElement("a");
-  		      newElement.dataset.this = obj[prop]; 
-  		      newElement.dataset.view = view; 
-  		      newElement.name = prop;
-  		      newElement.defaultValue = obj[prop];
-  		      newElement.id = id + prop; 
-		      newElement.innerHTML = obj[prop]+' ' ;
-                      newElement.setAttribute('class',nmp.view.class);
-  		      //li.appendChild(newElement);
-		   }
-                } 
-              } 
-          }
-
 
   for (var i in nmp.view.list) {
     if (obj.hasOwnProperty(nmp.view.list[i])) {
@@ -669,13 +649,29 @@ nmp.view.renderlist = function (id,obj,objStore) {
       newElement.dataset.obj = JSON.stringify(obj); 
       newElement.name = nmp.view.list[i];
       newElement.defaultValue = obj[nmp.view.list[i]];
-      newElement.id = id + nmp.view.list[i] +'2'; 
-      newElement.innerHTML = '2: '+obj[nmp.view.list[i]]+' ' ;
+      newElement.id = id + nmp.view.list[i] ; 
+      newElement.innerHTML = ' '+obj[nmp.view.list[i]]+' ' ;
       newElement.setAttribute('class',nmp.view.class);
       newElement.addEventListener("click", function(e) {
-    	  nmp.view.eventClick(this.getAttribute('data-value'),this.getAttribute('data-descriptor'),this.getAttribute('data-objStore'));
-    	  nmp.view.eventClick2(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
       }, false);
+    }
+    else if (!obj.hasOwnProperty(nmp.view.list[i]) && !nmp.db.readOnly(nmp.view.list[i],obj) ) {
+      //console.log('nmp.view.renderlist: 2' +i+': ' +nmp.view.list[i]);
+      var newElement = document.createElement("a");
+      newElement.dataset.descriptor = nmp.view.list[i]; 
+      newElement.dataset.view = view; 
+      newElement.dataset.id = id; 
+      newElement.dataset.store = objStore; 
+      newElement.dataset.obj = JSON.stringify(obj); 
+      newElement.name = nmp.view.list[i];
+      newElement.id = id + nmp.view.list[i]; 
+      newElement.setAttribute('class',nmp.view.class);
+      newElement.innerHTML = ' '+nmp.view.list[i]+' ';
+      newElement.addEventListener("click", function(e) {
+    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+      }, false);
+
     }
     else {
       //console.log('nmp.view.renderlist: 2' +i+': ' +nmp.view.list[i]);
@@ -688,19 +684,20 @@ nmp.view.renderlist = function (id,obj,objStore) {
       newElement.name = nmp.view.list[i];
       newElement.id = id + nmp.view.list[i]; 
       newElement.setAttribute('class',nmp.view.class);
-      newElement.innerHTML = ' '+nmp.view.list[i];
+      newElement.innerHTML = '"no '+nmp.view.list[i]+'"';
       newElement.addEventListener("click", function(e) {
-    	  nmp.view.eventClick2(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
       }, false);
-
     }
+
+
+
+
+
+
 
    li.appendChild(newElement);
  } 
-
-
-
-
 
 
  
@@ -735,22 +732,13 @@ nmp.view.renderlist = function (id,obj,objStore) {
   src.dataset.src = obj.src; 
   src.dataset.desc = row.desc; 
   desc.textContent = " "+ row.desc + " ";
-  format.textContent = " format: " + row.format;
+  //format.textContent = " format: " + row.format;
   if (obj.lastUsed){lastUsed.textContent = " lastUsed=" + row.lastUsed;}
   if (obj.usageCounter){usageCounter.textContent = " count=" + obj.usageCounter;}
   pause.textContent = " #Pause";
   pause.dataset.id = row.objId; 
   objId.dataset.id = row.objId; 
   objId.textContent = "objId=" + row.objId;
-  //li.appendChild(objId);
-  //li.appendChild(usageCounter);
-  //li.appendChild(desc);
-  //li.appendChild(format);
-  //li.appendChild(src);
-  //li.appendChild(pause);
-  //li.appendChild(www);
-  //li.appendChild(owner);
-  //li.appendChild(lastUsed);
 }
   if (typeof obj.objId !== 'undefined') {objId.textContent = " objId=" + obj.objId;}
   if (typeof obj.objOwner !== 'undefined') {objOwner.textContent = " objOwner=" + obj.objOwner;}
@@ -762,59 +750,49 @@ nmp.view.renderlist = function (id,obj,objStore) {
   if (typeof obj.objId !== 'undefined') {
      edit.textContent = " #edit";
      edit.dataset.id = obj.objId; 
-     //edit.addEventListener("click", function(e) {
-       // fxosnetzradio.browserdb.objectEdit(id,obj.objId,objStore);
- // });
 
   }
-  //li.appendChild(objId);
-  //li.appendChild(objOwner);
-  //li.appendChild(del);
-  //li.appendChild(edit);
   radioListAll.appendChild(li);
 
 };
 
 
-nmp.view.eventClick = function (value,descriptor,objStore){
-  console.log('nmp.view.eventClick', value, descriptor);
-  nmp.app.vibrate();
-  if (descriptor == "www") {
-    window.open(value,'_blank'); 
-  }
-  if (descriptor == "src") {
-    nmp.audio.prepare(value);
-    nmp.audio.play(value);
-    nmp.app.update();
-  }
-};
 
-nmp.view.eventClick2 = function (id,objStr,objStore,descriptor){
+nmp.view.eventClick = function (id,objStr,objStore,descriptor){
   var obj = JSON.parse(objStr);
-  console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
+  console.log('nmp.view.eventClick ',obj,descriptor,objStore,id);
   nmp.app.vibrate();
   if (descriptor == "www") {
     window.open(obj.www,'_blank'); 
   }
-  if (descriptor == "src") {
+  if (descriptor == "src" || descriptor == "desc") {
+    nmp.storage.currentUpdate(obj.objId,objStore);
+    nmp.db.objectUpdateStats(obj.objId,objStore);
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
     nmp.app.update();
   }
   if (descriptor == "delete") {
-    fxosnetzradio.browserdb.objectDel(obj.objId,objStore);
+    nmp.db.objectDel(obj.objId,objStore);
+    nmp.app.update();
+  }
+  if (descriptor == "duplicate") {
+    obj.objId =  JSON.stringify(new Date().getTime());
+    obj.objOwner =  "browser";
+    nmp.db.objectAdd(obj);
+    nmp.app.update();
   }
   if (descriptor == "edit") {
-    console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
-     fxosnetzradio.browserdb.objectEdit(id,obj.objId,objStore);
+    //console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
+    nmp.db.objectEdit(id,obj.objId,objStore);
   }
   if (descriptor == "pause") {
-    nmp.audio.pause();
-    nmp.app.update();
+    nmp.audio.pause("pause");
+    nmp.app.updateControl();
   }
   if (descriptor == "stop") {
     nmp.audio.pause("stop");
-    nmp.app.update();
+    nmp.app.updateControl();
   }
 };
 

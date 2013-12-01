@@ -134,6 +134,17 @@ nmp.db.ok = function () {
 };
 
 
+nmp.db.readOnly = function (descriptor,obj) {
+  var result=false;
+  for (var i in nmp.db.radio.readonlyObjOwner) {
+    if ((descriptor == "edit" || descriptor == "delete") && obj.objOwner == nmp.db.radio.readonlyObjOwner[i]) {
+	result = true
+    }
+  }
+return result;
+};
+
+
 nmp.db.statusSet = function () {
 	fxosnetzradio.browserdb.statusSet ();
 };
@@ -174,11 +185,12 @@ fxosnetzradio.browserdb.statusSet = function () {
      }
 }
 
-
-
-//fxosnetzradio.browserdb.objectDel(row.id,objStore);
 fxosnetzradio.browserdb.objectDel = function(key,objStore) {
-   if (fxosnetzradio.browserdb.ok() && objStore && key){
+	nmp.db.objectDel (key,objStore); 
+};
+
+nmp.db.objectDel = function(key,objStore) {
+   if (nmp.db.ok() && objStore && key){
       var db = nmp.db.db;
       var trans = db.transaction([objStore], "readwrite");
       var store = trans.objectStore(objStore);
@@ -363,6 +375,7 @@ nmp.db.radioValid = function (obj) {
   } 
   if (resultCount > 113) {result = true;}
   else {result = false;console.log('obj validation: count='+resultCount +' '+result);}
+  console.log( 'nmp.db.radioValid '+result+' '+resultCount+' '+JSON.stringify(obj));
   return result;
 };
 
@@ -548,9 +561,11 @@ fxosnetzradio.browserdb.renderform  = function (id) {
 }
 
 
+fxosnetzradio.browserdb.objectEdit = function (elementId,objId,objStore) {
+	nmp.db.objectEdit (elementId,objId,objStore); 
+};
 
-//fxosnetzradio.browserdb.objectEdit(obj.objId,objStore);
-fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
+nmp.db.objectEdit  = function (elementId,objId,objStore) {
    console.log('edit mode: ',elementId,objId,objStore);
   var element = document.getElementById(elementId);
   var formname = elementId;
@@ -567,7 +582,7 @@ fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
   var format = document.createElement("input");
   var updateStr = "";
   var oldObj = [];
-  if (fxosnetzradio.browserdb.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
+  if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
     var db = nmp.db.db;
     var store = db.transaction(objStore).objectStore(objStore);
     store.get(objId).onsuccess = function(e) {
@@ -603,7 +618,7 @@ fxosnetzradio.browserdb.objectEdit  = function (elementId,objId,objStore) {
               } 
           } 
   	  button.type = "button";
-          button.value = "Add";
+          button.value = "Submit";
           button.setAttribute('form',formId);
           button.addEventListener("click", function(e) {
 	     var form = document.getElementById(formId);
