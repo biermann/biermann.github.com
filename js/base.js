@@ -74,7 +74,7 @@ nmp.db = {};
 Object.defineProperty(nmp.db, 'version', {
   enumerable: true, 
   writable: false, 
-  value: "42", 
+  value: "43", 
   configurable: false
 });
 Object.defineProperty(nmp.db, 'name', {

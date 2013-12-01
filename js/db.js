@@ -61,15 +61,12 @@ nmp.db.open = function() {
   }
 
    if(!db.objectStoreNames.contains(radioDBstore)) {
-      console.log('upgrade needed und  db does not exist', evt);
-      var objectStore = db.createObjectStore(radioDBstore, {keyPath: "objId"});
-          objectStore.createIndex("srcIndex", "src", { unique: false }); 
-          objectStore.createIndex("descIndex", "desc", { unique: false }); 
-          objectStore.createIndex("wwwIndex", "www", { unique: false }); 
-          objectStore.createIndex("objOwnerIndex", "objOwner", { unique: false }); 
-          objectStore.createIndex("usageCounterIndex", "usageCounter", { unique: false }); 
-          objectStore.createIndex("lastUsedIndex", "lastUsed", { unique: false }); 
-     	  console.log('Datenbank angelegt', evt);
+     console.log('upgrade needed und  db does not exist', evt);
+     var store = db.createObjectStore(radioDBstore, {keyPath: "objId"});
+     for (var i in nmp.db.radio.field) {
+       store.createIndex(nmp.db.radio.field[i],nmp.db.radio.field[i], { unique: false })
+     }
+   console.log('Datenbank angelegt', evt);
    }
     
     //var trans = db.transaction([radioDBstore], "versionchange");
