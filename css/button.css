@@ -72,7 +72,7 @@ button[disabled],
 a[role="button"][aria-disabled="true"],
 button[disabled].recommend,
 a[role="button"][aria-disabled="true"].recommend {
-  background-image: url(../images/buttons/ui/disabled.png);
+  background-image: url(../image/button/ui/disabled.png);
   background-color: transparent;
   border-color: #dadada;
   color: #bcbcbc;

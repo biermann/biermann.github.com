@@ -127,7 +127,7 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "edit" && fxosnetzradio.browserdb.ok() ) {
+    if (view == "edit" && nmp.db.ok() ) {
       current.view = "edit";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -153,7 +153,7 @@ nmp.view.update = function (view) {
 
 
 
-    if (view == "recent" && fxosnetzradio.browserdb.ok()) {
+    if (view == "recent" && nmp.db.ok()) {
     current.view = "recent";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -165,7 +165,7 @@ nmp.view.update = function (view) {
       fxosnetzradio.view.renderAudioStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.upperBound(new Date().getTime());
-      var index = store.index("lastUsedIndex");
+      var index = store.index("lastUsed");
       var cursorRequest = index.openCursor(keyRange);
       //var store = db.transaction(radioDBrecent).objectStore(radioDBrecent);
       //var keyRange = IDBKeyRange.only("http");
@@ -186,7 +186,7 @@ nmp.view.update = function (view) {
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
     }
 
-    if (view == "recent10" && fxosnetzradio.browserdb.ok()) {
+    if (view == "recent10" && nmp.db.ok()) {
     current.view = "recent10";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -198,7 +198,7 @@ nmp.view.update = function (view) {
       var trans = db.transaction([radioDBstore], "readonly");
       var store = trans.objectStore(radioDBstore);
       var keyRange = IDBKeyRange.upperBound(new Date().getTime());
-      var index = store.index("lastUsedIndex");
+      var index = store.index("lastUsed");
       var cursorRequest = index.openCursor(keyRange);
       //var keyRange = IDBKeyRange.only("http*");
       //var keyRange = IDBKeyRange.lowerBound(new Date().getTime());
@@ -247,20 +247,20 @@ nmp.view.update = function (view) {
       nmp.view.renderbuttonControl(elementId);
     }
 
-    if (view == "audioogg" && fxosnetzradio.browserdb.ok()) {
-    current.view = "audioogg";
+    if (view == "audio/ogg" && nmp.db.ok()) {
+    current.view = "audio/ogg";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
-      var keyRange = IDBKeyRange.only("audioogg");
+      var keyRange = IDBKeyRange.only("audio/ogg");
       var index = store.index("type");
       var cursorRequest = index.openCursor(keyRange);
       index.openCursor(keyRange).onsuccess = function(e) {
          var cursor = e.target.result;
          if (cursor) {
-    	    cursor.value.view = "audioogg" ;  
+    	    cursor.value.view = "audio/ogg" ;  
 	    fxosnetzradio.view.renderbutton(elementId,cursor.value,radioDBstore);
             cursor.continue();
          }
@@ -290,11 +290,10 @@ nmp.view.update = function (view) {
            result.continue();
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
-      fxosnetzradio.view.renderLocalstorageStatus (elementId);	
     }
 
 
-    if (view == "top" && fxosnetzradio.browserdb.ok()) {
+    if (view == "top" && nmp.db.ok()) {
     current.view ="top";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -329,7 +328,7 @@ nmp.view.update = function (view) {
 
 
 
-    if (view == "edit" && fxosnetzradio.browserdb.ok()) {
+    if (view == "edit" && nmp.db.ok()) {
     current.view = "form";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -357,7 +356,7 @@ nmp.view.update = function (view) {
 
 
  
-    if (view == "form" && fxosnetzradio.browserdb.ok()) {
+    if (view == "form" && nmp.db.ok()) {
     current.view = "form";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
