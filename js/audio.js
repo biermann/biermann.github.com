@@ -16,12 +16,6 @@ nmp.audio.init1 = function (e) {
   }
 }
 
-	nmp.audio.pause = function(e) {
-   		var audio = document.querySelector("#audio");
-   		if (audio ) {
-  			audio.pause();
-  		}
-  	}
 
 
 
@@ -88,9 +82,17 @@ nmp.audio.prepare = function(e) {
       }
       //if (audioSrcStr == "http://stop/") {fxosnetzradio.localstorage.radioCurrentSetAudio();}   
   }
-}
+};
 
-
+nmp.audio.pause = function(e) {
+  var audio = document.querySelector("#audio");
+  if (updateValidator () && audio ) {
+    audio.pause(); 
+    if (typeof e !== 'undefined' && e == "stop") {
+      audio.src = '';       
+    }
+  }
+};
 
 
 

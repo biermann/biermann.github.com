@@ -119,7 +119,7 @@ nmp.view.update = function (view) {
       cursorRequest.onsuccess = function(e) {
            var result = e.target.result;
            if(!!result == false) return;
-    	   console.log("fxosnetzradio.view.update: " ,view, result.value);
+    //	   console.log("fxosnetzradio.view.update: " ,view, result.value);
     	result.value.view = "list" ;  
 	fxosnetzradio.view.renderlist(elementId,result.value,nmp.db.radio.name);
            result.continue();
@@ -614,8 +614,11 @@ nmp.view.renderBrowserdbStatus = function (id) {
   element.appendChild(li);
 }
 
-
 fxosnetzradio.view.renderlist = function (id,obj,objStore) {
+	nmp.view.renderlist (id,obj,objStore);
+}
+
+nmp.view.renderlist = function (id,obj,objStore) {
   var li = document.createElement("li");
   var del = document.createElement("a");
   var edit = document.createElement("a");
@@ -632,12 +635,12 @@ fxosnetzradio.view.renderlist = function (id,obj,objStore) {
     var element = document.getElementById(id);
     var radioListAll = element;
   }
-  if (fxosnetzradio.browserdb.radioValid(obj) && id !== null) {
+  if (nmp.db.radioValid(obj) && id !== null) {
           for (var prop in obj) {
              if (obj.hasOwnProperty(prop)) {
-                //console.log('edit mode: ' +prop+': ' +oldObj[prop]);
                 for (var i in nmp.db.radio.formField) {
 	           if ( prop == nmp.view.list[i]){
+                      //console.log('nmp.view.renderlist: ' +prop+': ' +obj[prop]);
         	      //console.log('edit mode: ' +prop+': ' +oldObj[prop]+nmp.db.radio.formField[i]);
   		      var newElement = document.createElement("a");
   		      newElement.dataset.this = obj[prop]; 
@@ -646,11 +649,61 @@ fxosnetzradio.view.renderlist = function (id,obj,objStore) {
   		      newElement.defaultValue = obj[prop];
   		      newElement.id = id + prop; 
 		      newElement.innerHTML = obj[prop]+' ' ;
-  		      li.appendChild(newElement);
+                      newElement.setAttribute('class',nmp.view.class);
+  		      //li.appendChild(newElement);
 		   }
                 } 
               } 
-          } 
+          }
+
+
+  for (var i in nmp.view.list) {
+    if (obj.hasOwnProperty(nmp.view.list[i])) {
+      //console.log('nmp.view.renderlist: 2' +i+': ' +obj[nmp.view.list[i]]);
+      var newElement = document.createElement("a");
+      newElement.dataset.value = obj[nmp.view.list[i]]; 
+      newElement.dataset.descriptor = nmp.view.list[i]; 
+      newElement.dataset.view = view; 
+      newElement.dataset.id = id; 
+      newElement.dataset.store = objStore; 
+      newElement.dataset.obj = JSON.stringify(obj); 
+      newElement.name = nmp.view.list[i];
+      newElement.defaultValue = obj[nmp.view.list[i]];
+      newElement.id = id + nmp.view.list[i] +'2'; 
+      newElement.innerHTML = '2: '+obj[nmp.view.list[i]]+' ' ;
+      newElement.setAttribute('class',nmp.view.class);
+      newElement.addEventListener("click", function(e) {
+    	  nmp.view.eventClick(this.getAttribute('data-value'),this.getAttribute('data-descriptor'),this.getAttribute('data-objStore'));
+    	  nmp.view.eventClick2(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+      }, false);
+    }
+    else {
+      //console.log('nmp.view.renderlist: 2' +i+': ' +nmp.view.list[i]);
+      var newElement = document.createElement("a");
+      newElement.dataset.descriptor = nmp.view.list[i]; 
+      newElement.dataset.view = view; 
+      newElement.dataset.id = id; 
+      newElement.dataset.store = objStore; 
+      newElement.dataset.obj = JSON.stringify(obj); 
+      newElement.name = nmp.view.list[i];
+      newElement.id = id + nmp.view.list[i]; 
+      newElement.setAttribute('class',nmp.view.class);
+      newElement.innerHTML = ' '+nmp.view.list[i];
+      newElement.addEventListener("click", function(e) {
+    	  nmp.view.eventClick2(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+      }, false);
+
+    }
+
+   li.appendChild(newElement);
+ } 
+
+
+
+
+
+
+ 
     //console.log("fxosnetzradio.view.render: " ,id, obj);
     var row = obj;
     www.addEventListener("click", function(e) {
@@ -689,15 +742,15 @@ fxosnetzradio.view.renderlist = function (id,obj,objStore) {
   pause.dataset.id = row.objId; 
   objId.dataset.id = row.objId; 
   objId.textContent = "objId=" + row.objId;
-  li.appendChild(objId);
-  li.appendChild(usageCounter);
+  //li.appendChild(objId);
+  //li.appendChild(usageCounter);
   //li.appendChild(desc);
   //li.appendChild(format);
-  li.appendChild(src);
+  //li.appendChild(src);
   //li.appendChild(pause);
-  li.appendChild(www);
+  //li.appendChild(www);
   //li.appendChild(owner);
-  li.appendChild(lastUsed);
+  //li.appendChild(lastUsed);
 }
   if (typeof obj.objId !== 'undefined') {objId.textContent = " objId=" + obj.objId;}
   if (typeof obj.objOwner !== 'undefined') {objOwner.textContent = " objOwner=" + obj.objOwner;}
@@ -709,22 +762,60 @@ fxosnetzradio.view.renderlist = function (id,obj,objStore) {
   if (typeof obj.objId !== 'undefined') {
      edit.textContent = " #edit";
      edit.dataset.id = obj.objId; 
-     edit.addEventListener("click", function(e) {
-        fxosnetzradio.browserdb.objectEdit(id,obj.objId,objStore);
-  });
+     //edit.addEventListener("click", function(e) {
+       // fxosnetzradio.browserdb.objectEdit(id,obj.objId,objStore);
+ // });
 
   }
-  li.appendChild(objId);
-  li.appendChild(objOwner);
-  li.appendChild(del);
-  li.appendChild(edit);
+  //li.appendChild(objId);
+  //li.appendChild(objOwner);
+  //li.appendChild(del);
+  //li.appendChild(edit);
   radioListAll.appendChild(li);
 
-}
+};
 
 
+nmp.view.eventClick = function (value,descriptor,objStore){
+  console.log('nmp.view.eventClick', value, descriptor);
+  nmp.app.vibrate();
+  if (descriptor == "www") {
+    window.open(value,'_blank'); 
+  }
+  if (descriptor == "src") {
+    nmp.audio.prepare(value);
+    nmp.audio.play(value);
+    nmp.app.update();
+  }
+};
 
-
-
+nmp.view.eventClick2 = function (id,objStr,objStore,descriptor){
+  var obj = JSON.parse(objStr);
+  console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
+  nmp.app.vibrate();
+  if (descriptor == "www") {
+    window.open(obj.www,'_blank'); 
+  }
+  if (descriptor == "src") {
+    nmp.audio.prepare(obj.src);
+    nmp.audio.play(obj.src);
+    nmp.app.update();
+  }
+  if (descriptor == "delete") {
+    fxosnetzradio.browserdb.objectDel(obj.objId,objStore);
+  }
+  if (descriptor == "edit") {
+    console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
+     fxosnetzradio.browserdb.objectEdit(id,obj.objId,objStore);
+  }
+  if (descriptor == "pause") {
+    nmp.audio.pause();
+    nmp.app.update();
+  }
+  if (descriptor == "stop") {
+    nmp.audio.pause("stop");
+    nmp.app.update();
+  }
+};
 
 

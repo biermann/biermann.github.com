@@ -94,7 +94,7 @@ nmp.db.open = function() {
     //fxosnetzradio.browserdb.radioAdd(fxosnetzradio.radioData);
     //var db = fxosnetzradio.browserdb.db;
     for (var i in nmp.db.radio.readonlyObj) {
-     console.log('radio add:',i, event,nmp.db.radio.readonlyObj[i]);
+     //console.log('radio add:',i, event,nmp.db.radio.readonlyObj[i]);
       //radioData[i].timeStamp =  new Date().getTime();
       nmp.db.objectAdd (nmp.db.radio.readonlyObj[i]);
       //var request = store.put(radioData[i]);

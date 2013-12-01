@@ -194,7 +194,7 @@ nmp.storage.currentReset = function () {
 }; 
 
 
-nmp.storage.currentGet = function () {
+nmp.storage.currentGet = function (e){
    var array = nmp.storage.name;
    var objects = JSON.parse(localStorage.getItem(array));
    //console.log( 'nmp.storage.currentGet');

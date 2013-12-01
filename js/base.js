@@ -8,7 +8,7 @@ Object.defineProperty(nmp.app.settings, 'vibrate', {
   value: "boolean", 
   configurable: false
 });
-Object.defineProperty(nmp.app.settings, 'reset', {
+Object.defineProperty(nmp.app.settings, 'reset current', {
   enumerable: true, 
   writable: false, 
   value: "click", 
@@ -60,7 +60,7 @@ Object.defineProperty(nmp.view, 'option', {
 Object.defineProperty(nmp.view, 'list', {
   enumerable: true, 
   writable: false, 
-  value: ["desc"], 
+  value: ["desc","src","type","www","delete","edit","pause","stop"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'class', {
@@ -121,10 +121,10 @@ Object.defineProperty(nmp.db.radio, 'readonlyObj', {
   writable: false, 
   configurable: false,
   value:   [
-  { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "biermann" },
+  { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "n/a" },
   { objId: "4", src: "http://radio.hbr1.com:19800/tronic.ogg", desc: "HBR1 Tronic", www: 'http://www.hbr1.com/', type: "audio/ogg", objOwner: "biermann" },
   { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
-  { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "biermann" },
+  { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "n/a" },
   { objId: "1", src: "http://88.198.34.209:13128/nometa.ogg", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/ogg", objOwner: "biermann" }
 ]
 });
