@@ -130,6 +130,7 @@ Object.defineProperty(nmp.db.radio, 'readonlyObj', {
 ]
 });
 
+nmp.touch = {};
 
 //to delete
 var fxosnetzradio = {};
@@ -168,6 +169,7 @@ nmp.audio.init2();
 //nmp.audio.prepare();
 nmp.app.update();
 //nmp.view.update();
+nmp.touch.init();
 
 };
 

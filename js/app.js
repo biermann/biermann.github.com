@@ -32,7 +32,7 @@ else {
 }
 
 nmp.app.vibrate = function (e) {
-	if('vibrate' in navigator && nmp.storage.currentGet().vibrate == true) {
+	if('vibrate' in navigator && nmp.storage.currentGet().vibrate == "true") {
         	navigator.vibrate(100);
 	}
 }
