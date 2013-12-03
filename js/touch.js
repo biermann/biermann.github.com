@@ -49,9 +49,9 @@ var touchsurface = document.getElementById('nmpView'),
                         nmp.storage.statusSet();
                 }
 
+   //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
 
   }
-   //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
   else{
    //touchsurface.innerHTML = 'Condition for right swipe not met yet'
   }
