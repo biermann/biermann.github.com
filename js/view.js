@@ -547,6 +547,7 @@ fxosnetzradio.view.renderStatus = function (id) {
 } 
 
 nmp.view.renderStatus = function (id) {
+  var header = document.getElementById("header");
   var element = document.getElementById(id);
   var current = nmp.storage.currentGet ();
   var a = document.createElement("a");
@@ -555,11 +556,12 @@ nmp.view.renderStatus = function (id) {
   var br = document.createElement("br");
   var span = document.createElement("span");
   a.textContent = "desc="+current.desc+" - view="+current.view;
+  header.innerHTML = ""+current.desc+" ("+current.view+" view)";
   a.setAttribute('id','nmpViewStatus');
   a.setAttribute('class',nmp.view.class);
-  element.appendChild(a);
+  //element.appendChild(a);
   //element.appendChild(hr);
-  element.appendChild(br);
+  //element.appendChild(br);
 }
 
 

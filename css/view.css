@@ -8,6 +8,9 @@
 
 
 .nmpView [type=button]:active {
+  border-color: #008aaa;
+  background: #008aaa;
+  color: #333;
   background-color: #008aaa;
 }
 

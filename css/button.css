@@ -20,7 +20,7 @@ a[role="button"] {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  background: #fafafa url(../image/button/ui/default.png) repeat-x left bottom;
+  background: #fafafa url(../image/button/ui/default.png.oos) repeat-x left bottom;
   border: 0.1rem solid #9f9f9f;
   border-radius: 0.3rem;
   font: 400 1.6rem/3.8rem 'MozTT', Sans-serif;
@@ -45,7 +45,7 @@ a.recommend[role="button"]:active {
 /* Recommend */
 button.recommend,
 a[role="button"].recommend {
-  background-image: url(../images/buttons/ui/recommend.png);
+  background-image: url(../image/button/ui/recommend.png);
   background-color: #00caf2;
   border-color: #00acce;
 }
