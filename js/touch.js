@@ -11,10 +11,16 @@ var touchsurface = document.getElementById('nmpView'),
   startTime
  
  function handleswipe(isrightswipe){
-  if (isrightswipe)
-   touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
+	        var current = nmp.storage.currentGet();
+  if (isrightswipe){
+			current.view = "biermann";
+			nmp.storage.currentSet(current);
+			nmp.app.update();
+                        nmp.storage.statusSet();
+  }
+   //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
   else{
-   touchsurface.innerHTML = 'Condition for right swipe not met yet'
+   //touchsurface.innerHTML = 'Condition for right swipe not met yet'
   }
  }
  
