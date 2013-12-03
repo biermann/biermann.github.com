@@ -1,7 +1,7 @@
 nmp.touch.init = function(e) {
 
 
-var touchsurface = document.getElementById('nmpView'),
+var touchsurface = document.getElementById('main'),
   startX,
   startY,
   dist,
