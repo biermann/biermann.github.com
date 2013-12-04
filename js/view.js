@@ -1,3 +1,41 @@
+nmp.view.rotate = function (direction) {
+	        var current = nmp.storage.currentGet();
+	        var oldObj = current;
+		var newObj = {};
+		var next = 0;
+		var last = nmp.view.option.length - 1;
+		var exist = false;
+     		for (var i in nmp.view.option) {
+     			if (nmp.view.option[i] == oldObj.view){exist = true;}
+     		}
+		for (var i=0; i<last; i++){
+		next++;
+		   if (nmp.view.option[i] == oldObj.view){
+			newObj.view = nmp.view.option[next];
+			current.view = nmp.view.option[next];
+			nmp.storage.currentSet(current);
+			nmp.app.update();
+                        nmp.storage.statusSet();
+			break;
+		   }	
+    		}
+       		if (nmp.view.option[last] == oldObj.view) {
+			newObj.view = nmp.view.option[0];
+			current.view = nmp.view.option[0];
+			nmp.storage.currentSet(current);
+			nmp.app.update();
+                        nmp.storage.statusSet();
+			nmp.db.statusSet ();
+       		}
+       		if (current.view === undefined || !exist || oldObj.view == '') {
+			current.view = "biermann";
+			nmp.storage.currentSet(current);
+			nmp.app.update();
+                        nmp.storage.statusSet();
+
+       		}
+
+};
 
 
 nmp.view.update = function (view) {

@@ -1,7 +1,7 @@
 nmp.touch.init = function(e) {
 
 
-var touchsurface = document.getElementById('main'),
+var touchsurface = document.getElementById('header'),
   startX,
   startY,
   dist,
@@ -12,38 +12,7 @@ var touchsurface = document.getElementById('main'),
  
  function handleswipe(isrightswipe){
   if (isrightswipe){
-	        var oldObj = nmp.storage.currentGet();
-	        var current = nmp.storage.currentGet();
-		var newObj ={};
-		var next = 0;
-		var last = nmp.view.option.length - 1;
-		nmp.app.vibrate();
-		for (var i=0; i<last; i++){
-		next++;
-		   if (nmp.view.option[i] == oldObj.view){
-			newObj.view = nmp.view.option[next];
-	                current = nmp.storage.currentGet();
-			current.view = nmp.view.option[next];
-			nmp.storage.currentSet(current);
-			nmp.app.update();
-                        nmp.storage.statusSet();
-			break;
-		   }	
-    		}
-       		if (nmp.view.option[last] == oldObj.view) {
-			newObj.view = nmp.view.option[0];
-			current.view = nmp.view.option[0];
-			nmp.storage.currentSet(current);
-			nmp.app.update();
-                        nmp.storage.statusSet();
-			nmp.db.statusSet ();
-        	}
-       		if (current.view === undefined || !exist || oldObj.view == '') {
-			current.view = "biermann";
-			nmp.storage.currentSet(current);
-			nmp.app.update();
-                        nmp.storage.statusSet();
-                }
+	nmp.view.rotate = function ("right") {
 
    //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
 
