@@ -170,6 +170,7 @@ nmp.audio.init2();
 nmp.app.update();
 nmp.view.update();
 nmp.app.updateControl();
+nmp.touch.init();
 
 };
 
