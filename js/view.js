@@ -342,7 +342,7 @@ nmp.view.update = function (view) {
       fxosnetzradio.view.renderStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.lowerBound(0);
-      var index = store.index("usageCounterIndex");
+      var index = store.index("usageCounter");
       var cursorRequest = index.openCursor(keyRange);
       var count = 0;
       cursorRequest.onsuccess = function(e) {
