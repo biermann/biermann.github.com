@@ -17,11 +17,7 @@ var touchsurface = document.getElementById('main'),
 		var newObj ={};
 		var next = 0;
 		var last = nmp.view.option.length - 1;
-		var exist = false;
 		nmp.app.vibrate();
-     		for (var i in nmp.view.option) {
-     			if (nmp.view.option[i] == oldObj.view){exist = true;}
-     		}
 		for (var i=0; i<last; i++){
 		next++;
 		   if (nmp.view.option[i] == oldObj.view){
