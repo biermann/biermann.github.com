@@ -1,4 +1,3 @@
-nmp.touch.init = function(e) {
 
 function swipedetect(el, callback){
 
@@ -65,5 +64,4 @@ swipedetect("header", function(swipedir){
    alert('You just swiped left!')
 })
 
-}
 
