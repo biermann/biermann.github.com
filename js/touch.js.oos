@@ -1,7 +1,7 @@
 nmp.touch.init = function () {
   console.log('nmp.touch.init: ');
 
-var surface = document.getElementById('headerStatus'),
+surface = document.getElementById('headerStatus'),
   startX,
   startY,
   distX,
@@ -14,7 +14,7 @@ var surface = document.getElementById('headerStatus'),
  
  function handleswipe(isrightswipe){
   if (isrightswipe){
-   nmp.view.rotate('right')
+   nmp.view.rotate('right');
    touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
   }
   else{
