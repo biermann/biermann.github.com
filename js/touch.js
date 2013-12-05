@@ -23,6 +23,7 @@ surface = document.getElementById('header'),
  
  touchsurface.addEventListener('touchstart', function(e){
   touchsurface.innerHTML = ''
+  alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
   var touchobj = e.changedTouches[0]
   dist = 0
   startX = touchobj.pageX
