@@ -162,15 +162,15 @@ if (audio) {audio.volume = .5;}
 
 nmp.audio.init1();
 nmp.app.init();
-nmp.app.toolbar();
 nmp.db.init();
+nmp.app.toolbar();
 nmp.storage.init();
 nmp.audio.init2();
 nmp.touch.init();
 //nmp.audio.prepare();
-nmp.app.update();
+//nmp.app.update();
 nmp.view.update();
-nmp.app.updateControl();
+//nmp.app.updateControl();
 
 };
 

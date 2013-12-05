@@ -1,7 +1,7 @@
 nmp.touch.init = function () {
   console.log('nmp.touch.init: ');
 
-var surface = document.getElementById('headerStatus'),
+var touchsurface = document.getElementById('headerStatus'),
   startX,
   startY,
   distX,

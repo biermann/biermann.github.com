@@ -206,9 +206,10 @@ nmp.storage.currentGet = function (e){
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
         var newArray = [];
         newArray.push(newObj);
-      localStorage.removeItem(array);
-      localStorage.setItem(array, JSON.stringify(newArray));	
-      //return nmp.storage.currentGet();
+        localStorage.removeItem(array);
+        localStorage.setItem(array, JSON.stringify(newArray));	
+        return newObj;
+        //return nmp.storage.currentGet();
      }
      if (obj) {
         if (!nmp.storage.currentobjectValid (obj)) { 
