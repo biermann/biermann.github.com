@@ -6,16 +6,33 @@ nmp.view.rotate = function (direction) {
 		var newObj = {};
 		var next = 0;
 		var last = nmp.view.option.length - 1;
+		var now = 0;
 		var exist = false;
      		for (var i in nmp.view.option) {
      			if (nmp.view.option[i] == oldObj.view){exist = true;}
      		}
+     		for (var i in nmp.view.option) {
+     			if (nmp.view.option[i] == oldObj.view){now = i;}
+     		}
+ 		console.log("nmp.view.rotate: "+direction+' now='+now+' next='+next+' last='+last+' '+current.view);
+	        if (direction == "right") {
+			if (now < last) {now++;next = now;current.view = nmp.view.option[next];}
+			if (now = last) {current.view = nmp.view.option[next];}
+		}	
+	        if (direction == "left") {
+			if (now > next) {now--;next = now;current.view = nmp.view.option[next];}
+			if (now = next) {current.view = nmp.view.option[last];}
+		}	
+		nmp.storage.currentSet(current);
+		nmp.app.update();
+ 		console.log("nmp.view.rotate: "+direction+' now='+now+' next='+next+' last='+last+' '+current.view);
+		
 		for (var i=0; i<last; i++){
 		next++;
 		   if (nmp.view.option[i] == oldObj.view){
 			newObj.view = nmp.view.option[next];
 			current.view = nmp.view.option[next];
-			nmp.storage.currentSet(current);
+			//nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
 			break;
@@ -24,14 +41,14 @@ nmp.view.rotate = function (direction) {
        		if (nmp.view.option[last] == oldObj.view) {
 			newObj.view = nmp.view.option[0];
 			current.view = nmp.view.option[0];
-			nmp.storage.currentSet(current);
+			//nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
 			nmp.db.statusSet ();
        		}
        		if (current.view === undefined || !exist || oldObj.view == '') {
 			current.view = "biermann";
-			nmp.storage.currentSet(current);
+			//nmp.storage.currentSet(current);
 			nmp.app.update();
                         nmp.storage.statusSet();
 

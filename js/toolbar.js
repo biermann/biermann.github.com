@@ -4,7 +4,8 @@ nmp.app.toolbar = function (e) {
 // menu
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
-        	menu.onclick = function () {			
+        	menu.onclick = function () {		
+	         	nmp.view.rotate('right');	
 	        var oldObj = nmp.storage.currentGet();
 	        var current = nmp.storage.currentGet();
 		var newObj ={};
@@ -21,8 +22,8 @@ nmp.app.toolbar = function (e) {
 			newObj.view = nmp.view.option[next];
 	                current = nmp.storage.currentGet();
 			current.view = nmp.view.option[next];
-			nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.storage.currentSet(current);
+			//nmp.app.update();
                         nmp.storage.statusSet();
 			break;
 		   }	
@@ -30,15 +31,15 @@ nmp.app.toolbar = function (e) {
        		if (nmp.view.option[last] == oldObj.view) {
 			newObj.view = nmp.view.option[0];
 			current.view = nmp.view.option[0];
-			nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.storage.currentSet(current);
+			//nmp.app.update();
                         nmp.storage.statusSet();
 			nmp.db.statusSet ();
        		}
        		if (current.view === undefined || !exist || oldObj.view == '') {
 			current.view = "biermann";
-			nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.storage.currentSet(current);
+			//nmp.app.update();
                         nmp.storage.statusSet();
        		}
         };
