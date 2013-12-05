@@ -48,7 +48,7 @@ var touchsurface = document.getElementById('headerStatus'),
 var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
 var swipeleftBol = ((elapsedTime <= allowedTime) && (Math.abs(distX) >= threshold && Math.abs(distY)) && (distX < 0))
 
-//handleswipe(swiperightBol)
+handleswipe(swiperightBol)
 
 
   if (elapsedTime <= allowedTime){ // first condition for awipe met
