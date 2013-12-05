@@ -119,7 +119,7 @@ nmp.view.update = function (view) {
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
       fxosnetzradio.view.renderAudioStatus (elementId);	
-      fxosnetzradio.view.renderLocalstorageStatus (elementId);	
+      nmp.view.renderLocalstorageStatus (elementId);	
 
     }
 
@@ -600,7 +600,8 @@ nmp.view.renderStatus = function (id) {
   a.setAttribute('id','nmpViewStatus');
   a.setAttribute('class',nmp.view.class);
   //element.appendChild(a);
-  //element.appendChild(hr);
+  element.appendChild(hr);
+  element.appendChild(hr);
   //element.appendChild(br);
 }
 

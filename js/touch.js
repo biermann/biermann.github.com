@@ -9,6 +9,7 @@ var touchsurface = document.getElementById('headerStatus'),
   dist,
   threshold = 150, //required min distance traveled to be considered swipe
   allowedTime = 200, // maximum time allowed to travel that distance
+  restraint = 100, // maximum distance allowed at the same time in perpendicular direction
   elapsedTime,
   startTime
  
@@ -48,18 +49,19 @@ var touchsurface = document.getElementById('headerStatus'),
 var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
 var swipeleftBol = ((elapsedTime <= allowedTime) && (Math.abs(distX) >= threshold && Math.abs(distY)) && (distX < 0))
 
-handleswipe(swiperightBol)
+//handleswipe(swiperightBol)
 
 
   if (elapsedTime <= allowedTime){ // first condition for awipe met
    if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
     swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+    if (distX < 0) {nmp.view.rotate('left')} else {nmp.view.rotate('right')}
    }
    else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
     swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+    if (distY < 0) {nmp.view.rotate('up')} else {nmp.view.rotate('down')}
    }
   }
-   nmp.view.rotate(swipedir)
 
 e.preventDefault()
 }, false)
