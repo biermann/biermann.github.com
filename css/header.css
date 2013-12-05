@@ -12,7 +12,7 @@ section[role="region"] > header:first-child {
   position: relative;
   z-index: 10;
   padding: 0;
-  height: 5rem;
+  height: 6rem;
   color: #fff;
   background: url(../image/header/ui/header.png) repeat-x 0 0;
   background-size: auto 100%;
