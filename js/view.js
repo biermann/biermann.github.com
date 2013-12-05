@@ -11,6 +11,9 @@ nmp.view.rotate = function (direction) {
      		for (var i in nmp.view.option) {
      			if (nmp.view.option[i] == oldObj.view){exist = true;}
      		}
+       		if (current.view === undefined || !exist || oldObj.view == '') {
+			current.view = nmp.view.option[last];
+		}
      		for (var i in nmp.view.option) {
      			if (nmp.view.option[i] == oldObj.view){now = i;}
      		}
@@ -25,34 +28,8 @@ nmp.view.rotate = function (direction) {
 		}	
 		nmp.storage.currentSet(current);
 		nmp.app.update();
+                nmp.storage.statusSet();
  		console.log("nmp.view.rotate: "+direction+' now='+now+' next='+next+' last='+last+' '+current.view);
-		
-		for (var i=0; i<last; i++){
-		next++;
-		   if (nmp.view.option[i] == oldObj.view){
-			newObj.view = nmp.view.option[next];
-			current.view = nmp.view.option[next];
-			//nmp.storage.currentSet(current);
-			//nmp.app.update();
-                        nmp.storage.statusSet();
-			break;
-		   }	
-    		}
-       		if (nmp.view.option[last] == oldObj.view) {
-			newObj.view = nmp.view.option[0];
-			current.view = nmp.view.option[0];
-			//nmp.storage.currentSet(current);
-			//nmp.app.update();
-                        nmp.storage.statusSet();
-			nmp.db.statusSet ();
-       		}
-       		if (current.view === undefined || !exist || oldObj.view == '') {
-			current.view = "biermann";
-			//nmp.storage.currentSet(current);
-			//nmp.app.update();
-                        nmp.storage.statusSet();
-
-       		}
 
 };
 

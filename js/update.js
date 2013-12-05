@@ -43,7 +43,8 @@ function update () {
             //console.log( 'update: ' +prop+': ' +this[prop]);
           if ( prop == "view" ) { 
            //console.log( 'update(): ' +prop+': ' +this[prop]);
-	    setTimeout('nmp.view.update (this["view"])', 2000);
+	    //setTimeout('nmp.view.update (this["view"])', 2000);
+	    setTimeout('nmp.view.update (this["view"])', 500);
 	    //fxosnetzradio.view.update (this[prop]);
 	  } 
 	} 
