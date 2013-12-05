@@ -1,6 +1,7 @@
-.nmpView {
-  margin-top: 20px;
+.nmpView [id=nmpView] {
+    margin-top: 5rem;
 }
+
 
 .nmpView button {
     width: 45%;

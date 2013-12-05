@@ -1,4 +1,6 @@
 nmp.view.rotate = function (direction) {
+                var touchsurface = document.getElementById('headerStatus');
+                touchsurface.innerHTML = ''+direction;
 	        var current = nmp.storage.currentGet();
 	        var oldObj = current;
 		var newObj = {};

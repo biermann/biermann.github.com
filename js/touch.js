@@ -15,7 +15,7 @@ var touchsurface = document.getElementById('headerStatus'),
  function handleswipe(isrightswipe){
   if (isrightswipe){
    nmp.view.rotate('right')
-   touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
+   //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
   }
   else{
    //touchsurface.innerHTML = 'Condition for right swipe not met yet'
