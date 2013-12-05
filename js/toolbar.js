@@ -5,7 +5,7 @@ nmp.app.toolbar = function (e) {
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
         	menu.onclick = function () {		
-	         	nmp.view.rotate('right');	
+	         	nmp.view.rotate('left');	
 	        var oldObj = nmp.storage.currentGet();
 	        var current = nmp.storage.currentGet();
 		var newObj ={};

@@ -21,7 +21,7 @@ nmp.view.rotate = function (direction) {
 		}	
 	        if (direction == "left") {
 			if (now > next) {now--;next = now;current.view = nmp.view.option[next];}
-			if (now = next) {current.view = nmp.view.option[last];}
+			if (now == 0) {current.view = nmp.view.option[last];}
 		}	
 		nmp.storage.currentSet(current);
 		nmp.app.update();
@@ -33,7 +33,7 @@ nmp.view.rotate = function (direction) {
 			newObj.view = nmp.view.option[next];
 			current.view = nmp.view.option[next];
 			//nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.app.update();
                         nmp.storage.statusSet();
 			break;
 		   }	
@@ -42,14 +42,14 @@ nmp.view.rotate = function (direction) {
 			newObj.view = nmp.view.option[0];
 			current.view = nmp.view.option[0];
 			//nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.app.update();
                         nmp.storage.statusSet();
 			nmp.db.statusSet ();
        		}
        		if (current.view === undefined || !exist || oldObj.view == '') {
 			current.view = "biermann";
 			//nmp.storage.currentSet(current);
-			nmp.app.update();
+			//nmp.app.update();
                         nmp.storage.statusSet();
 
        		}
