@@ -15,15 +15,15 @@ var touchsurface = document.getElementById('headerStatus'),
  function handleswipe(isrightswipe){
   if (isrightswipe){
    nmp.view.rotate('right')
-   touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
+   //touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
   }
   else{
-   touchsurface.innerHTML = 'Condition for right swipe not met yet'
+   //touchsurface.innerHTML = 'Condition for right swipe not met yet'
   }
  }
  
  touchsurface.addEventListener('touchstart', function(e){
-  touchsurface.innerHTML = ''
+  //touchsurface.innerHTML = ''
   //alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
   var touchobj = e.changedTouches[0]
   dist = 0
@@ -47,7 +47,20 @@ var touchsurface = document.getElementById('headerStatus'),
   // check that elapsed time is within specified, horizontal dist traveled >= threshold, and vertical dist traveled <= 100
 var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
 var swipeleftBol = ((elapsedTime <= allowedTime) && (Math.abs(distX) >= threshold && Math.abs(distY)) && (distX < 0))
-handleswipe(swiperightBol)
+
+//handleswipe(swiperightBol)
+
+
+  if (elapsedTime <= allowedTime){ // first condition for awipe met
+   if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+    swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+   }
+   else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+    swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+   }
+  }
+   nmp.view.rotate(swipedir)
+
 e.preventDefault()
 }, false)
 

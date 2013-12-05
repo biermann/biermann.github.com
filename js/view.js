@@ -103,7 +103,6 @@ nmp.view.update = function (view) {
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
-      fxosnetzradio.view.renderAudioStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.lowerBound(0);
       //var keyCount = store.count(keyRange);
@@ -117,6 +116,7 @@ nmp.view.update = function (view) {
            result.continue();
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
+      fxosnetzradio.view.renderAudioStatus (elementId);	
       fxosnetzradio.view.renderLocalstorageStatus (elementId);	
 
     }

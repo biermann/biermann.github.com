@@ -372,7 +372,7 @@ nmp.db.radioValid = function (obj) {
   } 
   if (resultCount > 113) {result = true;}
   else {result = false;console.log('obj validation: count='+resultCount +' '+result);}
-  console.log( 'nmp.db.radioValid '+result+' '+resultCount+' '+JSON.stringify(obj));
+  //console.log( 'nmp.db.radioValid '+result+' '+resultCount+' '+JSON.stringify(obj));
   return result;
 };
 

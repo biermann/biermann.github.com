@@ -156,8 +156,8 @@ fxosnetzradio.view = {};
 window.onload = function prepatory() {
 
 
-audio = document.getElementById('audio');
-if (audio) {audio.volume = .5;}
+//audio = document.getElementById('audio');
+//if (audio) {audio.volume = .5;}
 
 
 nmp.audio.init1();
@@ -168,8 +168,8 @@ nmp.storage.init();
 nmp.audio.init2();
 nmp.touch.init();
 //nmp.audio.prepare();
-//nmp.app.update();
-nmp.view.update();
+nmp.app.update();
+//nmp.view.update();
 //nmp.app.updateControl();
 
 };
