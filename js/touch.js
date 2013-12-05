@@ -46,8 +46,8 @@ var touchsurface = document.getElementById('headerStatus'),
   distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
   elapsedTime = new Date().getTime() - startTime // get time elapsed
   // check that elapsed time is within specified, horizontal dist traveled >= threshold, and vertical dist traveled <= 100
-var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
-var swipeleftBol = ((elapsedTime <= allowedTime) && (Math.abs(distX) >= threshold && Math.abs(distY)) && (distX < 0))
+//var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
+//var swipeleftBol = ((elapsedTime <= allowedTime) && (Math.abs(distX) >= threshold && Math.abs(distY)) && (distX < 0))
 
 //handleswipe(swiperightBol)
 
