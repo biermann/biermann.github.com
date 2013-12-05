@@ -585,7 +585,7 @@ fxosnetzradio.view.renderStatus = function (id) {
 } 
 
 nmp.view.renderStatus = function (id) {
-  var header = document.getElementById("header");
+  var header = document.getElementById("headerStatus");
   var element = document.getElementById(id);
   var current = nmp.storage.currentGet ();
   var a = document.createElement("a");

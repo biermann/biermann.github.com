@@ -1,6 +1,13 @@
 /* ----------------------------------
 * HEADERS: default
 * ---------------------------------- */
+
+[role="region"] {
+  width: 100%;
+  position: fixed;
+}
+
+
 section[role="region"] > header:first-child {
   position: relative;
   z-index: 10;
