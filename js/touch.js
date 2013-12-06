@@ -8,7 +8,8 @@ var touchsurface = document.getElementById('headerStatus'),
   distY,
   dist,
   threshold = 150, //required min distance traveled to be considered swipe
-  allowedTime = 200, // maximum time allowed to travel that distance
+  allowedTime = 300, // maximum time allowed to travel that distance
+  //allowedTime = 200, // maximum time allowed to travel that distance
   restraint = 100, // maximum distance allowed at the same time in perpendicular direction
   elapsedTime,
   startTime
