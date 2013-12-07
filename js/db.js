@@ -29,9 +29,14 @@ const radioData = [
 
 
 nmp.db.open = function() {
-  console.log("db open:"+nmp.db.name+' '+nmp.db.version);
-  var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
-  var updateStr = "db.open.";
+  if (!window.indexedDB) {
+    window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+  }
+  else {
+    var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
+    var updateStr = "db.open.";
+    console.log("nmp.db.open:"+nmp.db.name+' '+nmp.db.version);
+  }
   openRequest.onupgradeneeded = function(evt) {
     var db = evt.target.result;
      console.log('db upgrade ', evt);
