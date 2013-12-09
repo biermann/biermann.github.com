@@ -180,13 +180,13 @@ var	playPause = document.querySelector("#playPause");
    var  	toolbarPlayPause = document.querySelector("#toolbarPlayPause");
    var  	www = document.querySelector("#www");
    var audio = document.querySelector("#audio");
-   var volume = audio.volume;
+   //var volume = audio.volume;
+   var volume = nmp.storage.currentGet().volume;
    var volumeInteger = 0;
    if (www && nmp.storage.currentGet().www) {
       www.innerHTML = nmp.storage.currentGet().www ;
    }
    if (audio) {
-      var volume = audio.volume;
       if (volume) {
          volumeInteger = Math.ceil(volume * 100);
       }

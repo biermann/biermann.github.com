@@ -20,7 +20,7 @@ nmp.view.rotate = function (direction) {
  		console.log("nmp.view.rotate: "+direction+' now='+now+' next='+next+' last='+last+' '+current.view);
 	        if (direction == "right") {
 			if (now < last) {now++;next = now;current.view = nmp.view.option[next];}
-			if (now = last) {current.view = nmp.view.option[next];}
+			if (now == last) {current.view = nmp.view.option[next];}
 		}	
 	        if (direction == "left") {
 			if (now > next) {now--;next = now;current.view = nmp.view.option[next];}
@@ -424,7 +424,8 @@ nmp.view.renderbuttonControl = function (id) {
    var element = document.getElementById(id);
    var audio = document.querySelector("#audio");
    var br = document.createElement("br");
-   var volume = audio.volume;
+   var current = nmp.storage.currentGet();
+   var volume = current.volume;
    var volumeInteger = 0;
    if (volume) {
       volumeInteger = Math.ceil(volume * 100);
@@ -446,7 +447,7 @@ nmp.view.renderbuttonControl = function (id) {
        www.setAttribute('type','button');
        www.setAttribute('id','www');
        www.setAttribute('class',nmp.view.class);
-       www.dataset.www = nmp.storage.currentGet().www;
+       www.dataset.www = current.www;
        //www.innerHTML = fxosnetzradio.localstorage.currentGet().www; 
        www.innerHTML = "www"; 
        www.addEventListener("click", function(e) {
@@ -465,18 +466,22 @@ nmp.view.renderbuttonControl = function (id) {
           }		
        }, false);
        volumeUp.addEventListener("click", function(e) {
-          var volume = audio.volume;
+          var volume = nmp.storage.currentGet().volume;
 	  volume = volume + 0.05;
 	  if (volume >= 1) { volume = 0.99; }
 	  audio.volume = volume;
+	  current.volume = volume;
+	  nmp.storage.currentSet(current);
           updateControl ();
        }, false);
        volumeDown.addEventListener("click", function(e) {
-          var volume = audio.volume;
+          var volume = nmp.storage.currentGet().volume;
 	  if (volume == 0.99) {volume = volume - 0.04;}
 	  else {volume = volume - 0.05;}
 	  if (volume <= 0.1) {volume = 0.1;}
 	  audio.volume = volume;
+	  current.volume = volume;
+	  nmp.storage.currentSet(current);
           updateControl ();
        }, false);
        element.appendChild(br);

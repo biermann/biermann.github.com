@@ -167,10 +167,10 @@ nmp.app.toolbar();
 nmp.storage.init();
 nmp.audio.init2();
 nmp.touch.init();
-//nmp.audio.prepare();
+nmp.audio.prepare();
 nmp.app.update();
 //nmp.view.update();
-//nmp.app.updateControl();
+nmp.app.updateControl();
 
 };
 

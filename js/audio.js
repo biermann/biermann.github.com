@@ -1,7 +1,7 @@
 nmp.audio.init1 = function (e) {
    nmp.audio.statusSet = function (eventDescription) {
       var audio = document.querySelector("#audio");
-      var db = fxosnetzradio.browserdb.db;
+      //var db = fxosnetzradio.browserdb.db;
       var	elementId = 'radioStatus';
       var	element = document.getElementById(elementId);
       var	className = 'nmpView';
@@ -64,10 +64,10 @@ nmp.audio.prepare = function(e) {
    var b = nmp.storage.currentGet().src.substr(0,20) ;
       	 console.log( 'fxosnetzradio.audio.play.volume=' +currentVolume );
    if (updateValidator () && audio ) {
-      	 //console.log( 'fxosnetzradio.audio.prepare.volume=' +currentVolume );
+      	 console.log( 'fxosnetzradio.audio.prepare.volume=' +currentVolume );
       if (currentVolume <= 1 && currentVolume > 0 && audioVolume !== currentVolume) {
          audio.setAttribute('volume',currentVolume.toString());
-      	 //console.log( 'fxosnetzradio.audio.prepare.volume.set from '+audioVolume+" to " +currentVolume );
+      	 console.log( 'fxosnetzradio.audio.prepare.volume.set from '+audioVolume+" to " +currentVolume );
       }
       //console.log( 'fxosnetzradio.localstorage.radioCurrentSetAudio: ' +String(radioCurrent.src) );
       if (currentSrcStr !== audioSrcStr && typeof fastlaneSrcStr == 'undefined') {
@@ -95,8 +95,12 @@ nmp.audio.pause = function(e) {
 };
 
 
-
-
+nmp.audio.volume = function(e) {
+  var audio = document.querySelector("#audio");
+  if (updateValidator () && audio ) {
+    audio.volume = e;
+  }
+};
 
 
 

@@ -28,11 +28,12 @@ nmp.app.toolbar = function (e) {
 
 
 // volumeDown
-    var volumeDown = document.querySelector("#toolbarVolumeDown");
-    if (volumeDown && audio) {
+    var volumeDown = document.querySelector("#toolbarVolumeDown")
+    var current = nmp.storage.currentGet();
+    if (volumeDown && current) {
         volumeDown.onclick = function () {
 		nmp.app.vibrate();
-		var volume = audio.volume;
+		var volume = current.volume;
 		if (volume == 0.99) {
 		volume = volume - 0.04;
 		}
@@ -42,8 +43,9 @@ nmp.app.toolbar = function (e) {
 		if (volume <= 0.1) {
 		volume = 0.1;
 		}
-		audio.volume = volume;
-		nmp.storage.currentUpdate();
+		nmp.audio.volume(volume);
+		current.volume = volume;
+		nmp.storage.currentSet(current);
                 updateControl ();
                 nmp.storage.statusSet();
         };
@@ -52,17 +54,18 @@ nmp.app.toolbar = function (e) {
 
 // volumeUp
     var volumeUp = document.querySelector("#toolbarVolumeUp");
-	audio = document.querySelector("#audio");
-    if (volumeUp && audio) {
+    var current = nmp.storage.currentGet();
+    if (volumeUp) {
         volumeUp.onclick = function () {
 		nmp.app.vibrate();
-		var volume = audio.volume;
+		var volume = current.volume;
 		volume = volume + 0.05;
 		if (volume >= 1) {
 		volume = 0.99;
 		}
-		audio.volume = volume;
-		nmp.storage.currentUpdate();
+		nmp.audio.volume(volume);
+		current.volume = volume;
+		nmp.storage.currentSet(current);
                 updateControl ();
                 nmp.storage.statusSet();
         }
