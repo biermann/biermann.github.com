@@ -156,10 +156,8 @@ nmp.view.update = function (view) {
 
             pickAny.onsuccess = function () { 
                 var picked = document.createElement("a");
-                if (this.result.blob.type.indexOf("text") != -1) {
                     picked.src = window.URL.createObjectURL(this.result.blob);
                     element.appendChild(picked);
-                }
             };
 
             pickAny.onerror = function () { 
