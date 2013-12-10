@@ -227,14 +227,14 @@ nmp.storage.currentGet = function (e){
      if (!obj) {
         var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
-           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(neObj));
+           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
         return newObj;
      }
    }
    else {
         var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
-           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(neObj));
+           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
         return newObj;
    }
 };
