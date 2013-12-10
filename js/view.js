@@ -158,9 +158,11 @@ nmp.view.update = function (view) {
                 var picked = document.createElement("a");
                     picked.innerHTML = window.URL.createObjectURL(this.result.blob);
                     element.appendChild(picked);
+                window.alert("success");
             };
 
             pickAny.onerror = function () { 
+                window.alert("error");
                 console.log("An error occurred");
             };
        }, false);
