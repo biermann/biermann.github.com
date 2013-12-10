@@ -156,7 +156,7 @@ nmp.view.update = function (view) {
 
             pickAny.onsuccess = function () { 
                 var picked = document.createElement("a");
-                    picked.src = window.URL.createObjectURL(this.result.blob);
+                    picked.innerHTML = window.URL.createObjectURL(this.result.blob);
                     element.appendChild(picked);
             };
 
