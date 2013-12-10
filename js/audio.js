@@ -97,7 +97,13 @@ nmp.audio.pause = function(e) {
 
 nmp.audio.volume = function(e) {
   var audio = document.querySelector("#audio");
-  if (updateValidator () && audio ) {
+  if (e >= 1) {
+     e = 0.99;
+  }
+  if (e <= 0.1) {
+     e = 0.1;
+  }
+  if (updateValidator () && audio && e ) {
     audio.volume = e;
   }
 };

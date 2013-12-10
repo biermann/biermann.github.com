@@ -217,6 +217,7 @@ nmp.storage.currentGet = function (e){
 	      if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';}
            }
            console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(obj));
+           if (obj.volume == "n/a"){obj.volume = 0.5;}
 	   return obj;
         } 
      }
@@ -229,6 +230,12 @@ nmp.storage.currentGet = function (e){
            console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(neObj));
         return newObj;
      }
+   }
+   else {
+        var newObj = {};
+        for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
+           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(neObj));
+        return newObj;
    }
 };
 

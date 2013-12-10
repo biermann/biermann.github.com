@@ -27,7 +27,7 @@ section[role="region"] > header:first-child:after {
   top: 100%;
   left: 0;
   right: 0;
-  background: url(../images/headers/ui/shadow.png) repeat-x 0 0;
+  background: url(../image/header/ui/shadow.png) repeat-x 0 0;
   background-size: auto 100%;
 }
 
@@ -63,7 +63,7 @@ section[role="region"] > header:first-child input[type="text"] {
   border: solid 0.1rem #9d4123;
   border-top-color: #a6501e;
   border-radius: 0.3rem;
-  background: #fff url(../images/headers/ui/shadow.png) repeat-x left -0.1rem;
+  background: #fff url(../image/header/ui/shadow.png) repeat-x left -0.1rem;
   font: 1.5rem/3em "MozTT", Sans-serif;
   box-shadow: none;
 }
@@ -113,7 +113,7 @@ section[role="region"] > header:first-child menu[type="toolbar"] button {
 
 section[role="region"] > header:first-child menu[type="toolbar"] a:last-child,
 section[role="region"] > header:first-child menu[type="toolbar"] button:last-child {
-  background: url(../images/headers/ui/separator.png) no-repeat left center;
+  background: url(../image/header/ui/separator.png) no-repeat left center;
   margin-left: -0.2rem;
   z-index: 1;
 }
@@ -233,7 +233,7 @@ section[role="region"] > header:first-child > a {
   left: 0;
   width: 5rem;
   height: 5rem;
-  background: url(../images/headers/ui/separator-large.png) no-repeat 2rem center;
+  background: url(../image/header/ui/separator-large.png) no-repeat 2rem center;
   overflow: hidden;
 }
 
@@ -315,7 +315,7 @@ section[role="region"].skin-dark > header:first-child menu[type="toolbar"] a:las
 .skin-dark section[role="region"] > header:first-child menu[type="toolbar"] a:last-child,
 section[role="region"].skin-dark > header:first-child menu[type="toolbar"] button:last-child,
 .skin-dark section[role="region"] > header:first-child menu[type="toolbar"] button:last-child {
-  background-image: url(../images/headers/ui/dark/separator.png);
+  background-image: url(../image/header/ui/dark/separator.png);
 }
 
 section[role="region"].skin-dark > header,
