@@ -44,7 +44,7 @@ nmp.view.update = function (view) {
  console.log("nmp.view.update request=",view);
  nmp.db.statusSet ();
  //updateControl ();
-  if (view == "n/a") {view = "myfirst";}	
+  if (view == "n/a") {view = "biermann";}	
   if (view == "admin") {
     current.view = "admin";
     var result = nmp.storage.currentSet(current);
@@ -137,6 +137,34 @@ nmp.view.update = function (view) {
       nmp.view.renderStatus (elementId);	
       nmp.view.renderSettings (elementId);	
     }
+
+
+    if (view == "import" && nmp.db.ok() ) {
+    current.view = "import";
+      var button= document.createElement("button");
+       button.innerHTML = "import";
+       button.addEventListener("click", function(e) {
+             var pickAny = new MozActivity({
+                 name: "pick"
+             });
+
+            pickAny.onsuccess = function () { 
+                var img = document.createElement("img");
+                if (this.result.blob.type.indexOf("image") != -1) {
+                    img.src = window.URL.createObjectURL(this.result.blob);
+                    document.querySelector("#image-presenter").appendChild(img);
+                }
+            };
+
+            pickAny.onerror = function () { 
+                console.log("An error occurred");
+            };
+       }, false);
+     element.appendChild(button);
+    }
+
+
+
 
 
 

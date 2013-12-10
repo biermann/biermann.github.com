@@ -54,7 +54,7 @@ nmp.view = {};
 Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
-  value: ["recent10","myfirst","list","form","top","biermann","myRadio","recent","audio/ogg","status","settings"], 
+  value: ["recent10","list","import","top","biermann","myRadio","recent","audio/ogg","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {

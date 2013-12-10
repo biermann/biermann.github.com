@@ -21,6 +21,7 @@ div.nmpView {
 
 .nmpView [checked=checked] {
   background-color: #008aaa;
+  background: #008aaa;
 }
 
 .nmpView  ul {
