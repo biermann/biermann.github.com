@@ -17,6 +17,15 @@
     "installs_allowed_from": ["*"],
     "default_locale": "en",
     "fullscreen": "false",
+    "activities": {
+        "share": {
+           "filters": {
+              "type": ["text/plain"]
+           },
+        "href": "/nmp.html",
+        "disposition": "window"
+      }
+    },
     "permissions": {
         "desktop-notification": {
             "description" : "To show notifications"
