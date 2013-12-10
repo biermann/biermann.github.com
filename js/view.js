@@ -141,18 +141,24 @@ nmp.view.update = function (view) {
 
     if (view == "import" && nmp.db.ok() ) {
     current.view = "import";
+    var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
       var button= document.createElement("button");
        button.innerHTML = "import";
        button.addEventListener("click", function(e) {
              var pickAny = new MozActivity({
-                 name: "pick"
+                 name: "pick",
+		data: {
+         		type: ["text/plain"]
+      		}
              });
 
             pickAny.onsuccess = function () { 
-                var img = document.createElement("img");
-                if (this.result.blob.type.indexOf("image") != -1) {
-                    img.src = window.URL.createObjectURL(this.result.blob);
-                    document.querySelector("#image-presenter").appendChild(img);
+                var picked = document.createElement("a");
+                if (this.result.blob.type.indexOf("text") != -1) {
+                    picked.src = window.URL.createObjectURL(this.result.blob);
+                    element.appendChild(picked);
                 }
             };
 
