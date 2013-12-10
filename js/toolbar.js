@@ -16,12 +16,12 @@ nmp.app.toolbar = function (e) {
 		nmp.app.vibrate();
 		if (audio.paused || audio.ended){
 			nmp.audio.play();
-                        updateControl ();
+                        nmp.app.updateControl ();
                 }
 		else	{
 			nmp.audio.pause('pause');
                         nmp.storage.statusSet();
-                        updateControl ();
+                        nmp.app.updateControl ();
 			}		
         };
     }

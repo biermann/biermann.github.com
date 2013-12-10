@@ -81,7 +81,7 @@ if (nmpViewStatus && updateValidator()){
     }
     if (toolbarPlayPause && playPause && audio.played && audio.src) {
 		playPause.textContent = '| | ' ;
-    		toolbarPlayPause.style.backgroundImage="url('images/toolbars/icons/pause.png')"; 
+    		toolbarPlayPause.style.backgroundImage="url('image/toolbar/icon/pause.png')"; 
     		//toolbarPlayPause.style.backgroundColor="transparent"; 
     }
     if (playPause && audio.played && descriptionStr) {
@@ -89,7 +89,7 @@ if (nmpViewStatus && updateValidator()){
     }
     if (toolbarPlayPause && playPause && audio.paused && audio.src) {
 		playPause.textContent = '> ' ;
-    		toolbarPlayPause.style.backgroundImage="url('images/toolbars/icons/play.png')"; 
+    		toolbarPlayPause.style.backgroundImage="url('image/toolbar/icon/play.png')"; 
     		//toolbarPlayPause.style.backgroundColor="transparent"; 
     }
 
