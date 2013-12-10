@@ -3,7 +3,6 @@
     "name": "NMP",
     "type" : "web",
     "launch_path": "/nmp.html",
-    "appcache_path": "/nmp.appcache",
     "description": "Network Music Player for B2G OS",
     "icons": {
         "128": 	"/image/app/logo128.png",
