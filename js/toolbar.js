@@ -5,6 +5,7 @@ nmp.app.toolbar = function (e) {
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
         	menu.onclick = function () {		
+		   	nmp.app.vibrate();
 	         	nmp.view.rotate('right');	
        		}
         }

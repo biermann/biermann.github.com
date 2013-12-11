@@ -447,7 +447,50 @@ nmp.view.update = function (view) {
       nmp.view.renderBrowserdbStatus (elementId);	
 
     }
-}
+
+
+    if (view == "swipe" && nmp.db.ok()) {
+      current.view = "swipe";
+      var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      console.log(":fxosnetzradio.view.update: " ,current.view);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      fxosnetzradio.view.renderStatus (elementId);
+      fxosnetzradio.view.renderbuttonControl(elementId);
+    //alert(screen.width + "x" + screen.height);
+
+      var swipeBox = document.createElement("div");
+      swipeBox.setAttribute('id','swipeBox');
+      swipeBox.setAttribute('name','swipeBox');
+      swipeBox.setAttribute('class',nmp.view.class);
+      //swipeBox.width = screen.width;
+      //swipeBox.height = screen.availHeight;
+      //swipeBox.height = screen.height;
+      //swipeBox.innerHTML=screen.width + "x" + screen.height+' - '+screen.availWidth + "x" + screen.availHeight;
+      element.appendChild(swipeBox);
+	
+      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var keyRange = IDBKeyRange.only("browser");
+      var index = store.index("objOwner");
+      var cursorRequest = index.openCursor(keyRange);
+      var count = 0;
+      cursorRequest.onsuccess = function(e) {
+           var result = e.target.result;
+	   count++;
+           if(!!result == false ) return;
+    	result.value.view = "swipe" ;  
+	fxosnetzradio.view.renderbutton('swipeBox',result.value,radioDBstore);
+           result.continue();
+      };
+    }
+
+
+
+
+
+
+
+};
 
 
 fxosnetzradio.view.renderbuttonControl = function (id) {
@@ -518,7 +561,7 @@ nmp.view.renderbuttonControl = function (id) {
 	  nmp.storage.currentSet(current);
           updateControl ();
        }, false);
-       element.appendChild(br);
+       //element.appendChild(br);
        element.appendChild(playPause);
        if (nmp.storage.currentGet().www) {
           element.appendChild(www);
@@ -709,6 +752,8 @@ nmp.view.renderlist = function (id,obj,objStore) {
   if (id !== null) {
     var element = document.getElementById(id);
     var radioListAll = element;
+    var br = document.createElement("br");
+    element.appendChild(br);
   }
   if (nmp.db.radioValid(obj) && id !== null) {
 
