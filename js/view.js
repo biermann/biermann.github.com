@@ -474,14 +474,18 @@ nmp.view.update = function (view) {
       var index = store.index("objOwner");
       var cursorRequest = index.openCursor(keyRange);
       var count = 0;
+      var objects = [];
       cursorRequest.onsuccess = function(e) {
            var result = e.target.result;
-	   count++;
            if(!!result == false ) return;
-    	result.value.view = "swipe" ;  
-	fxosnetzradio.view.renderbutton('swipeBox',result.value,radioDBstore);
+    	result.value.view = "swipe" ; 
+	objects.push(result.value); 
+	//fxosnetzradio.view.renderbutton('swipeBox',result.value,radioDBstore);
+	fxosnetzradio.view.renderbutton('swipeBox',objects[count],radioDBstore);
+	   count++;
            result.continue();
       };
+	//fxosnetzradio.view.renderbutton('swipeBox',objects[0],radioDBstore);
     }
 
 
