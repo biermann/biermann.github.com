@@ -95,10 +95,10 @@ nmp.db.open = function() {
     //var store = trans.objectStore(radioDBstore);
     //fxosnetzradio.browserdb.radioAdd(fxosnetzradio.radioData);
     //var db = fxosnetzradio.browserdb.db;
-    for (var i in nmp.db.radio.readonlyObj) {
+    for (var i in nmp.app.radio.readonlyObj) {
      //console.log('radio add:',i, event,nmp.db.radio.readonlyObj[i]);
       //radioData[i].timeStamp =  new Date().getTime();
-      nmp.db.objectAdd (nmp.db.radio.readonlyObj[i]);
+      nmp.db.objectAdd (nmp.app.radio.readonlyObj[i]);
       //var request = store.put(radioData[i]);
     }
 //fxosnetzradio.browserdb.myradio = new fxosnetzradio.browserdb.radio( "","biermann","http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3",  "IRF", "http://www.internationalradiofestival.com",  "MP3", "" ,"" );

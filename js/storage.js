@@ -41,6 +41,16 @@ nmp.storage.currentobjectValid = function (obj) {
   return result;
 };
 
+nmp.storage.ok = function () {
+  var result=false;
+  var array = nmp.storage.radio.name;
+  var objects = JSON.parse(localStorage.getItem(array));
+  if (typeof objects !== 'undefined' && objects !== null && objects.length > 0 ) {
+     result = true;
+  }
+  return result;
+};
+
 
 
 
@@ -57,7 +67,7 @@ fxosnetzradio.localstorage.statusSet = function () {
         var	radioCurrent = nmp.storage.currentGet ();
    var	elementId = 'localstorageStatus';
    var	element = document.getElementById(elementId);
-   var	className = 'fxosnetzradioView';
+   var	className = nmp.view.class;
    var 	currentdate = new Date(); 
    var text = "";
    text +=  currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds() + " ";
@@ -76,6 +86,15 @@ fxosnetzradio.localstorage.statusSet = function () {
             //console.log( 'update: ' +prop+': ' +this[prop]);
 	} 
        }
+       var array = nmp.storage.radio.name;
+       var objects = JSON.parse(localStorage.getItem(array));
+       var newElement = document.createElement("a");
+       text = ' - '+nmp.storage.radio.name+'.count='+objects.length;
+       text += " updatevalidator?" +updateValidator() ;
+       text += " nmp.storage.ok?" +nmp.storage.ok() ;
+       newElement.innerHTML = text;
+       newElement.setAttribute('class',className);
+       if (element) { element.appendChild(newElement); }
    //fxosnetzradio.localstorage.status = text;
    //text += " updatevalidator=" +updateValidator() ;
    //text += " fxosnetzradio.browserdb.ok=" +fxosnetzradio.browserdb.ok() ;
@@ -399,4 +418,43 @@ nmp.storage.init= function(e) {
      }
   }
 };
+
+
+nmp.storage.init2= function(e) {
+   var array = nmp.storage.radio.name;
+   var objects = JSON.parse(localStorage.getItem(array));
+   if (!objects) {
+      console.log( 'nmp.storage.init2: no objects');
+      var newArray = [];
+      var newObj = {};
+      for (var i in nmp.db.radio.readonlyObj) {
+        newArray.push (nmp.db.radio.readonlyObj[i]);
+      }
+      localStorage.removeItem(array);
+      localStorage.setItem(array, JSON.stringify(newArray));	
+   }
+   if (objects) {
+     var obj = objects[0];
+     if (typeof obj == 'undefined' || obj == null) {
+        console.log( 'storage init: obj undefined');
+	var newObj = {};
+        for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
+        var newArray = [];
+        newArray.push(newObj);
+      //localStorage.removeItem(array);
+      //localStorage.setItem(array, JSON.stringify(newArray));	
+     }
+     if (obj) {
+        console.log( 'storage init: obj defined');
+        for (var i in nmp.storage.field) {
+	   if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';}
+        }
+        var newArray = [];
+        newArray.push(obj);
+        //localStorage.removeItem(array);
+        //localStorage.setItem(array, JSON.stringify(newArray));	
+     }
+  }
+};
+
 

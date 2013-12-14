@@ -35,7 +35,35 @@ nmp.app.vibrate = function (e) {
 	if('vibrate' in navigator && nmp.storage.currentGet().vibrate == "true") {
         	navigator.vibrate(100);
 	}
-}
+};
+
+nmp.app.radio.valid = function (obj) {
+  var result=false;
+  var resultCount=0;
+  for (var prop in obj) {
+     if (obj.hasOwnProperty(prop)) {
+        resultCount++;
+	if (prop == "src") {resultCount = resultCount +10;}
+	if (prop == "objOwner") {resultCount = resultCount +100;}
+	this[prop] = obj[prop];
+        //console.log(resultCount+ 'fxosnetzradio.browserdb.objectAdd.obj.' +prop+': ' +this[prop]);
+     } 
+  } 
+  if (resultCount > 113) {result = true;}
+  else {result = false;console.log('nmp.app.radio.valid: count='+resultCount +' '+result);}
+  //console.log( 'nmp.db.radioValid '+result+' '+resultCount+' '+JSON.stringify(obj));
+  return result;
+};
+
+
+
+
+
+
+
+
+
+
 
 };
 

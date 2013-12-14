@@ -175,8 +175,8 @@ nmp.view.update = function (view) {
 
 
 
-    if (view == "list" && nmp.db.ok() ) {
-      current.view = "list";
+    if (view == "listIndexedDB" && nmp.db.ok() ) {
+      current.view = "listIndexedDB";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -188,8 +188,8 @@ nmp.view.update = function (view) {
            var result = e.target.result;
            if(!!result == false) return;
     //	   console.log("fxosnetzradio.view.update: " ,view, result.value);
-    	result.value.view = "list" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,nmp.db.radio.name);
+    	result.value.view = "listIndexedDB" ;  
+	nmp.view.renderList(elementId,result.value,nmp.app.radio.name,"db");
            result.continue();
       };
     }
@@ -197,6 +197,7 @@ nmp.view.update = function (view) {
 
     if (view == "edit" && nmp.db.ok() ) {
       current.view = "edit";
+      current.store = "db";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -209,7 +210,7 @@ nmp.view.update = function (view) {
            if(!!result == false) return;
     	   //console.log("fxosnetzradio.view.update: " ,view, result.value);
     	result.value.view = "edit" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+	fxosnetzradio.view.renderList(elementId,result.value,radioDBstore,store);
            result.continue();
       };
       nmp.view.renderLocalstorageStatus (elementId);	
@@ -223,6 +224,7 @@ nmp.view.update = function (view) {
 
     if (view == "recent" && nmp.db.ok()) {
     current.view = "recent";
+    current.store = "db";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       console.log(":fxosnetzradio.view.update: " ,current.view);
@@ -247,7 +249,7 @@ nmp.view.update = function (view) {
            if(!!result == false) return;
     	   //console.log(":fxosnetzradio.view.update: ",count ,view, result.value);
     	result.value.view = "recent" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+	nmp.view.renderList(elementId,result.value,radioDBstore,current.store);
            result.continue();
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
@@ -398,6 +400,7 @@ nmp.view.update = function (view) {
 
     if (view == "edit" && nmp.db.ok()) {
     current.view = "form";
+    current.store = "db";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) {element.removeChild(element.firstChild);}	
@@ -410,7 +413,7 @@ nmp.view.update = function (view) {
            var result = e.target.result;
            if(!!result == false) return;
     	result.value.view = "list" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+	fxosnetzradio.view.renderList(elementId,result.value,radioDBstore,current.store);
            result.continue();
       };
       nmp.view.renderLocalstorageStatus (elementId);	
@@ -426,6 +429,7 @@ nmp.view.update = function (view) {
  
     if (view == "form" && nmp.db.ok()) {
     current.view = "form";
+    current.db = "db";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) {
@@ -440,7 +444,7 @@ nmp.view.update = function (view) {
            var result = e.target.result;
            if(!!result == false) return;
     	result.value.view = "list" ;  
-	fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+	fxosnetzradio.view.renderList(elementId,result.value,radioDBstore,current.store);
            result.continue();
       };
       nmp.view.renderLocalstorageStatus (elementId);	
@@ -449,7 +453,7 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "swipe" && nmp.db.ok()) {
+    if (view == "swipe" && nmp.storage.ok()) {
       current.view = "swipe";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -468,26 +472,30 @@ nmp.view.update = function (view) {
       //swipeBox.height = screen.height;
       //swipeBox.innerHTML=screen.width + "x" + screen.height+' - '+screen.availWidth + "x" + screen.availHeight;
       element.appendChild(swipeBox);
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array));
+      for (var i in objects) {
+    	 objects[i].view = "swipe" ; 
+         fxosnetzradio.view.renderbutton('swipeBox',objects[i],array);
+      }
 	
-      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
-      var keyRange = IDBKeyRange.only("browser");
-      var index = store.index("objOwner");
-      var cursorRequest = index.openCursor(keyRange);
-      var count = 0;
-      var objects = [];
-      cursorRequest.onsuccess = function(e) {
-           var result = e.target.result;
-           if(!!result == false ) return;
-    	result.value.view = "swipe" ; 
-	objects.push(result.value); 
-	//fxosnetzradio.view.renderbutton('swipeBox',result.value,radioDBstore);
-	fxosnetzradio.view.renderbutton('swipeBox',objects[count],radioDBstore);
-	   count++;
-           result.continue();
-      };
-	//fxosnetzradio.view.renderbutton('swipeBox',objects[0],radioDBstore);
     }
 
+
+    if (view == "listStorage" && nmp.db.ok() ) {
+      current.view = "listStorage";
+      current.store = "storage";
+      var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      fxosnetzradio.view.renderStatus (elementId);	
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array));
+      for (var i in objects) {
+    	objects[i].view = "listStorage" ; 
+	nmp.view.renderList(elementId,objects[i],array,current.store);
+      }
+    }
 
 
 
@@ -736,11 +744,8 @@ nmp.view.renderBrowserdbStatus = function (id) {
   element.appendChild(li);
 }
 
-fxosnetzradio.view.renderlist = function (id,obj,objStore) {
-	nmp.view.renderlist (id,obj,objStore);
-}
 
-nmp.view.renderlist = function (id,obj,objStore) {
+nmp.view.renderList = function (id,obj,objStore,store) {
   var li = document.createElement("li");
   var del = document.createElement("a");
   var edit = document.createElement("a");
@@ -756,10 +761,8 @@ nmp.view.renderlist = function (id,obj,objStore) {
   if (id !== null) {
     var element = document.getElementById(id);
     var radioListAll = element;
-    var br = document.createElement("br");
-    element.appendChild(br);
   }
-  if (nmp.db.radioValid(obj) && id !== null) {
+  if (nmp.app.radio.valid(obj) && id !== null) {
 
   for (var i in nmp.view.list) {
     if (obj.hasOwnProperty(nmp.view.list[i])) {
@@ -769,7 +772,8 @@ nmp.view.renderlist = function (id,obj,objStore) {
       newElement.dataset.descriptor = nmp.view.list[i]; 
       newElement.dataset.view = view; 
       newElement.dataset.id = id; 
-      newElement.dataset.store = objStore; 
+      newElement.dataset.objstore = objStore; 
+      newElement.dataset.store = store; 
       newElement.dataset.obj = JSON.stringify(obj); 
       newElement.name = nmp.view.list[i];
       newElement.defaultValue = obj[nmp.view.list[i]];
@@ -777,7 +781,7 @@ nmp.view.renderlist = function (id,obj,objStore) {
       newElement.innerHTML = ' '+obj[nmp.view.list[i]]+' ' ;
       newElement.setAttribute('class',nmp.view.class);
       newElement.addEventListener("click", function(e) {
-    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-objstore'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
       }, false);
     }
     else if (!obj.hasOwnProperty(nmp.view.list[i]) && !nmp.db.readOnly(nmp.view.list[i],obj) ) {
@@ -786,14 +790,15 @@ nmp.view.renderlist = function (id,obj,objStore) {
       newElement.dataset.descriptor = nmp.view.list[i]; 
       newElement.dataset.view = view; 
       newElement.dataset.id = id; 
-      newElement.dataset.store = objStore; 
+      newElement.dataset.objstore = objStore; 
+      newElement.dataset.store = store; 
       newElement.dataset.obj = JSON.stringify(obj); 
       newElement.name = nmp.view.list[i];
       newElement.id = id + nmp.view.list[i]; 
       newElement.setAttribute('class',nmp.view.class);
       newElement.innerHTML = ' '+nmp.view.list[i]+' ';
       newElement.addEventListener("click", function(e) {
-    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+    	  nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-objstore'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
       }, false);
 
     }
@@ -882,33 +887,33 @@ nmp.view.renderlist = function (id,obj,objStore) {
 
 
 
-nmp.view.eventClick = function (id,objStr,objStore,descriptor){
+nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   var obj = JSON.parse(objStr);
-  console.log('nmp.view.eventClick ',obj,descriptor,objStore,id);
+  console.log('nmp.view.eventClick ',obj,descriptor,objStore,store,id);
   nmp.app.vibrate();
   if (descriptor == "www") {
     window.open(obj.www,'_blank'); 
   }
   if (descriptor == "src" || descriptor == "desc") {
     nmp.storage.currentUpdate(obj.objId,objStore);
-    nmp.db.objectUpdateStats(obj.objId,objStore);
+    if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
     nmp.app.update();
   }
   if (descriptor == "delete") {
-    nmp.db.objectDel(obj.objId,objStore);
+    if (store == "db") {nmp.db.objectDel(obj.objId,objStore);}
     nmp.app.update();
   }
   if (descriptor == "duplicate") {
     obj.objId =  JSON.stringify(new Date().getTime());
     obj.objOwner =  "browser";
-    nmp.db.objectAdd(obj);
+    if (store == "db") {nmp.db.objectAdd(obj);}
     nmp.app.update();
   }
   if (descriptor == "edit") {
     //console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
-    nmp.db.objectEdit(id,obj.objId,objStore);
+    if (store == "db") {nmp.db.objectEdit(id,obj.objId,objStore);}
   }
   if (descriptor == "pause") {
     nmp.audio.pause("pause");

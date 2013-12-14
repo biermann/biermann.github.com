@@ -14,6 +14,42 @@ Object.defineProperty(nmp.app.settings, 'reset current', {
   value: "click", 
   configurable: false
 });
+nmp.app.radio = {};
+Object.defineProperty(nmp.app.radio, 'name', {
+  enumerable: true, 
+  writable: false, 
+  value: "radios", 
+  configurable: false
+});
+Object.defineProperty(nmp.app.radio, 'field', {
+  enumerable: true, 
+  writable: false, 
+  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed"], 
+  configurable: false
+});
+Object.defineProperty(nmp.app.radio, 'store', {
+  enumerable: true, 
+  writable: false, 
+  value: ["db","storage"], 
+  configurable: false
+});
+
+Object.defineProperty(nmp.app.radio, 'readonlyObj', {
+  enumerable: true, 
+  writable: false, 
+  configurable: false,
+  value:   [
+  { objId: "6", src: "http://217.23.7.117:8128/", desc: "Deep Mix", www: 'http://mobile.deepmix.eu', type: "audio/mpeg", objOwner: "biermann" },
+  { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "biermann" },
+  { objId: "4", src: "http://radio.hbr1.com:19800/tronic.ogg", desc: "HBR1 Tronic", www: 'http://www.hbr1.com/', type: "audio/ogg", objOwner: "biermann" },
+  { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
+  { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "biermann" },
+  { objId: "1", src: "http://88.198.34.209:13128/nometa.ogg", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/ogg", objOwner: "biermann" }
+]
+});
+
+
+
 
 nmp.audio = {};
 Object.defineProperty(nmp.audio, 'status', {
@@ -39,22 +75,29 @@ Object.defineProperty(nmp.storage, 'status', {
 Object.defineProperty(nmp.storage, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view"], 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store"], 
   configurable: false
 });
-//Object.defineProperty(nmp.storage, 'object', {
-//  enumerable: true, 
-//  writable: false, 
-//  value: {"objId":"","objOwner":"","src":"","desc":"","www":"","type":"","volume":"","vibrator":""}, 
-//  configurable: false
-//});
 
+nmp.storage.radio = {};
+Object.defineProperty(nmp.storage.radio, 'name', {
+  enumerable: true, 
+  writable: false, 
+  value: "radios", 
+  configurable: false
+});
+Object.defineProperty(nmp.storage.radio, 'field', {
+  enumerable: true, 
+  writable: false, 
+  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed"], 
+  configurable: false
+});
 
 nmp.view = {};
 Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
-  value: ["recent10","list","swipe","top","biermann","myRadio","recent","audio/ogg","status","settings"], 
+  value: ["recent10","listIndexedDB","listStorage","swipe","top","biermann","myRadio","audio/ogg","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
@@ -165,6 +208,7 @@ nmp.app.init();
 nmp.db.init();
 nmp.app.toolbar();
 nmp.storage.init();
+nmp.storage.init2();
 nmp.audio.init2();
 nmp.touch.init();
 nmp.audio.prepare();
