@@ -12,8 +12,6 @@ fxosnetzradio.localstorage.currentobject = function (src,type,desc,www,objOwner,
 
 fxosnetzradio.localstorage.mycurrentobject = new fxosnetzradio.localstorage.currentobject ("http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3","MP3","IRF","http://www.internationalradiofestival.com","biermann","biermann","0.12345","","1");
 
-fxosnetzradio.localstorage.currentarray = "radioCurrent";
-nmp.storage.currentarray = "radioCurrent";
 
 fxosnetzradio.localstorage.currentobjectValid = function (obj) {
 	nmp.storage.currentobjectValid(obj);
@@ -272,7 +270,7 @@ nmp.storage.currentUpdate = function (objId,objStore) {
    var audio = document.querySelector("#audio");
    var current = nmp.storage.currentGet ();
    if (audio) { current.volume = audio.volume; }
-   if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
+   if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined' && typeof objId !== 'undefined'){
       var db = nmp.db.db;
       var store = db.transaction(objStore).objectStore(objStore);
       var request = store.get(objId);

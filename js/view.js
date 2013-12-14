@@ -177,6 +177,7 @@ nmp.view.update = function (view) {
 
     if (view == "listIndexedDB" && nmp.db.ok() ) {
       current.view = "listIndexedDB";
+      current.store= "db";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -189,10 +190,53 @@ nmp.view.update = function (view) {
            if(!!result == false) return;
     //	   console.log("fxosnetzradio.view.update: " ,view, result.value);
     	result.value.view = "listIndexedDB" ;  
-	nmp.view.renderList(elementId,result.value,nmp.app.radio.name,"db");
+    	result.value.store = "db" ;  
+	nmp.view.renderList(elementId,result.value,nmp.app.radio.name,current.store);
            result.continue();
       };
     }
+
+
+    if (view == "icecast" && nmp.db.ok() ) {
+      current.view = "icecast";
+      current.store= "icecast";
+      var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      fxosnetzradio.view.renderStatus (elementId);	
+      if (window.XMLHttpRequest){
+        var xmlhttp=new XMLHttpRequest();
+      }      
+      xmlhttp.open("GET","dir.xiph.org/yp.xml",false);
+      xmlhttp.send();
+      var xmlDoc=xmlhttp.responseXML;
+      var x=xmlDoc.getElementsByTagName("entry"); 
+      //var x=xmlDoc.documentElement.childNodes;
+      for (i=0;i<x.length;i++) {
+        //var result = x[i].nodeValue;
+	if (x[i].getElementsByTagName("server_type")[0].childNodes[0].nodeValue == "application/ogg") {
+          var result = {};
+          result.desc = x[i].getElementsByTagName("server_name")[0].childNodes[0].nodeValue;
+          result.type = x[i].getElementsByTagName("server_type")[0].childNodes[0].nodeValue;
+          result.src = x[i].getElementsByTagName("listen_url")[0].childNodes[0].nodeValue;
+    	  result.view = "icecast" ;  
+    	  result.store = "icecast" ; 
+    	  result.www = "n/a" ; 
+    	  result.objOwner = "icecast" ; 
+	  nmp.view.renderList(elementId,result,nmp.app.radio.name,current.store);
+      }
+}
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     if (view == "edit" && nmp.db.ok() ) {
@@ -429,7 +473,7 @@ nmp.view.update = function (view) {
  
     if (view == "form" && nmp.db.ok()) {
     current.view = "form";
-    current.db = "db";
+    current.store = "db";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) {
@@ -455,6 +499,7 @@ nmp.view.update = function (view) {
 
     if (view == "swipe" && nmp.storage.ok()) {
       current.view = "swipe";
+      current.store = "storage";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       console.log(":fxosnetzradio.view.update: " ,current.view);
@@ -856,29 +901,29 @@ nmp.view.renderList = function (id,obj,objStore,store) {
   }, false);
   //www.textContent = " #" + row.www;
   www.textContent = " #www";
-  src.textContent = " #" + row.src;
-  src.dataset.key = row.objId; 
-  src.dataset.src = obj.src; 
-  src.dataset.desc = row.desc; 
+  //src.textContent = " #" + row.src;
+  //src.dataset.key = row.objId; 
+  //src.dataset.src = obj.src; 
+  //src.dataset.desc = row.desc; 
   desc.textContent = " "+ row.desc + " ";
   //format.textContent = " format: " + row.format;
   if (obj.lastUsed){lastUsed.textContent = " lastUsed=" + row.lastUsed;}
   if (obj.usageCounter){usageCounter.textContent = " count=" + obj.usageCounter;}
-  pause.textContent = " #Pause";
-  pause.dataset.id = row.objId; 
-  objId.dataset.id = row.objId; 
-  objId.textContent = "objId=" + row.objId;
+  //pause.textContent = " #Pause";
+  //pause.dataset.id = row.objId; 
+  //objId.dataset.id = row.objId; 
+  //objId.textContent = "objId=" + row.objId;
 }
   if (typeof obj.objId !== 'undefined') {objId.textContent = " objId=" + obj.objId;}
   if (typeof obj.objOwner !== 'undefined') {objOwner.textContent = " objOwner=" + obj.objOwner;}
   del.textContent = " #Delete";
-  del.dataset.id = obj.objId; 
+  //del.dataset.id = obj.objId; 
   del.addEventListener("click", function(e) {
     fxosnetzradio.browserdb.objectDel(obj.objId,objStore);
   });
   if (typeof obj.objId !== 'undefined') {
      edit.textContent = " #edit";
-     edit.dataset.id = obj.objId; 
+     //edit.dataset.id = obj.objId; 
 
   }
   radioListAll.appendChild(li);
@@ -895,7 +940,7 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
     window.open(obj.www,'_blank'); 
   }
   if (descriptor == "src" || descriptor == "desc") {
-    nmp.storage.currentUpdate(obj.objId,objStore);
+    if (store == "db") {nmp.storage.currentUpdate(obj.objId,objStore);}
     if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);

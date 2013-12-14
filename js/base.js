@@ -30,7 +30,7 @@ Object.defineProperty(nmp.app.radio, 'field', {
 Object.defineProperty(nmp.app.radio, 'store', {
   enumerable: true, 
   writable: false, 
-  value: ["db","storage"], 
+  value: ["db","storage","icecast"], 
   configurable: false
 });
 
@@ -97,7 +97,7 @@ nmp.view = {};
 Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
-  value: ["recent10","listIndexedDB","listStorage","swipe","top","biermann","myRadio","audio/ogg","status","settings"], 
+  value: ["recent10","listIndexedDB","listStorage","swipe","icecast","biermann","myRadio","audio/ogg","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
@@ -193,6 +193,8 @@ const radioDBname = "radio";
 const radioDBversion = 39;
 fxosnetzradio.browserdb.radioDBname = radioDBname;
 fxosnetzradio.view = {};
+fxosnetzradio.localstorage.currentarray = "radioCurrent";
+nmp.storage.currentarray = "radioCurrent";
 
 
 

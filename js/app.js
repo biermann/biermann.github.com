@@ -45,13 +45,13 @@ nmp.app.radio.valid = function (obj) {
         resultCount++;
 	if (prop == "src") {resultCount = resultCount +10;}
 	if (prop == "objOwner") {resultCount = resultCount +100;}
-	this[prop] = obj[prop];
+	//this[prop] = obj[prop];
         //console.log(resultCount+ 'fxosnetzradio.browserdb.objectAdd.obj.' +prop+': ' +this[prop]);
      } 
   } 
   if (resultCount > 113) {result = true;}
   else {result = false;console.log('nmp.app.radio.valid: count='+resultCount +' '+result);}
-  //console.log( 'nmp.db.radioValid '+result+' '+resultCount+' '+JSON.stringify(obj));
+  console.log( 'nmp.app.radio.valid '+result+' '+resultCount+' '+JSON.stringify(obj));
   return result;
 };
 
