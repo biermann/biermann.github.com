@@ -14,21 +14,25 @@ fxosnetzradio.localstorage.mycurrentobject = new fxosnetzradio.localstorage.curr
 
 
 fxosnetzradio.localstorage.currentobjectValid = function (obj) {
-	nmp.storage.currentobjectValid(obj);
+   nmp.storage.current.valid(obj);
+}
+nmp.storage.currentobjectValid = function (obj) {
+   nmp.storage.current.valid(obj);
 }
 
-nmp.storage.currentobjectValid = function (obj) {
+
+nmp.storage.current.valid = function (obj) {
   var result=false;
   var resultCount=0;
   for (var prop in obj) {
      if (obj.hasOwnProperty(prop)) {
         resultCount++;
-        for (var i in nmp.storage.field) {
-	  if ( prop == nmp.storage.field[i]){ resultCount = resultCount +10; }		
+        for (var i in nmp.storage.current.field) {
+	  if ( prop == nmp.storage.current.field[i]){ resultCount = resultCount +10; }		
 	}
 	if (prop == "volume" && obj["volume"] < 1) { resultCount = resultCount +1000; }
 	if (obj["volume"] == "n/a") { resultCount = resultCount -1; }
-	if (obj[nmp.storage.field[i]] == "n/a") { resultCount = resultCount -1; }
+	if (obj[nmp.storage.current.field[i]] == "n/a") { resultCount = resultCount -1; }
      } 
   } 
   if (resultCount > 91) {result = true;}
@@ -102,11 +106,12 @@ fxosnetzradio.localstorage.statusSet = function () {
 
 
 nmp.storage.currentSet = function (obj) {
-   var array = nmp.storage.name;
+   var array = nmp.storage.current.name;
    var oldObjects = JSON.parse(localStorage.getItem(array));
    var current = nmp.storage.currentGet ();
    console.log( 'nmp.storage.currentSet');
-   if (nmp.storage.currentobjectValid (obj)) {
+     console.log( 'nmp.storage.currentSet request' +JSON.stringify(obj));
+   if (nmp.storage.current.valid (obj)) {
      console.log( 'nmp.storage.currentSet objectvalid request' +JSON.stringify(obj));
      for (var i in nmp.storage.field) {
       for (var prop in current) {
@@ -130,13 +135,13 @@ nmp.storage.currentSet = function (obj) {
      console.log( 'nmp.storage.currentSet objectvalid request' +JSON.stringify(obj));
 	return;
    }
-   if (!nmp.storage.currentobjectValid (obj)) {
+   if (!nmp.storage.current.valid (obj)) {
       for (var i in nmp.storage.field) {
          if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';}
       }
    console.log( 'nmp.storage.currentSet objectinvalid request' +JSON.stringify(obj));
    }
-   if (!nmp.storage.currentobjectValid (obj) && current) {
+   if (!nmp.storage.current.valid (obj) && current) {
       var newObjects = [];
       for (var prop in current) {
          if (current.hasOwnProperty(prop) && current[prop] !== "n/a" ) {
@@ -192,29 +197,35 @@ nmp.storage.currentSet = function (obj) {
             //localStorage.setItem(array, JSON.stringify(newObjects));
             //console.log( 'nmp.storage.currentSet.view='+newObject[prop]);
 	 }
-	//var newObjStr=JSON.stringify(newObject);
-        //console.log('currentSet: '+newObjStr);
+        console.log('currentSet: '+JSON.stringify(newObject));
   }
   }; 
 
 
 
-nmp.storage.currentReset = function () {
-         var array = nmp.storage.name;
+nmp.storage.current.reset = function () {
+         console.log( 'nmp.storage.current.reset');
+         var array = nmp.storage.current.name;
          var newObj = {};
          var newArray = [];
+         for (var i in nmp.storage.current.field) { newObj[nmp.storage.current.field[i]]  = 'n/a'; }
+	 newObj.view="settings";
+	 newObj.store="storage";
+	 newObj.volume="0.5";
+	 newObj.vibrate="false";
          newArray.push(newObj);
          localStorage.removeItem(array);
+         console.log( 'nmp.storage.current.reset new: ' +JSON.stringify(newArray));
          localStorage.setItem(array, JSON.stringify(newArray));	
-
-
+         nmp.audio.volume ("0.5");
 }; 
 
 
 nmp.storage.currentGet = function (e){
-   var array = nmp.storage.name;
+   var array = nmp.storage.current.name;
    var objects = JSON.parse(localStorage.getItem(array));
-   //console.log( 'nmp.storage.currentGet');
+   console.log( 'nmp.storage.currentGet');
+     console.log( 'nmp.storage.currentGet 0 ' +JSON.stringify(objects));
    if (objects) {
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
@@ -229,17 +240,20 @@ nmp.storage.currentGet = function (e){
         //return nmp.storage.currentGet();
      }
      if (obj) {
-        if (!nmp.storage.currentobjectValid (obj)) { 
-           for (var i in nmp.storage.field) {
-	      if (typeof obj[nmp.storage.field[i]] == 'undefined'){obj[nmp.storage.field[i]]  = 'n/a';}
+     console.log( 'nmp.storage.currentGet 1 ' +JSON.stringify(obj));
+        if (!nmp.storage.current.valid (obj)) { 
+           for (var i in nmp.storage.current.field) {
+	      if (typeof obj[nmp.storage.current.field[i]] == 'undefined'){obj[nmp.storage.current.field[i]]  = 'n/a';}
            }
-           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(obj));
-           if (obj.volume == "n/a"){obj.volume = 0.5;}
+           if (obj.volume == "n/a"){obj.volume = "0.5";}
+	   obj.store = "storage";
+	   obj.view = "settings";
+           console.log( 'nmp.storage.currentGet objectinvalid return 2 ' +JSON.stringify(obj));
 	   return obj;
         } 
      }
      if (obj) {
-        if (nmp.storage.currentobjectValid (obj)) { return obj; } 
+        if (nmp.storage.current.valid (obj)) { return obj; } 
      }
      if (!obj) {
         var newObj = {};
@@ -258,8 +272,19 @@ nmp.storage.currentGet = function (e){
 
 
 
-
-
+nmp.storage.current.update = function (obj) {
+   var current = nmp.storage.currentGet ();
+   console.log( 'nmp.storage.current.update request' +JSON.stringify(obj));
+   for (var i in nmp.storage.current.field) {
+      if (obj.hasOwnProperty(nmp.storage.current.field[i])) {
+	if (obj[nmp.storage.current.field[i]] !== "n/a") { 
+	   current[nmp.storage.current.field[i]] = obj[nmp.storage.current.field[i]];
+        }
+      }
+   }
+   console.log( 'nmp.storage.current.update set request' +JSON.stringify(current));
+   //if (nmp.storage.current.valid(current)) { nmp.storage.currentSet(current); }
+};
 
 
 
@@ -283,11 +308,11 @@ nmp.storage.currentUpdate = function (objId,objStore) {
             var current = nmp.storage.currentGet ();
             var audio = document.querySelector("#audio");
             if (audio) { obj.volume = audio.volume; }
+	    obj.store="db";
             for (var prop in obj) {
                if (obj.hasOwnProperty(prop)) { current[prop] = obj[prop]; } 
             }
-	    var newObjStr=JSON.stringify(current);
-            console.log('nmp.storage.currentUpdate: '+newObjStr);
+            console.log('nmp.storage.currentUpdate: '+JSON.stringify(current));
             if (nmp.storage.currentobjectValid(current)) { nmp.storage.currentSet(current); }
          }
       }

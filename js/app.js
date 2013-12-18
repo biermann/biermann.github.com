@@ -51,7 +51,7 @@ nmp.app.radio.valid = function (obj) {
   } 
   if (resultCount > 113) {result = true;}
   else {result = false;console.log('nmp.app.radio.valid: count='+resultCount +' '+result);}
-  console.log( 'nmp.app.radio.valid '+result+' '+resultCount+' '+JSON.stringify(obj));
+  //console.log( 'nmp.app.radio.valid '+result+' '+resultCount+' '+JSON.stringify(obj));
   return result;
 };
 

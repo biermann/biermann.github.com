@@ -60,6 +60,7 @@ Object.defineProperty(nmp.audio, 'status', {
 });
 
 nmp.storage = {};
+nmp.storage.current = {};
 Object.defineProperty(nmp.storage, 'name', {
   enumerable: true, 
   writable: false, 
@@ -73,6 +74,20 @@ Object.defineProperty(nmp.storage, 'status', {
   configurable: false
 });
 Object.defineProperty(nmp.storage, 'field', {
+  enumerable: true, 
+  writable: false, 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store"], 
+  configurable: false
+});
+
+nmp.storage.current = {};
+Object.defineProperty(nmp.storage.current, 'name', {
+  enumerable: true, 
+  writable: false, 
+  value: "radioCurrent", 
+  configurable: false
+});
+Object.defineProperty(nmp.storage.current, 'field', {
   enumerable: true, 
   writable: false, 
   value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store"], 
