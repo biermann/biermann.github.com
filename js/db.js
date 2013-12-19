@@ -30,13 +30,13 @@ const radioData = [
 
 nmp.db.open = function() {
   if (!window.indexedDB) {
-    window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+    //window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
   }
   else {
     var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
     var updateStr = "db.open.";
     console.log("nmp.db.open:"+nmp.db.name+' '+nmp.db.version);
-  }
+
   openRequest.onupgradeneeded = function(evt) {
     var db = evt.target.result;
      console.log('db upgrade ', evt);
@@ -117,7 +117,7 @@ nmp.db.open = function() {
     // before we can proceed.
     alert("Please close all other tabs with this site open!");
   };
-
+}
 
 };
 
@@ -158,7 +158,7 @@ fxosnetzradio.browserdb.statusSet = function () {
    var 	currentdate = new Date(); 
    var text = "";
    text +=  currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds() + " ";
-   if (db !== 'undefined' && db !== null){
+   if (db !== 'undefined' && db !== null && nmp.db.ok()){
       if (db.objectStoreNames.contains(radioDBstore)){
          var trans = db.transaction([radioDBstore], "readonly");
     	 var store = trans.objectStore(radioDBstore);

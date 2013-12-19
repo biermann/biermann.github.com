@@ -602,11 +602,11 @@ function radioListEventListener (array,className){
 		}	
    		if(elements.hasOwnProperty(b) && JSON.stringify(className).indexOf("pause") > 0) {
     			//console.log( 'for in if: ' + className + ' document.' + b + ' Eigenschaft: ' + elements[b] );
-    			elements[b].addEventListener('click', function(){radioListPause (array,this.getAttribute('data-index'));}, false);   		
+    			//elements[b].addEventListener('click', function(){radioListPause (array,this.getAttribute('data-index'));}, false);   		
 		}	
    		if(elements.hasOwnProperty(b) && JSON.stringify(className).indexOf("delete") > 0) {
     			//console.log( 'for in if: ' + className + ' document.' + b + ' Eigenschaft: ' + elements[b] );
-    			elements[b].addEventListener('click', function(){radioListDel (array,this.getAttribute('data-index'));}, false);   		
+    			//elements[b].addEventListener('click', function(){radioListDel (array,this.getAttribute('data-index'));}, false);   		
 		}	
    	}	
     }
