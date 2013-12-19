@@ -199,8 +199,8 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "icecast" ) {
-      current.view = "icecast";
+    if (view == "icecastOgg" ) {
+      current.view = "icecastOgg";
       current.store= "icecast";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -221,16 +221,46 @@ nmp.view.update = function (view) {
           result.desc = x[i].getElementsByTagName("server_name")[0].childNodes[0].nodeValue;
           result.type = x[i].getElementsByTagName("server_type")[0].childNodes[0].nodeValue;
           result.src = x[i].getElementsByTagName("listen_url")[0].childNodes[0].nodeValue;
-    	  result.view = "icecast" ;  
+    	  result.view = "icecastOgg" ;  
     	  result.store = "icecast" ; 
     	  result.www = "n/a" ; 
     	  result.objOwner = "icecast" ; 
 	  nmp.view.renderList(elementId,result,nmp.app.radio.name,current.store);
       }
-}
+     }
     }
 
 
+    if (view == "icecastMpeg" ) {
+      current.view = "icecastMpeg";
+      current.store= "icecast";
+      var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      fxosnetzradio.view.renderStatus (elementId);	
+      if (window.XMLHttpRequest){
+        var xmlhttp=new XMLHttpRequest();
+      }      
+      xmlhttp.open("GET","dir.xiph.org/yp.xml",false);
+      xmlhttp.send();
+      var xmlDoc=xmlhttp.responseXML;
+      var x=xmlDoc.getElementsByTagName("entry"); 
+      //var x=xmlDoc.documentElement.childNodes;
+      for (i=0;i<x.length;i++) {
+        //var result = x[i].nodeValue;
+	if (x[i].getElementsByTagName("server_type")[0].childNodes[0].nodeValue == "audio/mpeg") {
+          var result = {};
+          result.desc = x[i].getElementsByTagName("server_name")[0].childNodes[0].nodeValue;
+          result.type = x[i].getElementsByTagName("server_type")[0].childNodes[0].nodeValue;
+          result.src = x[i].getElementsByTagName("listen_url")[0].childNodes[0].nodeValue;
+    	  result.view = "icecastMpeg" ;  
+    	  result.store = "icecast" ; 
+    	  result.www = "n/a" ; 
+    	  result.objOwner = "icecast" ; 
+	  nmp.view.renderList(elementId,result,nmp.app.radio.name,current.store);
+      }
+     }
+    }
 
 
 
