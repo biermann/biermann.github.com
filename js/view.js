@@ -43,6 +43,7 @@ nmp.view.update = function (view) {
  var current = nmp.storage.currentGet ();
  console.log("nmp.view.update request=",view);
  nmp.db.statusSet ();
+ nmp.view.renderStatus (elementId);
  //updateControl ();
   if (view == "n/a") {view = "settings";}	
   if (view == "admin") {
@@ -198,7 +199,7 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "icecast" && nmp.db.ok() ) {
+    if (view == "icecast" ) {
       current.view = "icecast";
       current.store= "icecast";
       var result = nmp.storage.currentSet(current);
@@ -531,8 +532,25 @@ nmp.view.update = function (view) {
     }
 
 
-    if (view == "listStorage" && nmp.db.ok() ) {
+    if (view == "listStorage" ) {
       current.view = "listStorage";
+      current.store = "storage";
+      var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      fxosnetzradio.view.renderStatus (elementId);	
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array)); 
+      nmp.view.renderbuttonControl(elementId);
+      for (var i in objects) {
+    	objects[i].view = "listStorage" ; 
+        objects[i].store = current.store ;
+	nmp.view.renderList(elementId,objects[i],array,current.store);
+      }
+    }
+
+    if (view == "audio/mpeg" ) {
+      current.view = "audio/mpeg";
       current.store = "storage";
       var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
@@ -541,12 +559,13 @@ nmp.view.update = function (view) {
       var array = nmp.storage.radio.name;
       var objects = JSON.parse(localStorage.getItem(array));
       for (var i in objects) {
-    	objects[i].view = "listStorage" ; 
-	nmp.view.renderList(elementId,objects[i],array,current.store);
+    	objects[i].view = "audio/mpeg" ; 
+        objects[i].store = current.store ;
+        if (objects[i].type == "audio/mpeg") { nmp.view.renderList(elementId,objects[i],array,current.store); }
+	
       }
+      nmp.view.renderbuttonControl(elementId);
     }
-
-
 
 
 
