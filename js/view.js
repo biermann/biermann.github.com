@@ -28,7 +28,7 @@ nmp.view.rotate = function (direction) {
 		}	
 		nmp.storage.currentSet(current);
 		nmp.app.update();
-                nmp.storage.statusSet();
+                
  		console.log("nmp.view.rotate: "+direction+' now='+now+' next='+next+' last='+last+' '+current.view);
 
 };
