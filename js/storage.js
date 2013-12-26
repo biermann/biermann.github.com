@@ -48,6 +48,38 @@ nmp.storage.ok = function () {
 };
 
 
+nmp.storage.radio.objectAdd = function (obj) {
+   var array = nmp.storage.radio.name;
+   var objects = JSON.parse(localStorage.getItem(array));
+   var newArray = objects;
+   var newObj = obj;
+   newArray.push(newObj);
+   localStorage.removeItem(array);
+   localStorage.setItem(array, JSON.stringify(newArray));	
+};
+
+
+nmp.storage.radio.objectDel = function (obj) {
+   var array = nmp.storage.radio.name;
+   var objects = JSON.parse(localStorage.getItem(array));
+   var newArray = objects;
+   for(var i = newArray.length - 1; i >= 0; i--) {
+      if(newArray[i].objId === obj.objId) {
+         console.log( 'nmp.storage.radio.objectDel position='+i+' ' +JSON.stringify(newArray[i]));
+         newArray.splice(i, 1);
+      }
+   }   
+   localStorage.removeItem(array);
+   localStorage.setItem(array, JSON.stringify(newArray));	
+};
+
+
+
+
+
+
+
+
 
 
 //fxosnetzradio.localstorage.mycurrentobject = new fxosnetzradio.localstorage.currentobject ( "http://radio.hbr1.com:19800/trance.ogg",  "hbr1 trance"," http://www.hbr1.com/",  "Ogg",  "testbutton" );

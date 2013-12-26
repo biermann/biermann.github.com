@@ -59,7 +59,6 @@ Object.defineProperty(nmp.audio, 'status', {
 });
 
 nmp.storage = {};
-nmp.storage.current = {};
 Object.defineProperty(nmp.storage, 'name', {
   enumerable: true, 
   writable: false, 
@@ -111,7 +110,7 @@ nmp.view = {};
 Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
-  value: ["recent10","listIndexedDB","listStorage","swipe","icecastOgg","icecastMpeg","biermann","myRadio","audio/ogg","audio/mpeg","status","settings"], 
+  value: ["recent10","listIndexedDB","listStorage","icecastOgg","icecastMpeg","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {

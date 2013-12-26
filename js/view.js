@@ -377,7 +377,6 @@ nmp.view.update = function (view) {
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
-      nmp.view.renderLocalstorageStatus (elementId);	
       //var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("biermann");
@@ -442,6 +441,50 @@ nmp.view.update = function (view) {
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
     }
+
+
+
+    if (view == "listMyRadio" && nmp.db.ok()) {
+    current.view = "listMyRadio";
+    current.store= "db";
+    var result = nmp.storage.currentSet(current);
+    element = document.getElementById(elementId);
+    console.log(":fxosnetzradio.view.update: " ,current.view);
+    while (element.firstChild) { element.removeChild(element.firstChild); }	
+      nmp.view.renderStatus (elementId);	
+      nmp.view.renderbuttonControl(elementId);
+      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var keyRange = IDBKeyRange.only("browser");
+      var index = store.index("objOwner");
+      var cursorRequest = index.openCursor(keyRange);
+      var count = 0;
+      cursorRequest.onsuccess = function(e) {
+           var result = e.target.result;
+	   count++;
+           if(!!result == false ) return;
+    	result.value.view = "listMyRadio" ;  
+        result.value.store= "db";
+	nmp.view.renderList(elementId,result.value,nmp.app.radio.name,current.store);
+           result.continue();
+      }
+      current.store = "storage";
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array)); 
+      for (var i in objects) {
+    	objects[i].view = "listMyRadio" ; 
+        objects[i].store = current.store ;
+	nmp.view.renderList(elementId,objects[i],array,current.store);
+        if (objects[i].owner == "browser") { nmp.view.renderList(elementId,objects[i],array,current.store); }
+      }
+    }
+
+
+
+
+
+
+
+
 
 
     if (view == "top" && nmp.db.ok()) {
@@ -1011,12 +1054,14 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   }
   if (descriptor == "delete") {
     if (store == "db") {nmp.db.objectDel(obj.objId,objStore);}
+    if (store == "storage") {nmp.storage.radio.objectDel(obj);}
     nmp.app.update();
   }
   if (descriptor == "duplicate") {
     obj.objId =  JSON.stringify(new Date().getTime());
     obj.objOwner =  "browser";
     if (store == "db") {nmp.db.objectAdd(obj);}
+    if (store == "storage") {nmp.storage.radio.objectAdd(obj);}
     nmp.app.update();
   }
   if (descriptor == "edit") {
