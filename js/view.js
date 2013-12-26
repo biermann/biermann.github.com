@@ -438,7 +438,15 @@ nmp.view.update = function (view) {
         result.value.store= "db";
 	nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
            result.continue();
-      };
+      }
+      current.store = "storage";
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array)); 
+      for (var i in objects) {
+    	objects[i].view = "myRadio" ; 
+        objects[i].store = current.store ;
+        if (objects[i].owner == "browser") { nmp.view.renderButton(elementId,objects[i],array,current.store); }
+      }
       fxosnetzradio.view.renderbuttonControl(elementId);
     }
 
@@ -473,7 +481,6 @@ nmp.view.update = function (view) {
       for (var i in objects) {
     	objects[i].view = "listMyRadio" ; 
         objects[i].store = current.store ;
-	nmp.view.renderList(elementId,objects[i],array,current.store);
         if (objects[i].owner == "browser") { nmp.view.renderList(elementId,objects[i],array,current.store); }
       }
     }
