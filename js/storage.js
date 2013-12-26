@@ -13,12 +13,6 @@ fxosnetzradio.localstorage.currentobject = function (src,type,desc,www,objOwner,
 fxosnetzradio.localstorage.mycurrentobject = new fxosnetzradio.localstorage.currentobject ("http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3","MP3","IRF","http://www.internationalradiofestival.com","biermann","biermann","0.12345","","1");
 
 
-fxosnetzradio.localstorage.currentobjectValid = function (obj) {
-   nmp.storage.current.valid(obj);
-}
-nmp.storage.currentobjectValid = function (obj) {
-   nmp.storage.current.valid(obj);
-}
 
 
 nmp.storage.current.valid = function (obj) {
@@ -39,7 +33,7 @@ nmp.storage.current.valid = function (obj) {
   else {
 	result = false;console.log('validation: count='+resultCount +' '+result);}
 	var newObjStr=JSON.stringify(obj);
-        console.log('nmp.storage.currentobjectValid: '+resultCount+result+' '+newObjStr);
+        console.log('nmp.storage.current.valid: '+resultCount+' '+result+' '+newObjStr);
   return result;
 };
 
@@ -224,12 +218,12 @@ nmp.storage.current.reset = function () {
 nmp.storage.currentGet = function (e){
    var array = nmp.storage.current.name;
    var objects = JSON.parse(localStorage.getItem(array));
-   console.log( 'nmp.storage.currentGet');
-     console.log( 'nmp.storage.currentGet 0 ' +JSON.stringify(objects));
+   //console.log( 'nmp.storage.currentGet');
+     //console.log( 'nmp.storage.currentGet 0 ' +JSON.stringify(objects));
    if (objects) {
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
-        console.log( 'current get: obj undefined');
+        //console.log( 'current get: obj undefined');
 	var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
         var newArray = [];
@@ -240,7 +234,7 @@ nmp.storage.currentGet = function (e){
         //return nmp.storage.currentGet();
      }
      if (obj) {
-     console.log( 'nmp.storage.currentGet 1 ' +JSON.stringify(obj));
+     //console.log( 'nmp.storage.currentGet 1 ' +JSON.stringify(obj));
         if (!nmp.storage.current.valid (obj)) { 
            for (var i in nmp.storage.current.field) {
 	      if (typeof obj[nmp.storage.current.field[i]] == 'undefined'){obj[nmp.storage.current.field[i]]  = 'n/a';}
@@ -248,7 +242,7 @@ nmp.storage.currentGet = function (e){
            if (obj.volume == "n/a"){obj.volume = "0.5";}
 	   obj.store = "storage";
 	   obj.view = "settings";
-           console.log( 'nmp.storage.currentGet objectinvalid return 2 ' +JSON.stringify(obj));
+           //console.log( 'nmp.storage.currentGet objectinvalid return 2 ' +JSON.stringify(obj));
 	   return obj;
         } 
      }
@@ -258,14 +252,14 @@ nmp.storage.currentGet = function (e){
      if (!obj) {
         var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
-           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
+           //console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
         return newObj;
      }
    }
    else {
         var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
-           console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
+           //console.log( 'nmp.storage.currentGet objectinvalid return' +JSON.stringify(newObj));
         return newObj;
    }
 };
@@ -291,35 +285,43 @@ nmp.storage.current.update = function (obj) {
 
 //fxosnetzradio.localstorage.currentUpdate(objId,objStore);
 nmp.storage.currentUpdate = function (objId,objStore) {
-   var obj = [];
+   //var obj = [];
+   var obj = {};
    var audio = document.querySelector("#audio");
    var current = nmp.storage.currentGet ();
-   if (audio) { current.volume = audio.volume; }
+   //if (audio) { current.volume = audio.volume; }
    if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined' && typeof objId !== 'undefined'){
       var db = nmp.db.db;
       var store = db.transaction(objStore).objectStore(objStore);
       var request = store.get(objId);
       request.onsuccess = function(e) {
          obj  = e.target.result;
+            console.log('nmp.storage.currentUpdate: obj found: '+JSON.stringify(obj));
          if (obj == null) {
             console.log("obj not found: ",key,objStore);
          }
          else {
             var current = nmp.storage.currentGet ();
             var audio = document.querySelector("#audio");
-            if (audio) { obj.volume = audio.volume; }
+            //if (audio) { obj.volume = audio.volume; }
 	    obj.store="db";
             for (var prop in obj) {
-               if (obj.hasOwnProperty(prop)) { current[prop] = obj[prop]; } 
+               for (var i in nmp.app.radio.field) {
+	          if ( prop == nmp.app.radio.field[i]){		
+		     if (obj.hasOwnProperty(prop)) { current[prop] = obj[prop]; } 
+                  }
+               }
             }
-            console.log('nmp.storage.currentUpdate: '+JSON.stringify(current));
-            if (nmp.storage.currentobjectValid(current)) { nmp.storage.currentSet(current); }
+            if (nmp.storage.current.valid(current) == true) { 
+               console.log('nmp.storage.currentUpdate: '+JSON.stringify(current));
+	       nmp.storage.currentSet(current); 
+	    }
          }
       }
   }
-   var newObjStr=JSON.stringify(current);
-   console.log('currentUpdate: '+newObjStr);
-   if (nmp.storage.currentobjectValid(current)) { nmp.storage.currentSet(current); }
+   //var newObjStr=JSON.stringify(current);
+   //console.log('currentUpdate: '+newObjStr);
+   //if (nmp.storage.currentobjectValid(current)) { nmp.storage.currentSet(current); }
 };
 
 

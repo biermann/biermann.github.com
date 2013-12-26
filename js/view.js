@@ -377,6 +377,7 @@ nmp.view.update = function (view) {
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
+      nmp.view.renderLocalstorageStatus (elementId);	
       //var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("biermann");
@@ -419,6 +420,7 @@ nmp.view.update = function (view) {
 
     if (view == "myRadio" && nmp.db.ok()) {
     current.view = "myRadio";
+    current.store= "db";
     var result = nmp.storage.currentSet(current);
     element = document.getElementById(elementId);
     console.log(":fxosnetzradio.view.update: " ,current.view);
@@ -434,7 +436,8 @@ nmp.view.update = function (view) {
 	   count++;
            if(!!result == false ) return;
     	result.value.view = "myRadio" ;  
-	fxosnetzradio.view.renderbutton(elementId,result.value,radioDBstore);
+        result.value.store= "db";
+	nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
            result.continue();
       };
       fxosnetzradio.view.renderbuttonControl(elementId);
@@ -786,6 +789,7 @@ nmp.view.renderStatus = function (id) {
   var p = document.createElement("p");
   var br = document.createElement("br");
   var span = document.createElement("span");
+  var current = nmp.storage.currentGet ();
   a.textContent = "desc="+current.desc+" - view="+current.view;
   header.innerHTML = ""+current.desc+" ("+current.view+" view)";
   a.setAttribute('id','nmpViewStatus');

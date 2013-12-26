@@ -39,7 +39,6 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   writable: false, 
   configurable: false,
   value:   [
-  { objId: "6", src: "http://217.23.7.117:8128/", desc: "Deep Mix", www: 'http://mobile.deepmix.eu', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "4", src: "http://radio.hbr1.com:19800/tronic.ogg", desc: "HBR1 Tronic", www: 'http://www.hbr1.com/', type: "audio/ogg", objOwner: "biermann" },
   { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
