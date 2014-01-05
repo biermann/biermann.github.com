@@ -1057,7 +1057,7 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
     if (store == "icecast") {nmp.storage.current.update(obj);}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
-    nmp.app.update();
+    if (store !== "icecast") {nmp.app.update();}
   }
   if (descriptor == "delete") {
     if (store == "db") {nmp.db.objectDel(obj.objId,objStore);}
