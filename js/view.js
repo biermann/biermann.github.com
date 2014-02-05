@@ -397,10 +397,34 @@ nmp.view.update = function (view) {
 
     if (view == "audio/ogg" && nmp.db.ok()) {
     current.view = "audio/ogg";
+    current.store= "db";
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
-      fxosnetzradio.view.renderStatus (elementId);	
+      nmp.view.renderStatus (elementId);	
+      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var keyRange = IDBKeyRange.only("audio/ogg");
+      var index = store.index("type");
+      var cursorRequest = index.openCursor(keyRange);
+      index.openCursor(keyRange).onsuccess = function(e) {
+         var cursor = e.target.result;
+         if (cursor) {
+    	    cursor.value.view = "audio/ogg" ;  
+            cursor.value.store= "db";
+	    nmp.view.renderbutton(elementId,cursor.value,radioDBstore,current.store);
+            result.continue();
+    	 }
+      };
+      nmp.view.renderbuttonControl(elementId);
+    }
+
+    if (view == "audio/ogg" && nmp.db.ok()) {
+    current.view = "audio/ogg";
+    current.store= "db";
+    var result = nmp.storage.currentSet(current);
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      nmp.view.renderStatus (elementId);	
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("audio/ogg");
       var index = store.index("type");
@@ -1046,7 +1070,7 @@ nmp.view.renderList = function (id,obj,objStore,store) {
 
 nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   var obj = JSON.parse(objStr);
-  console.log('nmp.view.eventClick ',obj,descriptor,objStore,store,id);
+  console.log('nmp.view.eventClick id=',id,obj,'objStore=',objStore,'store=',store,'descriptor=',descriptor);
   nmp.app.vibrate();
   if (descriptor == "www") {
     window.open(obj.www,'_blank'); 
