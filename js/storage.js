@@ -53,9 +53,18 @@ nmp.storage.radio.objectAdd = function (obj) {
    var objects = JSON.parse(localStorage.getItem(array));
    var newArray = objects;
    var newObj = obj;
-   newArray.push(newObj);
-   localStorage.removeItem(array);
-   localStorage.setItem(array, JSON.stringify(newArray));	
+   var result = objects.lastIndexOf(obj);
+   for (var i=0; i<objects.length; i++){
+     if (JSON.stringify(objects[i]) ==  JSON.stringify(obj)){
+       result = 0;	
+     }
+   }
+   if (result < 0 ){
+     console.log( 'nmp.storage.radio.objectAdd '+result+'  ' +JSON.stringify(obj));
+     newArray.push(newObj);
+     localStorage.removeItem(array);
+     localStorage.setItem(array, JSON.stringify(newArray));	
+   }
 };
 
 
@@ -495,8 +504,8 @@ nmp.storage.init2= function(e) {
       console.log( 'nmp.storage.init2: no objects');
       var newArray = [];
       var newObj = {};
-      for (var i in nmp.db.radio.readonlyObj) {
-        newArray.push (nmp.db.radio.readonlyObj[i]);
+      for (var i in nmp.app.radio.readonlyObj) {
+        newArray.push (nmp.app.radio.readonlyObj[i]);
       }
       localStorage.removeItem(array);
       localStorage.setItem(array, JSON.stringify(newArray));	
@@ -522,6 +531,9 @@ nmp.storage.init2= function(e) {
         //localStorage.removeItem(array);
         //localStorage.setItem(array, JSON.stringify(newArray));	
      }
+  }
+  for (var i in nmp.app.radio.readonlyObj) {
+      nmp.storage.radio.objectAdd(nmp.app.radio.readonlyObj[i]);
   }
 };
 

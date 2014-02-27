@@ -650,7 +650,7 @@ nmp.view.update = function (view) {
       for (var i in objects) {
     	objects[i].view = "audio/mpeg" ; 
         objects[i].store = current.store ;
-        if (objects[i].type == "audio/mpeg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store); }
+        if (objects[i].type == "audio/mpeg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store);}
       }
 
       nmp.view.renderLocalstorageStatus (elementId);	
@@ -669,12 +669,7 @@ nmp.view.update = function (view) {
             result.continue();
     	 }
       }
-
-
-
-
     }
-
 
 
 
