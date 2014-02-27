@@ -131,6 +131,7 @@ fxosnetzradio.localstorage.statusSet = function () {
 
 
 
+
 nmp.storage.currentSet = function (obj) {
    var array = nmp.storage.current.name;
    var oldObjects = JSON.parse(localStorage.getItem(array));
@@ -296,9 +297,19 @@ nmp.storage.currentGet = function (e){
    }
 };
 
+nmp.storage.current.update = function (fieldname,field,desc){
+   var current = nmp.storage.currentGet ();
+   console.log( 'nmp.storage.current.update request ' +fieldname+ '='+field+' requestor='+desc);
+   for (var i in nmp.storage.current.field) {
+      if (nmp.storage.current.field[i] == fieldname) {
+	   current[nmp.storage.current.field[i]] = field;
+           nmp.storage.currentSet(current); 
+      }
+   }
+}
 
 
-nmp.storage.current.update = function (obj) {
+nmp.storage.current.updateOld = function (obj) {
    var current = nmp.storage.currentGet ();
    console.log( 'nmp.storage.current.update request' +JSON.stringify(obj));
    for (var i in nmp.storage.current.field) {

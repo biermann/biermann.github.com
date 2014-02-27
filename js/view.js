@@ -402,6 +402,7 @@ nmp.view.update = function (view) {
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
+      current.store= "db";
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("audio/ogg");
       var index = store.index("type");
@@ -418,27 +419,6 @@ nmp.view.update = function (view) {
       nmp.view.renderbuttonControl(elementId);
     }
 
-    if (view == "audio/ogg" && nmp.db.ok()) {
-    current.view = "audio/ogg";
-    current.store= "db";
-    var result = nmp.storage.currentSet(current);
-      element = document.getElementById(elementId);
-      while (element.firstChild) { element.removeChild(element.firstChild); }	
-      nmp.view.renderStatus (elementId);	
-      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
-      var keyRange = IDBKeyRange.only("audio/ogg");
-      var index = store.index("type");
-      var cursorRequest = index.openCursor(keyRange);
-      index.openCursor(keyRange).onsuccess = function(e) {
-         var cursor = e.target.result;
-         if (cursor) {
-    	    cursor.value.view = "audio/ogg" ;  
-	    fxosnetzradio.view.renderbutton(elementId,cursor.value,radioDBstore);
-            cursor.continue();
-         }
-      };
-      fxosnetzradio.view.renderbuttonControl(elementId);
-    }
 
 
     if (view == "myRadio" && nmp.db.ok()) {
@@ -469,7 +449,7 @@ nmp.view.update = function (view) {
       for (var i in objects) {
     	objects[i].view = "myRadio" ; 
         objects[i].store = current.store ;
-        if (objects[i].owner == "browser") { nmp.view.renderButton(elementId,objects[i],array,current.store); }
+        if (objects[i].owner == "browser") { nmp.view.renderbutton(elementId,objects[i],array,current.store); }
       }
       fxosnetzradio.view.renderbuttonControl(elementId);
     }
@@ -658,20 +638,41 @@ nmp.view.update = function (view) {
 
     if (view == "audio/mpeg" ) {
       current.view = "audio/mpeg";
-      current.store = "storage";
-      var result = nmp.storage.currentSet(current);
+      var result = nmp.storage.current.update('view',current.view,'audio mpeg view update 8478432');
+      //var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       fxosnetzradio.view.renderStatus (elementId);	
       var array = nmp.storage.radio.name;
       var objects = JSON.parse(localStorage.getItem(array));
+      nmp.view.renderbuttonControl(elementId);
+      current.store = "storage";
       for (var i in objects) {
     	objects[i].view = "audio/mpeg" ; 
         objects[i].store = current.store ;
-        if (objects[i].type == "audio/mpeg") { nmp.view.renderList(elementId,objects[i],array,current.store); }
-	
+        if (objects[i].type == "audio/mpeg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store); }
       }
-      nmp.view.renderbuttonControl(elementId);
+
+      nmp.view.renderLocalstorageStatus (elementId);	
+      current.store= "db";
+      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var keyRange = IDBKeyRange.only("audio/mpeg");
+      var index = store.index("type");
+      var cursorRequest = index.openCursor(keyRange);
+      index.openCursor(keyRange).onsuccess = function(e) {
+         var result = e.target.result;
+         if(!!result == false) return;
+         if (result) {
+            result.value.store= "db";
+    	    result.value.view = "audio/mpeg" ;  
+	    nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
+            result.continue();
+    	 }
+      }
+
+
+
+
     }
 
 
@@ -1078,7 +1079,7 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   if (descriptor == "src" || descriptor == "desc") {
     if (store == "db") {nmp.storage.currentUpdate(obj.objId,objStore);}
     if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
-    if (store == "icecast") {nmp.storage.current.update(obj);}
+    if (store == "icecast") {nmp.storage.current.updateOld(obj);}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
     if (store !== "icecast") {nmp.app.update();}
