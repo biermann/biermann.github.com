@@ -1075,6 +1075,8 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
     if (store == "db") {nmp.storage.currentUpdate(obj.objId,objStore);}
     if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
     if (store == "icecast") {nmp.storage.current.updateOld(obj);}
+    if (store == "storage") {nmp.storage.current.update('objId',obj.objId,'nmp.view.eventClick 47482984');}
+    if (store == "storage") {nmp.storage.current.update('desc',obj.desc,'nmp.view.eventClick desc update 47565656565656482984');}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
     if (store !== "icecast") {nmp.app.update();}
