@@ -333,15 +333,14 @@ nmp.view.update = function (view) {
     }
 
     if (view == "recent10" && nmp.db.ok()) {
-    current.view = "recent10";
-    var result = nmp.storage.currentSet(current);
+      current.view = "recent10";
+      var result = nmp.storage.current.updateField('view',current.view,'audio mpeg view update 86478432');
+      current.store= "db";
       element = document.getElementById(elementId);
     	   console.log(":fxosnetzradio.view.update: " ,current.view);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
-      fxosnetzradio.view.renderStatus (elementId);	
-      fxosnetzradio.view.renderbuttonControl(elementId);
-      var trans = db.transaction([radioDBstore], "readonly");
-      var store = trans.objectStore(radioDBstore);
+      //fxosnetzradio.view.renderStatus (elementId);
+      var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);	
       var keyRange = IDBKeyRange.upperBound(new Date().getTime());
       var index = store.index("lastUsed");
       var cursorRequest = index.openCursor(keyRange);
@@ -360,13 +359,13 @@ nmp.view.update = function (view) {
            if(!!result == false ) return;
            if(count > 9) return;
     	   //console.log(":fxosnetzradio.view.update: ",count ,view, result.value);
-    	result.value.view = "recent10" ;  
-	//fxosnetzradio.view.renderlist(elementId,result.value,radioDBrecent);
-	fxosnetzradio.view.renderbutton(elementId,result.value,radioDBstore);
+    	result.value.view = "recent10" ; 
+        result.value.store = "db" ;
+        nmp.view.renderList(elementId,result.value,nmp.app.radio.name,current.store); 
            result.continue();
       };
-      nmp.view.renderLocalstorageStatus (elementId);	
-      fxosnetzradio.view.renderAudioStatus (elementId);	
+      //nmp.view.renderLocalstorageStatus (elementId);	
+      //fxosnetzradio.view.renderAudioStatus (elementId);	
     }
 
 
@@ -507,19 +506,22 @@ nmp.view.update = function (view) {
   	element.removeChild(element.firstChild);
       }
       fxosnetzradio.view.renderStatus (elementId);	
+      current.store= "db";
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.lowerBound(0);
       var index = store.index("usageCounter");
       var cursorRequest = index.openCursor(keyRange);
       var count = 0;
-      cursorRequest.onsuccess = function(e) {
+      index.openCursor(keyRange).onsuccess = function(e) {
            var result = e.target.result;
 	   count++;
            if(!!result == false ) return;
-    	result.value.view = "top" ;  
-	fxosnetzradio.view.renderbutton(elementId,result.value,radioDBstore);
-	//fxosnetzradio.view.renderlist(elementId,result.value,radioDBstore);
+           if (result) {
+    	     result.value.view = "top" ;  
+    	     result.value.store = "db" ;  
+             nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
            result.continue();
+      }
       }
       nmp.view.renderLocalstorageStatus (elementId);	
       nmp.view.renderBrowserdbStatus (elementId);	
@@ -638,7 +640,7 @@ nmp.view.update = function (view) {
 
     if (view == "audio/mpeg" ) {
       current.view = "audio/mpeg";
-      var result = nmp.storage.current.update('view',current.view,'audio mpeg view update 8478432');
+      var result = nmp.storage.current.updateField('view',current.view,'audio mpeg view update 8478432');
       //var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
@@ -1074,9 +1076,9 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   if (descriptor == "src" || descriptor == "desc") {
     if (store == "db") {nmp.storage.currentUpdate(obj.objId,objStore);}
     if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
-    if (store == "icecast") {nmp.storage.current.updateOld(obj);}
-    if (store == "storage") {nmp.storage.current.update('objId',obj.objId,'nmp.view.eventClick 47482984');}
-    if (store == "storage") {nmp.storage.current.update('desc',obj.desc,'nmp.view.eventClick desc update 47565656565656482984');}
+    if (store == "icecast") {nmp.storage.current.updateObj(obj,'fdgf');}
+    nmp.storage.current.updateField('store',obj.store,'nmp.view.eventClick store update 47565656565656984');
+    if (store == "storage") {nmp.storage.current.updateRadio(obj,'nmp.view.eventclick radio update 4345375');}
     nmp.audio.prepare(obj.src);
     nmp.audio.play(obj.src);
     if (store !== "icecast") {nmp.app.update();}

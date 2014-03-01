@@ -22,18 +22,23 @@ nmp.storage.current.valid = function (obj) {
      if (obj.hasOwnProperty(prop)) {
         resultCount++;
         for (var i in nmp.storage.current.field) {
-	  if ( prop == nmp.storage.current.field[i]){ resultCount = resultCount +10; }		
+	  //if ( prop == nmp.storage.current.field[i]){ resultCount = resultCount +10; }		
 	}
+	if (prop in nmp.storage.current.field){ resultCount = resultCount +10; }		
 	if (prop == "volume" && obj["volume"] < 1) { resultCount = resultCount +1000; }
 	if (obj["volume"] == "n/a") { resultCount = resultCount -1; }
 	if (obj[nmp.storage.current.field[i]] == "n/a") { resultCount = resultCount -1; }
+	if (prop == "store" && nmp.app.radio.store[obj["store"]]) { resultCount = resultCount +10000; }
+	if (obj[prop] in nmp.app.radio.store) { resultCount = resultCount +10000; }
+        for (var i in nmp.app.radio.store) {
+	  if (obj[prop] == nmp.app.radio.store[i]){ resultCount = resultCount +10000; }		
+	}
      } 
   } 
   if (resultCount > 91) {result = true;}
   else {
 	result = false;console.log('validation: count='+resultCount +' '+result);}
-	var newObjStr=JSON.stringify(obj);
-        console.log('nmp.storage.current.valid: '+resultCount+' '+result+' '+newObjStr);
+  console.log('nmp.storage.current.valid: '+resultCount+' '+result+' '+JSON.stringify(obj));
   return result;
 };
 
@@ -139,7 +144,9 @@ fxosnetzradio.localstorage.statusSet = function () {
 }
 
 
-
+nmp.storage.current.set = function (obj) {
+  nmp.storage.currentSet(obj);
+}
 
 nmp.storage.currentSet = function (obj) {
    var array = nmp.storage.current.name;
@@ -306,30 +313,35 @@ nmp.storage.currentGet = function (e){
    }
 };
 
-nmp.storage.current.update = function (fieldname,field,desc){
-   var current = nmp.storage.currentGet ();
-   console.log( 'nmp.storage.current.update request ' +fieldname+ '='+field+' requestor='+desc);
-   for (var i in nmp.storage.current.field) {
-      if (nmp.storage.current.field[i] == fieldname) {
+nmp.storage.current.updateField = function (fieldname,field,desc){
+  var current = nmp.storage.currentGet ();
+  if (typeof current !== 'undefined' && current !== null && fieldname && field && desc) {
+    console.log( 'nmp.storage.current.update request ' +fieldname+ '='+field+' requestor='+desc);
+    for (var i in nmp.storage.current.field) {
+      if (current.hasOwnProperty(nmp.storage.current.field[i])&&nmp.storage.current.field[i] == fieldname) {
 	   current[nmp.storage.current.field[i]] = field;
-           nmp.storage.currentSet(current); 
+           nmp.storage.current.set(current); 
       }
-   }
-}
+    }
+  }
+};
 
 
-nmp.storage.current.updateOld = function (obj) {
-   var current = nmp.storage.currentGet ();
-   console.log( 'nmp.storage.current.update request' +JSON.stringify(obj));
-   for (var i in nmp.storage.current.field) {
-      if (obj.hasOwnProperty(nmp.storage.current.field[i])) {
-	if (obj[nmp.storage.current.field[i]] !== "n/a") { 
+nmp.storage.current.updateRadio = function (obj,desc) {
+  var current = nmp.storage.currentGet ();
+  if (typeof current !== 'undefined' && current !== null && nmp.app.radio.valid(obj) && desc) {
+    console.log( 'nmp.storage.current.update request ' +JSON.stringify(obj)+' requestor='+desc);
+    for (var i in nmp.storage.current.field) {
+      for (var j in nmp.app.radio.field) {
+       if (obj.hasOwnProperty(nmp.storage.current.field[i])&&obj.hasOwnProperty(nmp.app.radio.field[j]) ) {
+	 if (obj[nmp.storage.current.field[i]] !== "n/a") { 
 	   current[nmp.storage.current.field[i]] = obj[nmp.storage.current.field[i]];
-        }
-      }
+         }
+       }
+     }
    }
-   console.log( 'nmp.storage.current.update set request' +JSON.stringify(current));
-   //if (nmp.storage.current.valid(current)) { nmp.storage.currentSet(current); }
+  }
+           nmp.storage.current.set(current); 
 };
 
 
