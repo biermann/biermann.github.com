@@ -333,15 +333,15 @@ nmp.storage.current.updateRadio = function (obj,desc) {
     console.log( 'nmp.storage.current.update request ' +JSON.stringify(obj)+' requestor='+desc);
     for (var i in nmp.storage.current.field) {
       for (var j in nmp.app.radio.field) {
-       if (obj.hasOwnProperty(nmp.storage.current.field[i])&&obj.hasOwnProperty(nmp.app.radio.field[j]) ) {
-	 if (obj[nmp.storage.current.field[i]] !== "n/a") { 
-	   current[nmp.storage.current.field[i]] = obj[nmp.storage.current.field[i]];
-         }
-       }
-     }
-   }
+        if (obj.hasOwnProperty(nmp.storage.current.field[i])&&obj.hasOwnProperty(nmp.app.radio.field[j]) ) {
+	  if (obj[nmp.storage.current.field[i]] !== "n/a") { 
+	    current[nmp.storage.current.field[i]] = obj[nmp.storage.current.field[i]];
+          }
+        }
+      }
+    }
   }
-           nmp.storage.current.set(current); 
+  nmp.storage.current.set(current); 
 };
 
 

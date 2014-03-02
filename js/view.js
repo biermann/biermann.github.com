@@ -1075,7 +1075,7 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   }
   if (descriptor == "src" || descriptor == "desc") {
     if (store == "db") {nmp.storage.currentUpdate(obj.objId,objStore);}
-    if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore);}
+    if (store == "db") {nmp.db.objectUpdateStats(obj.objId,objStore,'nmp.view.eventClick stats update 47564');}
     if (store == "icecast") {nmp.storage.current.updateObj(obj,'fdgf');}
     nmp.storage.current.updateField('store',obj.store,'nmp.view.eventClick store update 47565656565656984');
     if (store == "storage") {nmp.storage.current.updateRadio(obj,'nmp.view.eventclick radio update 4345375');}

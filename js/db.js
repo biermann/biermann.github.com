@@ -210,9 +210,9 @@ nmp.db.objectDel = function(key,objStore) {
 
 
 //fxosnetzradio.browserdb.objectUpdateStats(row.objId,objStore);
-nmp.db.objectUpdateStats = function(key,objStore) {
-   //console.log("updatestat: ",key,objStore);
-   if (fxosnetzradio.browserdb.ok() && objStore !== null && key !== null){
+nmp.db.objectUpdateStats = function(key,objStore,desc) {
+  if (nmp.db.ok() && objStore !== null && key !== null && desc){
+    console.log( 'nmp.storage.current.objectUpdatestat request key='+key+' store='+objStore+' requestor='+desc);
       //var db = fxosnetzradio.browserdb.db;
       //var store = db.transaction(objStore, "readwrite").objectStore(objStore);
       var db = nmp.db.db;
@@ -233,10 +233,10 @@ nmp.db.objectUpdateStats = function(key,objStore) {
       request.onsuccess = function(e) {
           obj  = e.target.result;
       if (obj == null) {
-            console.log("obj not found: ",key,objStore);
+            console.log("obj not found: "+key+objStore+' requestor='+desc);
       }
       else {
-            //console.log(objStore+key+" obj found "+obj.usageCounter+" "+obj.lastUsed);
+            console.log(objStore+key+" obj get found counter="+obj.usageCounter+" lastUsed="+obj.lastUsed+' requestor='+desc);
             obj.lastUsed=new Date().getTime();
             if (obj.usageCounter ) { obj.usageCounter = obj.usageCounter + 1;}
             if (!obj.usageCounter ) { obj.usageCounter = 1;}
@@ -244,11 +244,11 @@ nmp.db.objectUpdateStats = function(key,objStore) {
 	    var request = store.put(obj);
             request.onsuccess = function(e) {
               //console.log("object update: ",key,obj,objStore,e);
-            //console.log(objStore+key+" obj update"+obj.usageCounter+" "+obj.lastUsed);
+            console.log('store='+objStore+' key='+key+" obj put counter="+obj.usageCounter+" lastUsed="+obj.lastUsed+' requestor='+desc);
               //update();
             };
             request.onerror = function(e) {
-               console.log("Error object update: ",key,objStore,e);
+               console.log("Error object update: ",key,objStore,e+' requestor='+desc);
             };
       }
       };
