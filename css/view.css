@@ -41,8 +41,23 @@ text-align: center;
     font-size: 24px;
 }
 
+.nmpView  li {
+    display:inline-block;
+    text-align: center;
+    width: 100%;
+    vertical-align: top;
+    font-size: 24px;
+    margin: 0.4em;
+
+}
+
 .nmpView  a {
 	font-size: 24px;
+  background: #fafafa url(../image/button/ui/default.png) repeat-x left bottom;
+    margin: 0.4em;
+padding: 0.2em;
+  border: 0.1rem solid #9f9f9f;
+  border-radius: 0.3rem;
 }
 
 .nmpView input {
