@@ -674,7 +674,7 @@ nmp.view.update = function (view) {
         if (objects[i].type == "audio/mpeg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store);}
       }
 
-      nmp.view.renderLocalstorageStatus (elementId);	
+      //nmp.view.renderLocalstorageStatus (elementId);	
       current.store= "db";
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("audio/mpeg");
