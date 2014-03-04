@@ -118,7 +118,7 @@ Object.defineProperty(nmp.view, 'option', {
 Object.defineProperty(nmp.view, 'list', {
   enumerable: true, 
   writable: false, 
-  //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","lastUsed","usageCounter"], 
+  //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","lastUsed","usageCounter","objId","store"], 
   value: ["desc","src","type","www","delete","edit","pause","stop","duplicate"], 
   configurable: false
 });
@@ -190,6 +190,8 @@ Object.defineProperty(nmp.db.radio, 'readonlyObj', {
 });
 
 nmp.touch = {};
+
+nmp.tempArray = [];
 
 //to delete
 var fxosnetzradio = {};

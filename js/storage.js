@@ -89,6 +89,25 @@ nmp.storage.radio.objectDel = function (obj) {
 
 
 
+nmp.storage.radio.updateStats = function (obj,desc) {
+  var array = nmp.storage.radio.name;
+  var objects = JSON.parse(localStorage.getItem(array));
+  var newArray = objects;
+  var newObj = obj;
+  if (typeof objects !== 'undefined' && objects !== null && nmp.app.radio.valid(obj) && desc) {
+    console.log( 'nmp.storage.radio.updateStats request ' +JSON.stringify(obj)+' requestor='+desc);
+    for(var i = newArray.length - 1; i >= 0; i--) {
+      if(newArray[i].objId === obj.objId) {
+        newArray.splice(i, 1);
+        newObj.lastUsed=new Date().getTime();
+        newArray.push(newObj);
+      }
+    }   
+    localStorage.removeItem(array);
+    localStorage.setItem(array, JSON.stringify(newArray));	
+  }
+};
+
 
 
 
@@ -343,6 +362,7 @@ nmp.storage.current.updateRadio = function (obj,desc) {
   }
   nmp.storage.current.set(current); 
 };
+
 
 
 
