@@ -14,6 +14,13 @@ Object.defineProperty(nmp.app.settings, 'reset current', {
   value: "click", 
   configurable: false
 });
+Object.defineProperty(nmp.app.settings, 'debug', {
+  enumerable: true, 
+  writable: false, 
+  value: "boolean", 
+  configurable: false
+});
+
 nmp.app.radio = {};
 Object.defineProperty(nmp.app.radio, 'name', {
   enumerable: true, 
@@ -89,7 +96,7 @@ Object.defineProperty(nmp.storage.current, 'name', {
 Object.defineProperty(nmp.storage.current, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store"], 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store","debug"], 
   configurable: false
 });
 

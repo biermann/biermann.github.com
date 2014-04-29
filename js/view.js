@@ -419,7 +419,17 @@ nmp.view.update = function (view) {
     var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
-      nmp.view.renderStatus (elementId);	
+      nmp.view.renderStatus (elementId);
+	
+      var array = nmp.storage.radio.name;
+      var objects = JSON.parse(localStorage.getItem(array));
+      current.store = "storage";
+      for (var i in objects) {
+    	objects[i].view = "audio/ogg" ; 
+        objects[i].store = current.store ;
+        if (objects[i].type == "audio/ogg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store);}
+      }
+
       current.store= "db";
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
       var keyRange = IDBKeyRange.only("audio/ogg");
@@ -791,7 +801,7 @@ nmp.view.renderSettings = function (id) {
                 newElement.dataset.prop = prop ;
                 newElement.dataset.boolean = current[prop] ;
              }
-             if (current[prop] == "true" && nmp.app.settings[i] == "boolean") { newElement.setAttribute('checked','checked');}
+             if (current[prop] == "true" && nmp.app.settings[i] == "boolean" && prop == i) { newElement.setAttribute('checked','checked');}
             //if (nmp.app.settings[i] == "boolean") { newElement.dataset.boolean = current[prop]; } 
           }
        		      if (nmp.app.settings[i] == "boolean") { 
