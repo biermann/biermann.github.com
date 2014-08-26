@@ -666,6 +666,21 @@ nmp.view.update = function (view) {
 	nmp.view.renderList(elementId,objects[i],array,current.store);
       }
     }
+    if (view == "drawer" ) {
+      current.view = "drawer";
+      current.store = "storage";
+      var result = nmp.storage.current.updateField('view',current.view,'drawer view update 8474332');
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      nmp.view.renderStatus (elementId);	
+      var array = nmp.storage.radio.name;
+      var temp = current;		
+      for (var i in nmp.view.option) {
+	temp.view = nmp.view.option[i];
+      	nmp.view.renderDrawer(elementId,temp);
+      	//nmp.view.renderDrawer(elementId,nmp.view.option[i]);
+      }
+    }
 
     if (view == "audio/mpeg" ) {
       current.view = "audio/mpeg";
@@ -706,6 +721,32 @@ nmp.view.update = function (view) {
 
 };
 
+nmp.view.renderDrawer = function (id,entry) {
+  if (id !== null) {
+    var element = document.getElementById(id);
+  }
+  var a = document.createElement("a");
+  var li = document.createElement("li");
+  var hr = document.createElement("hr");
+  var br = document.createElement("br");
+  if (entry !== null) {
+    a.textContent = ""+entry.view;
+  }
+  a.setAttribute('id','nmpViewDrawer');
+  a.setAttribute('class',nmp.view.class);
+  a.dataset.id = id; 
+  a.dataset.obj = JSON.stringify(entry); 
+  a.dataset.descriptor = "drawer"; 
+  a.dataset.store = "na"; 
+  a.dataset.objstore = "na"; 
+  //console.log('nmp.view.eventClick 1 '+test2+test+entry);
+  a.addEventListener("click", function(e) {
+    //console.log('nmp.view.eventClick 2'+entry.view);
+    nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-objstore'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+  }, false);
+  li.appendChild(a);
+  element.appendChild(li);
+}
 
 fxosnetzradio.view.renderbuttonControl = function (id) {
 	nmp.view.renderbuttonControl (id);
@@ -1096,8 +1137,9 @@ nmp.view.renderList = function (id,obj,objStore,store) {
 
 
 nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
+  console.log('nmp.view.eventClick id=',id,'objStr=',objStr,'objStore=',objStore,'store=',store,'descriptor=',descriptor);
   var obj = JSON.parse(objStr);
-  console.log('nmp.view.eventClick id=',id,obj,'objStore=',objStore,'store=',store,'descriptor=',descriptor);
+  console.log('nmp.view.eventClick id=',id,'obj=',obj,'objStore=',objStore,'store=',store,'descriptor=',descriptor);
   nmp.app.vibrate();
   if (descriptor == "www") {
     window.open(obj.www,'_blank'); 
@@ -1136,6 +1178,12 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   if (descriptor == "stop") {
     nmp.audio.pause("stop");
     nmp.app.updateControl();
+  }
+  if (descriptor == "drawer") {
+    var current = nmp.storage.currentGet();
+    current.view = obj.view;
+    nmp.storage.currentSet(current);
+    nmp.app.update();
   }
 };
 

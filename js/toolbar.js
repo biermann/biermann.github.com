@@ -6,7 +6,8 @@ nmp.app.toolbar = function (e) {
     	if (audio && menu) {
         	menu.onclick = function () {		
 		   	nmp.app.vibrate();
-	         	nmp.view.rotate('right');	
+	         	//nmp.view.rotate('right');
+			nmp.view.update('drawer');	
        		}
         }
 

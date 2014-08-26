@@ -48,7 +48,7 @@ text-align: center;
     vertical-align: top;
     font-size: 24px;
     margin: 0.4em;
-
+    z-index: 1;
 }
 
 .nmpView  a {
