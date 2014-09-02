@@ -31,6 +31,7 @@ const radioData = [
 nmp.db.open = function() {
   if (!window.indexedDB) {
     //window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+    var result = nmp.storage.current.updateField('storePrefered',"storage",'no indexedb store prefered storage update 5478432');
   }
   else {
     var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
