@@ -97,7 +97,7 @@ Object.defineProperty(nmp.storage.current, 'name', {
 Object.defineProperty(nmp.storage.current, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store","debug"], 
+  value: ["objId","objOwner","src","desc","www","type","volume","vibrate","view","store","debug","storePrefered"], 
   configurable: false
 });
 

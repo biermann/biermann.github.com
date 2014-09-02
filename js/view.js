@@ -674,11 +674,10 @@ nmp.view.update = function (view) {
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
       var array = nmp.storage.radio.name;
-      var temp = current;		
+      var temp = {  view: "n/a" }
       for (var i in nmp.view.option) {
 	temp.view = nmp.view.option[i];
       	nmp.view.renderDrawer(elementId,temp);
-      	//nmp.view.renderDrawer(elementId,nmp.view.option[i]);
       }
     }
 

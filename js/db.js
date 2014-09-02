@@ -91,6 +91,7 @@ nmp.db.open = function() {
     nmp.db.db = event.target.result;
     //fxosnetzradio.browserdb.db = event.target.result;
     nmp.db.statusSet ();
+    var result = nmp.storage.current.updateField('storePrefered',"db",'openrequest onsuccess store prefered update 86478432');
     //var trans = fxosnetzradio.browserdb.db.transaction([radioDBstore], "readwrite");
     //var store = trans.objectStore(radioDBstore);
     //fxosnetzradio.browserdb.radioAdd(fxosnetzradio.radioData);
@@ -108,7 +109,7 @@ nmp.db.open = function() {
   openRequest.onerror = function(e) {
       console.log("Database error: " + e.target.errorCode);
     updateStr += 'onerror: ' +openRequest.errorCode ;
-    nmp.db.statusupdate (updateStr);
+    //nmp.db.statusupdate (updateStr);
     alert("db open error");
   };
   openRequest.onblocked = function(event) {
