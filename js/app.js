@@ -1,4 +1,4 @@
-nmp.app.init = function (e) {
+function nmp.app.init  {
 
 // Install app
 if (navigator.mozApps) {
