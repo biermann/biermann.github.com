@@ -48,7 +48,7 @@ nmp.app.toolbar = function (e) {
 		nmp.audio.volume(volume);
 		current.volume = volume;
 		nmp.storage.currentSet(current);
-                updateControl ();
+                nmp.app.updateControl ();
                 nmp.storage.statusSet();
         };
     }
@@ -68,7 +68,7 @@ nmp.app.toolbar = function (e) {
 		nmp.audio.volume(volume);
 		current.volume = volume;
 		nmp.storage.currentSet(current);
-                updateControl ();
+                nmp.app.updateControl ();
                 nmp.storage.statusSet();
         }
 
