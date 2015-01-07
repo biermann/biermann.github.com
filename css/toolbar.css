@@ -41,16 +41,4 @@
   background-color: #008aaa;
 }
 
-[role="toolbar"] #audio {
-  width: 5rem;
-  height: 6rem;
-  border: none;
-  font: normal 24px "mozTT", sans-serif;
-  color: white;
-  background: transparent no-repeat 50% 50%;
-  padding: 0;
-  border-radius: 0;
-  align-self: center;
-  visibility: hidden;
-}
 
