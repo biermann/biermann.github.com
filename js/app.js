@@ -1,6 +1,9 @@
 nmp.app.init = function ()   {
 
 // Install app
+
+var isInstalled = window.locationbar && !window.locationbar.visible;
+if (isInstalled) {
 if (navigator.mozApps) {
     var checkIfInstalled = navigator.mozApps.getSelf();
     checkIfInstalled.onsuccess = function () {
@@ -30,6 +33,12 @@ if (navigator.mozApps) {
 else {
     console.log("Open Web Apps not supported");
 }
+}
+else {
+    console.log("Open Web App not installed. simple test. navigator.mozApps test does not work on ff 34.0.5 for suse.");
+}
+
+
 
 nmp.app.vibrate = function (e) {
 	if('vibrate' in navigator && nmp.storage.currentGet().vibrate == "true") {
