@@ -800,20 +800,22 @@ nmp.view.renderbuttonControl = function (id) {
           var volume = nmp.storage.currentGet().volume;
 	  volume = volume + 0.05;
 	  if (volume >= 1) { volume = 0.99; }
-	  audio.volume = volume;
+	  //audio.volume = volume;
+          nmp.audio.volume(volume);
 	  current.volume = volume;
-	  nmp.storage.currentSet(current);
-          updateControl ();
+          var result = nmp.storage.current.updateField('volume',current.volume,'renderbuttoncontrol  volumeUp update 84548432');
+          nmp.app.updateControl ();
        }, false);
        volumeDown.addEventListener("click", function(e) {
           var volume = nmp.storage.currentGet().volume;
 	  if (volume == 0.99) {volume = volume - 0.04;}
 	  else {volume = volume - 0.05;}
 	  if (volume <= 0.1) {volume = 0.1;}
-	  audio.volume = volume;
+	  //audio.volume = volume;
+          nmp.audio.volume(volume);
 	  current.volume = volume;
-	  nmp.storage.currentSet(current);
-          updateControl ();
+          var result = nmp.storage.current.updateField('volume',current.volume,'renderbuttoncontrol  volumeDown update 484548432');
+          nmp.app.updateControl ();
        }, false);
        //element.appendChild(br);
        element.appendChild(playPause);
