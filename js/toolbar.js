@@ -48,11 +48,7 @@ nmp.app.toolbar = function (e) {
 		}
 		nmp.audio.volume(volume);
 		current.volume = volume;
-<<<<<<< HEAD
                 var result = nmp.storage.current.updateField('volume',current.volume,'toolbar volumeDown update 85478432');
-=======
-		nmp.storage.currentSet(current);
->>>>>>> b44cfadfc4e184016e8cc2b20b3e3613dc2c702e
                 nmp.app.updateControl ();
                 nmp.storage.statusSet();
         };
@@ -73,11 +69,7 @@ nmp.app.toolbar = function (e) {
 		}
 		nmp.audio.volume(volume);
 		current.volume = volume;
-<<<<<<< HEAD
                 var result = nmp.storage.current.updateField('volume',current.volume,'toolbar volumeUp update 8548432');
-=======
-		nmp.storage.currentSet(current);
->>>>>>> b44cfadfc4e184016e8cc2b20b3e3613dc2c702e
                 nmp.app.updateControl ();
                 nmp.storage.statusSet();
         }
