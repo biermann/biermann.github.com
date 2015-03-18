@@ -677,7 +677,7 @@ nmp.view.update = function (view) {
       var temp = {  view: "n/a" }
       for (var i in nmp.view.option) {
 	temp.view = nmp.view.option[i];
-      	nmp.view.renderDrawer(elementId,temp);
+      	nmp.view.renderDrawer2(elementId,temp);
       }
     }
 
@@ -719,6 +719,41 @@ nmp.view.update = function (view) {
 
 
 };
+
+
+
+nmp.view.renderDrawer2 = function (id,entry) {
+  if (id !== null) {
+    var element = document.getElementById(id);
+  }
+  var button= document.createElement("button");
+  var a = document.createElement("button");
+  //var a = document.createElement("a");
+  var li = document.createElement("li");
+  var hr = document.createElement("hr");
+  var br = document.createElement("br");
+  if (entry !== null) {
+    a.textContent = ""+entry.view;
+  }
+  a.setAttribute('id','nmpViewDrawer');
+  a.setAttribute('type','drawer');
+  a.setAttribute('class',nmp.view.class);
+  a.dataset.id = id; 
+  a.dataset.obj = JSON.stringify(entry); 
+  a.dataset.descriptor = "drawer"; 
+  a.dataset.store = "na"; 
+  a.dataset.objstore = "na"; 
+  //console.log('nmp.view.eventClick 1 '+test2+test+entry);
+  a.addEventListener("click", function(e) {
+    //console.log('nmp.view.eventClick 2'+entry.view);
+    nmp.view.eventClick(this.getAttribute('data-id'),this.getAttribute('data-obj'),this.getAttribute('data-objstore'),this.getAttribute('data-store'),this.getAttribute('data-descriptor'));
+  }, false);
+  //li.appendChild(a);
+  //element.appendChild(li);
+  element.appendChild(a);
+}
+
+
 
 nmp.view.renderDrawer = function (id,entry) {
   if (id !== null) {

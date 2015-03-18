@@ -19,6 +19,13 @@ text-align: center;
     margin-left: 5px;
 }
 
+.nmpView [type|="drawer"] { 
+    width: auto;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 
 
 .nmpView [type=button]:active {
