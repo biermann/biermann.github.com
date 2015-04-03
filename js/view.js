@@ -152,18 +152,17 @@ nmp.view.update = function (view) {
              var pickAny = new MozActivity({
                  name: "pick",
 		data: {
-         		type: ["text/plain"]
-      		}
+         		type: ["text/plain"]}
              });
 
-            pickAny.onsuccess = function () { 
+            pickAny.onsuccess = function () {
                 var picked = document.createElement("a");
                     picked.innerHTML = window.URL.createObjectURL(this.result.blob);
                     element.appendChild(picked);
                 window.alert("success");
             };
 
-            pickAny.onerror = function () { 
+            pickAny.onerror = function () {
                 window.alert("error");
                 console.log("An error occurred");
             };
