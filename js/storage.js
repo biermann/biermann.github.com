@@ -217,7 +217,7 @@ nmp.storage.currentSet = function (obj) {
    console.log( 'nmp.storage.currentSet objectinvalid request' +JSON.stringify(obj));
    console.log( 'nmp.storage.currentSet objectinvalid current' +JSON.stringify(current));
    }
-   if (!nmp.storage.currentobjectValid (obj) && !nmp.storage.currentobjectValid (current)) {
+   if (!nmp.storage.current.valid (obj) && !nmp.storage.current.valid (current)) {
       var newObj = {};
       for (var i in nmp.storage.field) {
 	 if (typeof newObj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
@@ -295,9 +295,10 @@ nmp.storage.currentGet = function (e){
 	var newObj = {};
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
         var newArray = [];
-        newArray.push(newObj);
-        localStorage.removeItem(array);
-        localStorage.setItem(array, JSON.stringify(newArray));	
+        //newArray.push(newObj);
+        //localStorage.removeItem(array);
+        //localStorage.setItem(array, JSON.stringify(newArray));
+        nmp.storage.current.reset();	
         return newObj;
         //return nmp.storage.currentGet();
      }
@@ -500,8 +501,9 @@ nmp.storage.init= function(e) {
       }
       var newArray = [];
       newArray.push(newObj);
-      localStorage.removeItem(array);
-      localStorage.setItem(array, JSON.stringify(newArray));	
+      //localStorage.removeItem(array);
+      //localStorage.setItem(array, JSON.stringify(newArray));
+      nmp.storage.current.reset();	
    }
    if (objects) {
      console.log( 'storage init: objects');
@@ -512,8 +514,9 @@ nmp.storage.init= function(e) {
         for (var i in nmp.storage.field) { newObj[nmp.storage.field[i]]  = 'n/a'; }
         var newArray = [];
         newArray.push(newObj);
-      localStorage.removeItem(array);
-      localStorage.setItem(array, JSON.stringify(newArray));	
+        //localStorage.removeItem(array);
+        //localStorage.setItem(array, JSON.stringify(newArray));	
+        nmp.storage.current.set(newObj); 
      }
      if (obj) {
         console.log( 'storage init: obj defined');
@@ -522,8 +525,9 @@ nmp.storage.init= function(e) {
         }
         var newArray = [];
         newArray.push(obj);
-        localStorage.removeItem(array);
-        localStorage.setItem(array, JSON.stringify(newArray));	
+        //localStorage.removeItem(array);
+        //localStorage.setItem(array, JSON.stringify(newArray));	
+        nmp.storage.current.set(obj); 
      }
   }
 };
@@ -539,8 +543,9 @@ nmp.storage.init2= function(e) {
       for (var i in nmp.app.radio.readonlyObj) {
         newArray.push (nmp.app.radio.readonlyObj[i]);
       }
-      localStorage.removeItem(array);
-      localStorage.setItem(array, JSON.stringify(newArray));	
+      //localStorage.removeItem(array);
+      //localStorage.setItem(array, JSON.stringify(newArray));
+      nmp.storage.current.reset();	
    }
    if (objects) {
      var obj = objects[0];
@@ -552,6 +557,7 @@ nmp.storage.init2= function(e) {
         newArray.push(newObj);
       //localStorage.removeItem(array);
       //localStorage.setItem(array, JSON.stringify(newArray));	
+        nmp.storage.current.set(newObj); 
      }
      if (obj) {
         console.log( 'storage init: obj defined');
@@ -562,6 +568,7 @@ nmp.storage.init2= function(e) {
         newArray.push(obj);
         //localStorage.removeItem(array);
         //localStorage.setItem(array, JSON.stringify(newArray));	
+        nmp.storage.current.set(obj); 
      }
   }
   for (var i in nmp.app.radio.readonlyObj) {
