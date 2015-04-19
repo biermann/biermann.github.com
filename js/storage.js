@@ -163,7 +163,8 @@ fxosnetzradio.localstorage.statusSet = function () {
 }
 
 
-nmp.storage.current.set = function (obj) {
+nmp.storage.current.set = function (obj,desc) {
+  console.log( 'nmp.storage.currentSet request' +JSON.stringify(obj)+' requestor='+desc);
   nmp.storage.currentSet(obj);
 }
 
@@ -190,6 +191,8 @@ nmp.storage.currentSet = function (obj) {
          }
        }
    }
+   if (obj.volume <= 1 && obj.volume > 0) {obj.volume = Math.round(obj.volume*1000)/1000;}
+   //obj.volume = Math.round(obj.volume*1000)/1000;
    var newObjects = [];
    newObjects.push(obj);
    localStorage.removeItem(array);
@@ -273,7 +276,7 @@ nmp.storage.current.reset = function () {
          for (var i in nmp.storage.current.field) { newObj[nmp.storage.current.field[i]]  = 'n/a'; }
 	 newObj.view="settings";
 	 newObj.store="storage";
-	 newObj.volume="0.5";
+	 newObj.volume=0.5;
 	 newObj.vibrate="false";
          newArray.push(newObj);
          localStorage.removeItem(array);
@@ -308,7 +311,7 @@ nmp.storage.currentGet = function (e){
            for (var i in nmp.storage.current.field) {
 	      if (typeof obj[nmp.storage.current.field[i]] == 'undefined'){obj[nmp.storage.current.field[i]]  = 'n/a';}
            }
-           if (obj.volume == "n/a"){obj.volume = "0.5";}
+           if (obj.volume == "n/a"){obj.volume = 0.5;}
 	   obj.store = "storage";
 	   obj.view = "settings";
            //console.log( 'nmp.storage.currentGet objectinvalid return 2 ' +JSON.stringify(obj));
@@ -340,7 +343,7 @@ nmp.storage.current.updateField = function (fieldname,field,desc){
     for (var i in nmp.storage.current.field) {
       if (current.hasOwnProperty(nmp.storage.current.field[i])&&nmp.storage.current.field[i] == fieldname) {
 	   current[nmp.storage.current.field[i]] = field;
-           nmp.storage.current.set(current); 
+           nmp.storage.current.set(current,desc); 
       }
     }
   }

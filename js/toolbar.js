@@ -38,10 +38,10 @@ nmp.app.toolbar = function (e) {
                 var volume = nmp.storage.currentGet().volume;
 		//var volume = current.volume;
 		if (volume == 0.99) {
-		volume = volume - 0.04;
+		volume -= 0.04;
 		}
 		else {
-		volume = volume - 0.05;
+		volume -= 0.05;
 		}
 		if (volume <= 0.1) {
 		volume = 0.1;
@@ -63,7 +63,7 @@ nmp.app.toolbar = function (e) {
 		nmp.app.vibrate();
                 var volume = nmp.storage.currentGet().volume;
 		//var volume = current.volume;
-		volume = volume + 0.05;
+		volume += 0.05;
 		if (volume >= 1) {
 		volume = 0.99;
 		}
