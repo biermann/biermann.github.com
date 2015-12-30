@@ -123,6 +123,7 @@ footer {
     width: 100%;
     height: 5rem;
     bottom: 0;
+    z-index: 10;
 }
 
 [role="toolbar"] li button.update {
