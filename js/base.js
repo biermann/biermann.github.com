@@ -37,7 +37,8 @@ Object.defineProperty(nmp.app.radio, 'field', {
 Object.defineProperty(nmp.app.radio, 'store', {
   enumerable: true, 
   writable: false, 
-  value: ["db","storage","icecast"], 
+  //value: ["db","storage","icecast"], 
+  value: ["db"], 
   configurable: false
 });
 
@@ -128,7 +129,8 @@ Object.defineProperty(nmp.view, 'list', {
   enumerable: true, 
   writable: false, 
   //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","lastUsed","usageCounter","objId","store"], 
-  value: ["desc","src","type","www","delete","edit","pause","stop","duplicate"], 
+  //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate"], 
+  value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","store"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'class', {

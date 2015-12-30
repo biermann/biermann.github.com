@@ -470,15 +470,15 @@ nmp.view.update = function (view) {
 	nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
            result.continue();
       }
-      current.store = "storage";
+      //current.store = "storage";
       var array = nmp.storage.radio.name;
       var objects = JSON.parse(localStorage.getItem(array)); 
       for (var i in objects) {
     	objects[i].view = "myRadio" ; 
         objects[i].store = current.store ;
-        if (objects[i].owner == "browser") { nmp.view.renderbutton(elementId,objects[i],array,current.store); }
+        //if (objects[i].owner == "browser") { nmp.view.renderbutton(elementId,objects[i],array,current.store); }
       }
-      fxosnetzradio.view.renderbuttonControl(elementId);
+      nmp.view.renderbuttonControl(elementId);
     }
 
 
@@ -492,7 +492,8 @@ nmp.view.update = function (view) {
     while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
       nmp.view.renderbuttonControl(elementId);
-      var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      //var store = db.transaction(radioDBstore).objectStore(radioDBstore);
+      var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
       var keyRange = IDBKeyRange.only("browser");
       var index = store.index("objOwner");
       var cursorRequest = index.openCursor(keyRange);
@@ -506,13 +507,13 @@ nmp.view.update = function (view) {
 	nmp.view.renderList(elementId,result.value,nmp.app.radio.name,current.store);
            result.continue();
       }
-      current.store = "storage";
+      //current.store = "storage";
       var array = nmp.storage.radio.name;
       var objects = JSON.parse(localStorage.getItem(array)); 
       for (var i in objects) {
     	objects[i].view = "listMyRadio" ; 
         objects[i].store = current.store ;
-        if (objects[i].owner == "browser") { nmp.view.renderList(elementId,objects[i],array,current.store); }
+        //if (objects[i].owner == "browser") { nmp.view.renderList(elementId,objects[i],array,current.store); }
       }
     }
 
@@ -919,7 +920,10 @@ if (nmp.db.radioValid(obj) && obj.objId !== null) {
       var button= document.createElement("button");
       var buttonId= "button"+obj.view+obj.objId;
       var row = obj;
-      //console.log("fxosnetzradio.view.render: " ,id, object,fxosnetzradio.localstorage.currentGet());
+      if (nmp.storage.currentGet().debug == "true") {
+          console.log ("debug ",nmp.storage.currentGet().debug,":");
+          console.log (id,obj,objStore,store);
+      }
        button.innerHTML = obj.desc;
        button.name = obj.desc;
        button.dataset.descriptor = "desc"; 
@@ -1047,6 +1051,10 @@ nmp.view.renderList = function (id,obj,objStore,store) {
     var radioListAll = element;
   }
   if (nmp.app.radio.valid(obj) && id !== null) {
+      if (nmp.storage.currentGet().debug == "true") {
+          console.log ("debug ",nmp.storage.currentGet().debug,":");
+          console.log (id,obj,objStore,store);
+      }
 
   for (var i in nmp.view.list) {
     if (obj.hasOwnProperty(nmp.view.list[i])) {
