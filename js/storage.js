@@ -495,9 +495,10 @@ function storageevent() {
 nmp.storage.init= function(e) {
    var array = nmp.storage.name;
    var objects = JSON.parse(localStorage.getItem(array));
+   var desc = "nmp.storage.init";
    console.log( 'storage init');
    if (!objects) {
-      console.log( 'storage init: no objects');
+      console.log( 'storage init: no objects arrayname='+array);
       var newObj = {};
       for (var i in nmp.storage.field) {
 	 if (typeof newObj[nmp.storage.field[i]] == 'undefined'){newObj[nmp.storage.field[i]]  = 'n/a';}
@@ -509,7 +510,7 @@ nmp.storage.init= function(e) {
       nmp.storage.current.reset();	
    }
    if (objects) {
-     console.log( 'storage init: objects');
+     console.log( 'storage init: objects array='+array);
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
         console.log( 'storage init: obj undefined');
@@ -530,7 +531,7 @@ nmp.storage.init= function(e) {
         newArray.push(obj);
         //localStorage.removeItem(array);
         //localStorage.setItem(array, JSON.stringify(newArray));	
-        nmp.storage.current.set(obj); 
+        nmp.storage.current.set(obj,desc); 
      }
   }
 };
@@ -540,7 +541,7 @@ nmp.storage.init2= function(e) {
    var array = nmp.storage.radio.name;
    var objects = JSON.parse(localStorage.getItem(array));
    if (!objects) {
-      console.log( 'nmp.storage.init2: no objects');
+      console.log( 'nmp.storage.init2: no objects arrayname='+array);
       var newArray = [];
       var newObj = {};
       for (var i in nmp.app.radio.readonlyObj) {
@@ -548,9 +549,11 @@ nmp.storage.init2= function(e) {
       }
       //localStorage.removeItem(array);
       //localStorage.setItem(array, JSON.stringify(newArray));
-      nmp.storage.current.reset();	
+      //nmp.storage.current.reset();	
+      console.log( 'nmp.storage.init2: no objects current reset comment out 26.12.2016');
    }
    if (objects) {
+     console.log( 'nmp.storage.init2: objects');
      var obj = objects[0];
      if (typeof obj == 'undefined' || obj == null) {
         console.log( 'storage init: obj undefined');
@@ -575,7 +578,8 @@ nmp.storage.init2= function(e) {
      }
   }
   for (var i in nmp.app.radio.readonlyObj) {
-      nmp.storage.radio.objectAdd(nmp.app.radio.readonlyObj[i]);
+      //nmp.storage.radio.objectAdd(nmp.app.radio.readonlyObj[i]);
+      console.log( 'nmp.storage.init2: comment out object add problem 26.12.2016 '+i);
   }
 };
 
