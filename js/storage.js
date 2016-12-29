@@ -125,37 +125,41 @@ nmp.storage.statusSet = function () {
 
 fxosnetzradio.localstorage.statusSet = function () {
    //var db = fxosnetzradio.browserdb.db;
-        var	radioCurrent = nmp.storage.currentGet ();
+   var	radioCurrent = nmp.storage.currentGet ();
    var	elementId = 'localstorageStatus';
    var	element = document.getElementById(elementId);
    var	className = nmp.view.class;
    var 	currentdate = new Date(); 
-   var text = "";
+   var  text = "";
    text +=  currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds() + " ";
-   if (element) { element.textContent = text; }
+   text += "nmp.storage.currentGet result: "
+   //if (element) { element.textContent = text; }
         for (var prop in radioCurrent) {
           if (radioCurrent.hasOwnProperty(prop)) {
   		var newElement = document.createElement("a");
   		newElement.dataset.this = radioCurrent[prop]; 
   		//newElement.dataset.view = view; 
   		newElement.id = elementId + prop; 
+		text += ' '+prop+'='+radioCurrent[prop]+' ' ;
 		newElement.innerHTML = ' '+prop+'='+radioCurrent[prop]+' ' ;
                 newElement.setAttribute('class',className);
 		//text += '<a id=' + elementId + prop  + '  data-src=0 class=' + className + '>  #' + prop + ':<code>' + radioCurrent[prop] + '</code></a>';
 		//text += '<a id=' + elementId + prop  + '  data-src=0 class=' + className + '>  #' + prop + ':<code>' + radioCurrent[prop] + '</code></a>';
-              if (element) { element.appendChild(newElement); }
+              //if (element) { element.appendChild(newElement); }
             //console.log( 'update: ' +prop+': ' +this[prop]);
 	} 
        }
        var array = nmp.storage.radio.name;
        var objects = JSON.parse(localStorage.getItem(array));
        var newElement = document.createElement("a");
-       text = ' - '+nmp.storage.radio.name+'.count='+objects.length;
+       text += ' - arrayname='+nmp.storage.radio.name+': ';
+       if (nmp.storage.ok()) {text += ' - '+nmp.storage.radio.name+'.count='+objects.length;}
        text += " updatevalidator?" +updateValidator() ;
        text += " nmp.storage.ok?" +nmp.storage.ok() ;
-       newElement.innerHTML = text;
-       newElement.setAttribute('class',className);
-       if (element) { element.appendChild(newElement); }
+       nmp.storage.status = text;
+       //newElement.innerHTML = text;
+       //newElement.setAttribute('class',className);
+       //if (element) { element.appendChild(newElement); }
    //fxosnetzradio.localstorage.status = text;
    //text += " updatevalidator=" +updateValidator() ;
    //text += " fxosnetzradio.browserdb.ok=" +fxosnetzradio.browserdb.ok() ;
@@ -422,7 +426,7 @@ fxosnetzradio.localstorage.radioCurrentSet = function(src,desc,www,format,object
     //var radioListSelect = document.querySelector("#radioListSelect"),
   	//radioListSelection = radioListSelect.selectedIndex,
     var audio = document.querySelector("#audio");
-    var	radioCurrentArray = JSON.parse(sessionStorage.getItem("radioCurrent"));
+    var	radioCurrentArray = JSON.parse(sessionStorage.getItem("nmp.storage.current.name"));
 	//radioListArray = JSON.parse(localStorage.getItem("radioList"));
     //if (radioListSelect && audio && radioListArray && radioCurrentArray) {
     if (audio && radioCurrentArray) {
@@ -433,8 +437,8 @@ fxosnetzradio.localstorage.radioCurrentSet = function(src,desc,www,format,object
 	myObject.www = www;
 	myObject.objOwner = objectOwner;
 	myArrayObject.push(myObject);
-	localStorage.removeItem("radioCurrent");
-	localStorage.setItem("radioCurrent", JSON.stringify(myArrayObject));
+	localStorage.removeItem("nmp.storage.current.name");
+	localStorage.setItem("nmp.current.storage.name", JSON.stringify(myArrayObject));
 	//var myArrayObject = JSON.parse(localStorage.getItem("radioList")),
 	//radioListArray = JSON.parse(localStorage.getItem("radioList")),
 	//radioCurrentArray = JSON.parse(sessionStorage.getItem("radioCurrent")),
@@ -493,9 +497,9 @@ function storageevent() {
 };
 
 nmp.storage.init= function(e) {
-   var array = nmp.storage.name;
+   var array = nmp.storage.current.name;
    var objects = JSON.parse(localStorage.getItem(array));
-   var desc = "nmp.storage.init";
+   var desc = "nmp.storage.init:"+array;
    console.log( 'storage init');
    if (!objects) {
       console.log( 'storage init: no objects arrayname='+array);

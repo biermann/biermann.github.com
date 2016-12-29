@@ -1008,9 +1008,11 @@ nmp.view.renderLocalstorageStatus = function (id) {
   var li = document.createElement("li");
   var hr = document.createElement("hr");
   var br = document.createElement("br");
+  var text = "";
+  text += "" +nmp.storage.status;
+  a.textContent = text;
   a.setAttribute('id','localstorageStatus');
   a.setAttribute('class',nmp.view.class);
-  element.appendChild(a);
   li.appendChild(a);
   element.appendChild(li);
   nmp.storage.statusSet ();

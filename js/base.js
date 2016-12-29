@@ -73,7 +73,8 @@ nmp.storage = {};
 Object.defineProperty(nmp.storage, 'name', {
   enumerable: true, 
   writable: false, 
-  value: "radioCurrent", 
+  //value: "radioCurrent", 
+  value: "n/a", 
   configurable: false
 });
 Object.defineProperty(nmp.storage, 'status', {
