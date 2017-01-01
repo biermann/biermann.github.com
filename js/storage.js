@@ -156,6 +156,7 @@ fxosnetzradio.localstorage.statusSet = function () {
        if (nmp.storage.ok()) {text += ' - '+nmp.storage.radio.name+'.count='+objects.length;}
        text += " updatevalidator?" +updateValidator() ;
        text += " nmp.storage.ok?" +nmp.storage.ok() ;
+       text += " -  nmp.app.version=" +nmp.app.version ;
        nmp.storage.status = text;
        //newElement.innerHTML = text;
        //newElement.setAttribute('class',className);

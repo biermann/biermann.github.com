@@ -1015,7 +1015,7 @@ nmp.view.renderLocalstorageStatus = function (id) {
   a.setAttribute('class',nmp.view.class);
   li.appendChild(a);
   element.appendChild(li);
-  nmp.storage.statusSet ();
+  //nmp.storage.statusSet ();
 }
 
 nmp.view.renderBrowserdbStatus = function (id) {

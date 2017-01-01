@@ -1,6 +1,13 @@
 var nmp = {};
 
 nmp.app = {};
+Object.defineProperty(nmp.app, 'version', {
+  enumerable: true, 
+  writable: false, 
+  value: "201701011018", 
+  configurable: false
+});
+
 nmp.app.settings = {};
 Object.defineProperty(nmp.app.settings, 'vibrate', {
   enumerable: true, 
