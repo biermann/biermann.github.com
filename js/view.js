@@ -1069,12 +1069,12 @@ nmp.view.renderHeaderFav = function (desc) {
         for (var prop in obj) {
           if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] == "true") {
             headerFav.style.backgroundImage="url('image/header/icon/fav-on.png')";
-            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view)"+obj.objId+"";
+            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view) "+obj.objId+"";
             console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
           }
           if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] != "true") {
             headerFav.style.backgroundImage="url('image/header/icon/fav-off.png')";
-            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view)"+obj.objId+"";
+            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view) "+obj.objId+"";
             console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
           }
         }
