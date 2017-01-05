@@ -2,13 +2,12 @@ div.nmpView {
     margin-top:5rem;
 left: 0px; 
 right: 0px;
-top: 0px; 
-bottom: 0px; 
-position: relative;
+bottom: 7rem; 
 z-index: 1;
-text-align: center;
+text-align: right;
     width: 100%;
-    height: 100%;
+vertical-align: bottom;
+position: fixed;
 }
 
 
