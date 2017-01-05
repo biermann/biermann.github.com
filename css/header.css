@@ -2,6 +2,70 @@
 * HEADERS: default
 * ---------------------------------- */
 
+[role="header"] {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    color: #fff;
+  background: url(../image/header/ui/header.png) repeat-x 0 0;
+  background-size: auto 100%;
+}
+
+section[role="header"] > header:first-child {
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  color: #fff;
+  background: url(../image/header/ui/header.png) repeat-x 0 0;
+  background-size: auto 100%;
+  border: none;
+}
+
+
+section[role="header"] > header:first-child:after {
+  content: "";
+  display: block;
+  height: 0.3rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: url(../image/header/ui/shadow.png) repeat-x 0 0;
+  background-size: auto 100%;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    height: 5rem;
+    bottom: 0;
+    z-index: 10;
+}
+
+[role="header"] ul {
+  float: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[role="header"] ul:last-child {
+    float: right;
+}
+
+[role="header"] li {
+  float: left;
+}
+
+[role="header"] button {
+    height: 6rem;
+    color: white;
+    background: transparent no-repeat 50% 50%;
+    padding: 0;
+    border-radius: 0;
+}
+
 [role="region"] {
   width: 100%;
   position: fixed;
@@ -129,7 +193,6 @@ section[role="region"] > header:first-child button {
   background: none;
   padding: 0;
   overflow: hidden;
-  font: 400 1.5rem/1.1em "MozTT", Sans-serif;
   color: #fff;
   border-radius: 0;
   text-decoration: none;

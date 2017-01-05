@@ -152,4 +152,51 @@ footer {
   visibility: hidden;
 }
 
+#headerFav {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 5rem;
+    height: 6rem;
+    float: right;
+  border: none;
+  color: white;
+  background: transparent no-repeat 50% 50%;
+  padding: 0;
+  border-radius: 0;
+  text-align: right;
+}
+
+#headerFavObjId {
+    position: absolute;
+    right: 5rem;
+    top: 0px;
+    height: 6rem;
+    float: right;
+  color: white;
+  background: transparent no-repeat 50% 50%;
+  padding: 0;
+  border-radius: 0;
+  text-align: right;
+}
+
+#headerStatus {
+    right: 5rem;
+    height: 6rem;
+    float: right;
+  text-align: right;
+    top: 0px;
+  text-align: right;
+  background: transparent no-repeat 50% 50%;
+}
+
+
+
+
+
+
+#online-status.offline {
+    background: #ff0000;
+}
+
 

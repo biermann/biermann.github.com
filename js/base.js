@@ -4,7 +4,7 @@ nmp.app = {};
 Object.defineProperty(nmp.app, 'version', {
   enumerable: true, 
   writable: false, 
-  value: "201701011018", 
+  value: "201701005", 
   configurable: false
 });
 
@@ -38,7 +38,7 @@ Object.defineProperty(nmp.app.radio, 'name', {
 Object.defineProperty(nmp.app.radio, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed"], 
+  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed","fav"], 
   configurable: false
 });
 Object.defineProperty(nmp.app.radio, 'store', {
@@ -54,6 +54,7 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   writable: false, 
   configurable: false,
   value:   [
+  { objId: "9", src: "http://listen.radionomy.com/jmaster", desc: "test fav", www: 'http://www.rjm-radio.fr/radio-groove-jazz-funk/', type: "audio/mpeg", objOwner: "browser", fav: "true" },
   { objId: "8", src: "http://ice.somafm.com/sf1033", desc: "SF 10-33", www: 'http://somafm.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "7", src: "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3", desc: "IRF", www: 'http://www.internationalradiofest.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "6", src: "http://germany-rinse.it.two.dnbradio.com:10128", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" },
@@ -130,7 +131,8 @@ Object.defineProperty(nmp.view, 'option', {
   enumerable: true, 
   writable: false, 
   //value: ["recent10","listIndexedDB","listStorage","icecastOgg","icecastMpeg","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
-  value: ["drawer","recent10","listIndexedDB","listStorage","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
+  //value: ["drawer","recent10","listIndexedDB","listStorage","biermann","myRadio","listMyRadio","fav","audio/ogg","audio/mpeg","status","settings"], 
+  value: ["drawer","listIndexedDB","biermann","fav","listFav","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
@@ -148,17 +150,27 @@ Object.defineProperty(nmp.view, 'class', {
   configurable: false
 });
 
+nmp.toolbar = {};
+Object.defineProperty(nmp.toolbar, 'class', {
+  enumerable: true, 
+  writable: false, 
+  value: 'nmpToolbar', 
+  configurable: false
+});
+
+
 nmp.db = {};
 Object.defineProperty(nmp.db, 'version', {
   enumerable: true, 
   writable: false, 
-  value: "43", 
+  value: "45", 
   configurable: false
 });
 Object.defineProperty(nmp.db, 'name', {
   enumerable: true, 
   writable: false, 
-  value: "radio", 
+  //value: "radio", 
+  value: "n/a", 
   configurable: false
 });
 Object.defineProperty(nmp.db, 'status', {
@@ -179,13 +191,13 @@ Object.defineProperty(nmp.db.radio, 'name', {
 Object.defineProperty(nmp.db.radio, 'field', {
   enumerable: true, 
   writable: false, 
-  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed"], 
+  value: ["objId","objOwner","src","desc","www","type","usageCounter","lastUsed","fav"], 
   configurable: false
 });
 Object.defineProperty(nmp.db.radio, 'formField', {
   enumerable: true, 
   writable: false, 
-  value: ["src","desc","www","type"], 
+  value: ["src","desc","www","type","fav"], 
   configurable: false
 });
 Object.defineProperty(nmp.db.radio, 'readonlyObjOwner', {

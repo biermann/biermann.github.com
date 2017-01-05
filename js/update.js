@@ -2,6 +2,8 @@
 function update () {
     var volumeUp = document.querySelector("#volumeUp"),
 	volumeDown = document.querySelector("#volumeDown"),
+	toolbarVolumeDown = document.querySelector("#toolbarVolumeDown"),
+	toolbarVolumeUp = document.querySelector("#toolbarVolumeUp"),
 	playPause = document.querySelector("#playPause"),
 	wwwButton = document.querySelector("#wwwButton"),
 	radioListSelect = document.querySelector("#radioListSelect"),
@@ -174,15 +176,17 @@ nmp.app.update = function (e) {
 
 
 function updateControl (){
-    var volumeUp = document.querySelector("#volumeUp");
-var	volumeDown = document.querySelector("#volumeDown");
-var	playPause = document.querySelector("#playPause");
-   var  	toolbarPlayPause = document.querySelector("#toolbarPlayPause");
-   var  	www = document.querySelector("#www");
-   var audio = document.querySelector("#audio");
+  var volumeUp = document.querySelector("#volumeUp");
+  var	volumeDown = document.querySelector("#volumeDown");
+  var	playPause = document.querySelector("#playPause");
+  var  	toolbarPlayPause = document.querySelector("#toolbarPlayPause");
+  var  	toolbarFav = document.querySelector("#toolbarFav");
+  var  	www = document.querySelector("#www");
+  var audio = document.querySelector("#audio");
    //var volume = audio.volume;
-   var volume = nmp.storage.currentGet().volume;
-   var volumeInteger = 0;
+  var volume = nmp.storage.currentGet().volume;
+  var objId = nmp.storage.currentGet().objId;
+  var volumeInteger = 0;
    if (www && nmp.storage.currentGet().www) {
       www.innerHTML = nmp.storage.currentGet().www ;
    }

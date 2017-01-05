@@ -169,7 +169,7 @@ fxosnetzradio.localstorage.statusSet = function () {
 
 
 nmp.storage.current.set = function (obj,desc) {
-  console.log( 'nmp.storage.currentSet request' +JSON.stringify(obj)+' requestor='+desc);
+  console.log( 'nmp.storage.current.set request' +JSON.stringify(obj)+' requestor='+desc);
   nmp.storage.currentSet(obj);
 }
 
@@ -178,10 +178,10 @@ nmp.storage.currentSet = function (obj) {
    var oldObjects = JSON.parse(localStorage.getItem(array));
    var current = nmp.storage.currentGet ();
    console.log( 'nmp.storage.currentSet');
-     console.log( 'nmp.storage.currentSet request' +JSON.stringify(obj));
+   console.log( 'nmp.storage.currentSet request' +JSON.stringify(obj));
    if (nmp.storage.current.valid (obj)) {
      console.log( 'nmp.storage.currentSet objectvalid request' +JSON.stringify(obj));
-     for (var i in nmp.storage.field) {
+     for (var i in nmp.storage.current.field) {
       for (var prop in current) {
          if (current.hasOwnProperty(prop)) {
 	    if ( prop == nmp.storage.field[i]){
@@ -195,15 +195,15 @@ nmp.storage.currentSet = function (obj) {
 	    }
          }
        }
-   }
-   if (obj.volume <= 1 && obj.volume > 0) {obj.volume = Math.round(obj.volume*1000)/1000;}
-   //obj.volume = Math.round(obj.volume*1000)/1000;
-   var newObjects = [];
-   newObjects.push(obj);
-   localStorage.removeItem(array);
-   localStorage.setItem(array, JSON.stringify(newObjects));
+     }
+     if (obj.volume <= 1 && obj.volume > 0) {obj.volume = Math.round(obj.volume*1000)/1000;}
+     //obj.volume = Math.round(obj.volume*1000)/1000;
+     var newObjects = [];
+     newObjects.push(obj);
+     localStorage.removeItem(array);
+     localStorage.setItem(array, JSON.stringify(newObjects));
      console.log( 'nmp.storage.currentSet objectvalid request' +JSON.stringify(obj));
-	return;
+     return;
    }
    if (!nmp.storage.current.valid (obj)) {
       for (var i in nmp.storage.field) {
@@ -344,7 +344,7 @@ nmp.storage.currentGet = function (e){
 nmp.storage.current.updateField = function (fieldname,field,desc){
   var current = nmp.storage.currentGet ();
   if (typeof current !== 'undefined' && current !== null && fieldname && field && desc) {
-    console.log( 'nmp.storage.current.update request ' +fieldname+ '='+field+' requestor='+desc);
+    console.log( 'nmp.storage.current.updateField request ' +fieldname+ '='+field+' requestor='+desc);
     for (var i in nmp.storage.current.field) {
       if (current.hasOwnProperty(nmp.storage.current.field[i])&&nmp.storage.current.field[i] == fieldname) {
 	   current[nmp.storage.current.field[i]] = field;

@@ -1,6 +1,21 @@
 nmp.app.toolbar = function (e) {
 	var audio = document.querySelector("#audio");
 
+
+// fav icon
+    	var headerFav = document.querySelector("#headerFav");
+    	if (headerFav) {
+        	headerFav.onclick = function () {		
+    			var key = nmp.storage.currentGet().objId;
+        		var desc = "nmp.app.toolbar";
+		   	nmp.app.vibrate();
+			nmp.db.radio.objectToggleFav(key,desc);
+                        //nmp.storage.statusSet();
+			//nmp.view.renderStatus(desc)
+			nmp.app.update();
+       		}
+        }
+
 // menu
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
@@ -41,7 +56,7 @@ nmp.app.toolbar = function (e) {
 		volume -= 0.04;
 		}
 		else {
-		volume -= 0.05;
+		volume -= 0.1;
 		}
 		if (volume <= 0.1) {
 		volume = 0.1;
@@ -58,12 +73,12 @@ nmp.app.toolbar = function (e) {
 // volumeUp
     var volumeUp = document.querySelector("#toolbarVolumeUp");
     var current = nmp.storage.currentGet();
-    if (volumeUp) {
+    if (volumeUp && current) {
         volumeUp.onclick = function () {
 		nmp.app.vibrate();
                 var volume = nmp.storage.currentGet().volume;
 		//var volume = current.volume;
-		volume += 0.05;
+		volume += 0.1;
 		if (volume >= 1) {
 		volume = 0.99;
 		}

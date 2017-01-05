@@ -29,20 +29,21 @@ const radioData = [
 
 
 nmp.db.open = function() {
+    console.log("nmp.db.open");
   if (!window.indexedDB) {
     //window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
     var result = nmp.storage.current.updateField('storePrefered',"storage",'no indexedb store prefered storage update 5478432');
   }
   else {
-    var openRequest = window.indexedDB.open(nmp.db.name, nmp.db.version);
+    var openRequest = window.indexedDB.open(nmp.db.radio.name, nmp.db.version);
     var updateStr = "db.open.";
-    console.log("nmp.db.open:"+nmp.db.name+' '+nmp.db.version);
+    console.log("nmp.db.open:"+nmp.db.radio.name+' '+nmp.db.version);
 
   openRequest.onupgradeneeded = function(evt) {
     var db = evt.target.result;
      console.log('db upgrade ', evt);
      console.log('db.version=',db.version);
-     console.log('version.needed=',radioDBversion);
+     console.log('version.needed=',nmp.db.version);
 
   
 
@@ -257,7 +258,52 @@ nmp.db.objectUpdateStats = function(key,objStore,desc) {
    };
 };
 
-
+nmp.db.radio.objectToggleFav = function (key,desc) {
+  if (nmp.db.ok() && key !== null && desc){
+    var db = nmp.db.db;
+    var objStore = nmp.db.radio.name
+    var obj = {};
+    var store = db.transaction(objStore, "readwrite").objectStore(objStore);
+    var request = store.get(key); 
+    console.log( 'nmp.db.objectToggleFav request key='+key+' store='+objStore+' requestor='+desc);
+    request.onsuccess = function(e) {
+      obj  = e.target.result;
+      if (obj == null) {
+        console.log("nmp.db.objectToggleFav error "+key+objStore+' requestor='+desc);
+      }
+      else {
+        var newObj = {};
+        for (var i in nmp.db.radio.field) {
+          if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = 'n/a';}
+        }
+        for (var i in nmp.db.radio.readonlyObjOwner) {
+          if (obj.objOwner == nmp.db.radio.readonlyObjOwner[i]) { obj.fav = 'n/a' }
+        }
+        for (var prop in obj) {
+          newObj[prop] = obj[prop];
+          console.log('nmp.db.objectToggleFav ' +prop+': ' +obj[prop]+' requestor='+desc);
+          if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] == "true") {
+            newObj[prop] = "false";
+            console.log('nmp.db.objectToggleFav ' +prop+'->' +obj[prop]+newObj[prop]+' requestor='+desc);
+          }
+          if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] == "false") {
+            newObj[prop] = "true";
+            console.log('nmp.db.objectToggleFav ' +prop+'->' +obj[prop]+newObj[prop]+' requestor='+desc);
+          }
+        }
+        if (obj.fav == "n/a") { 
+          newObj.fav = "true"; 
+          newObj.objId =  JSON.stringify(new Date().getTime());
+    	  newObj.objOwner =  "browser";
+          console.log('nmp.db.objectToggleFav ' +obj.fav+' '+newObj.fav+newObj.objId+newObj.objOwner);
+          nmp.db.radio.objectAdd(newObj);
+          nmp.storage.current.updateField('objId',newObj.objId,'nmp.db.objectToggleFav');
+        }
+        if (obj.fav != 'n/a') { var request = store.put(newObj) }
+      }
+    }
+  }
+}
 
 
 //fxosnetzradio.browserdb.objectGet (key,objStore)
@@ -385,13 +431,14 @@ nmp.db.radioValid = function (obj) {
 
 
 fxosnetzradio.browserdb.objectAdd = function (obj) {
-	nmp.db.objectAdd (obj);
+	nmp.db.radio.objectAdd (obj);
 };
-
-
 nmp.db.objectAdd = function (obj) {
-  var objStore = nmp.db.radio.name
+	nmp.db.radio.objectAdd (obj);
+};
+nmp.db.radio.objectAdd = function (obj) {
   var db = nmp.db.db;
+  var objStore = nmp.db.radio.name
   if (nmp.db.ok() && nmp.db.radioValid(obj)) {
     var store = db.transaction(objStore, "readwrite").objectStore(objStore);
     var request = store.put(obj);
@@ -568,6 +615,8 @@ fxosnetzradio.browserdb.renderform  = function (id) {
 fxosnetzradio.browserdb.objectEdit = function (elementId,objId,objStore) {
 	nmp.db.objectEdit (elementId,objId,objStore); 
 };
+
+
 
 nmp.db.objectEdit  = function (elementId,objId,objStore) {
    console.log('edit mode: ',elementId,objId,objStore);

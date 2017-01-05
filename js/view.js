@@ -390,7 +390,9 @@ nmp.view.update = function (view) {
     if (view == "biermann" && nmp.db.ok()) {
     current.view = "biermann";
     current.store= "db";
-    var result = nmp.storage.currentSet(current);
+    nmp.storage.current.updateField('store',current.store,'biermann 47564656565656984');
+    nmp.storage.current.updateField('view',current.view,'biermann 47564656565656984');
+    //var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);	
@@ -445,6 +447,57 @@ nmp.view.update = function (view) {
       };
       nmp.view.renderbuttonControl(elementId);
     }
+ 
+  if (view == "fav" && nmp.db.ok()) {
+    current.view = "fav";
+    current.store= "db";
+    nmp.storage.current.updateField('store',current.store,'fav sdafsdfds');
+    nmp.storage.current.updateField('view',current.view,'fav sdfsd');
+    element = document.getElementById(elementId);
+    while (element.firstChild) { element.removeChild(element.firstChild); }	
+    nmp.view.renderStatus (elementId);	
+    var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
+    var keyRange = IDBKeyRange.only("true");
+    var index = store.index("fav");
+    var cursorRequest = index.openCursor(keyRange);
+    var count = 0;
+    cursorRequest.onsuccess = function(e) {
+      var result = e.target.result;
+      count++;
+      if(!!result == false ) return;
+ 	result.value.view = "fav" ;  
+        result.value.store= "db";
+        nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
+        result.continue();
+      }
+  }
+
+
+    if (view == "listFav" && nmp.db.ok()) {
+    current.view = "listFav";
+    current.store= "db";
+    nmp.storage.current.updateField('store',current.store,'lisFav sdasfsdf');
+    nmp.storage.current.updateField('view',current.view,'listFav dfsdfdsa');
+    element = document.getElementById(elementId);
+    while (element.firstChild) { element.removeChild(element.firstChild); }
+      nmp.view.renderStatus (elementId);
+      nmp.view.renderbuttonControl(elementId);
+      var store = db.transaction(nmp.db.radio.name).objectStore(nmp.db.radio.name);
+      var keyRange = IDBKeyRange.only("true");
+      var index = store.index("fav");
+      var cursorRequest = index.openCursor(keyRange);
+      var count = 0;
+      cursorRequest.onsuccess = function(e) {
+           var result = e.target.result;
+           count++;
+           if(!!result == false ) return;
+        result.value.view = "listFav" ;
+        result.value.store= "db";
+        nmp.view.renderList(elementId,result.value,nmp.app.radio.name,current.store);
+           result.continue();
+      }
+    }
+
 
 
 
@@ -958,12 +1011,18 @@ if (nmp.db.radioValid(obj) && obj.objId !== null) {
 } 
 
 fxosnetzradio.view.renderStatus = function (id) {
-	nmp.view.renderStatus (id);
+	nmp.view.renderStatus ("fxosnetzradio.view.renderStatus");
 } 
 
-nmp.view.renderStatus = function (id) {
+nmp.view.renderStatus = function (desc) {
+	nmp.view.renderHeaderStatus (desc+" ->nmp.view.renderStatus");
+  	nmp.view.renderHeaderFav(desc+ " ->nmp.view.renderStatus");
+} 
+
+
+nmp.view.renderHeaderStatus = function (desc) {
   var header = document.getElementById("headerStatus");
-  var element = document.getElementById(id);
+  var element = document.getElementById("headerStatus");
   var current = nmp.storage.currentGet ();
   var a = document.createElement("a");
   var hr = document.createElement("hr");
@@ -972,7 +1031,8 @@ nmp.view.renderStatus = function (id) {
   var span = document.createElement("span");
   var current = nmp.storage.currentGet ();
   a.textContent = "desc="+current.desc+" - view="+current.view;
-  header.innerHTML = ""+current.desc+" ("+current.view+" view)";
+  //element.innerHTML = ""+current.desc+" ("+current.view+" view)";
+  element.innerHTML = ""+current.desc+"";
   a.setAttribute('id','nmpViewStatus');
   a.setAttribute('class',nmp.view.class);
   //element.appendChild(a);
@@ -981,9 +1041,47 @@ nmp.view.renderStatus = function (id) {
   //element.appendChild(br);
 }
 
-
-
-
+nmp.view.renderHeaderFav = function (desc) {
+  var element = document.getElementById("headerFav");
+  var headerStatus = document.getElementById("headerStatus");
+  var headerFav = document.getElementById("headerFav");
+  //var headerFavObjId = document.getElementById("headerFavObjId");
+  var current = nmp.storage.currentGet ();
+  var objId = nmp.storage.currentGet().objId;
+  var db = nmp.db.db;
+  var obj = {};
+  var objStore = nmp.db.radio.name;
+  var key = objId;
+  if (nmp.db.ok() && objStore !== null && key !== null && desc && element){
+    console.log( 'nmp.view.renderFav key='+key+' store='+objStore+' requestor='+desc);
+    var store = db.transaction(objStore).objectStore(objStore);
+    var myKey = objId;
+    var request = store.get(myKey);
+    request.onsuccess = function(e) {
+      obj  = e.target.result;
+      if (obj == null) {
+        console.log("nmp.view.renderFav: error "+key+objStore+' requestor='+desc);
+      }
+      else {
+        for (var i in nmp.db.radio.field) {
+          if (typeof obj[nmp.db.radio.field[i]] == 'undefined'){obj[nmp.db.radio.field[i]]  = 'n/a';}
+        }
+        for (var prop in obj) {
+          if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] == "true") {
+            headerFav.style.backgroundImage="url('image/header/icon/fav-on.png')";
+            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view)"+obj.objId+"";
+            console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
+          }
+          if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] != "true") {
+            headerFav.style.backgroundImage="url('image/header/icon/fav-off.png')";
+            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view)"+obj.objId+"";
+            console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
+          }
+        }
+      }
+    }
+  } 
+}
 
 
 
@@ -1208,7 +1306,7 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
   if (descriptor == "duplicate") {
     obj.objId =  JSON.stringify(new Date().getTime());
     obj.objOwner =  "browser";
-    if (store == "db") {nmp.db.objectAdd(obj);}
+    if (store == "db") {nmp.db.radio.objectAdd(obj);}
     if (store == "storage") {nmp.storage.radio.objectAdd(obj);}
     nmp.app.update();
   }
