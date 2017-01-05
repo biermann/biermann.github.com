@@ -1032,7 +1032,7 @@ nmp.view.renderHeaderStatus = function (desc) {
   var current = nmp.storage.currentGet ();
   a.textContent = "desc="+current.desc+" - view="+current.view;
   //element.innerHTML = ""+current.desc+" ("+current.view+" view)";
-  element.innerHTML = ""+current.desc+"";
+  //element.innerHTML = ""+current.desc+"";
   a.setAttribute('id','nmpViewStatus');
   a.setAttribute('class',nmp.view.class);
   //element.appendChild(a);
@@ -1069,12 +1069,12 @@ nmp.view.renderHeaderFav = function (desc) {
         for (var prop in obj) {
           if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] == "true") {
             headerFav.style.backgroundImage="url('image/header/icon/fav-on.png')";
-            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view) "+obj.objId+"";
+            headerStatus.innerHTML = current.view+" -  "+current.desc+" "+obj.objId+"";
             console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
           }
           if (obj.hasOwnProperty(prop) && prop == 'fav' && obj[prop] != "true") {
             headerFav.style.backgroundImage="url('image/header/icon/fav-off.png')";
-            headerStatus.innerHTML = ""+current.desc+" ("+current.view+" view) "+obj.objId+"";
+            headerStatus.innerHTML = current.view+" -  "+current.desc+" "+obj.objId+"";
             console.log('nmp.view.renderFav: ' +prop+': ' +obj[prop]);
           }
         }
