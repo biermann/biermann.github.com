@@ -7,6 +7,7 @@
     <meta name="description" content="B2G OS Network Music Player for my new Geeksphone Peak,now Flame, 2017 iOS" >
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+    <link rel="manifest" href="manifest.webapp">
 
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
@@ -37,9 +38,6 @@
         <header>
             <!-- Icon that will indicate whether you are online or offline - enabled if you are using offline/appcache (see above) -->
             <div id="online-status" title="Online"></div>
-            <menu type="toolbar">
-                <button id="install"><span class="icon icon-add">add</span></button>
-            </menu>
     </section>
 	    <div role="header">
             <ul>
@@ -52,13 +50,11 @@
 
     <div id="main">
 
-        <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
-        
-	<div id="nmpView" name="nmpView" class="nmpView"></div>
 
 	<audio id="audio"  tabindex="0" class="shadow" controls="false" mozaudiochannel="content">
 	<source src="" type="" >       
 	</audio>
+	<div id="nmpView" name="nmpView" class="nmpView"></div>
 
   </div>
        <footer>
