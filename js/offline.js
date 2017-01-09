@@ -1,21 +1,17 @@
-(function () {
-    var appCache = window.applicationCache;
-    if (appCache) {
-        appCache.onupdateready = function () {
-            if (confirm("The app has been updated. Do you want to download the latest files? \nOtherwise they will be updated at the next reload.")) {
-                location.reload(true);
-            }
-        };
 
-        var displayStatus = document.querySelector("#online-status");
-        if (displayStatus) {
-            // Using this, since navigator.onLine is very inconcistent and unreliable
-            appCache.onerror = function() {
-                displayStatus.className = "offline";
-                displayStatus.title = "Offline";
-            };
-            
-        }
+window.addEventListener('load', function() {
+  var status = document.getElementById("online-status");
+  var log = document.getElementById("log");
+  if (status){
+    function updateOnlineStatus(event) {
+      var condition = navigator.onLine ? "online" : "offline";
+
+      status.className = condition;
+      status.innerHTML = condition.toUpperCase();
+
+      //log.insertAdjacentHTML("beforeend", "Event: " + event.type + "; Status: " + condition);
     }
-})();
-
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+  }
+});
