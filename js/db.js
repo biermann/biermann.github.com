@@ -194,6 +194,11 @@ fxosnetzradio.browserdb.objectDel = function(key,objStore) {
 	nmp.db.objectDel (key,objStore); 
 };
 
+nmp.db.radio.objectDel = function (key) {
+  var db = nmp.db.db;
+  nmp.db.objectDel (key,db); 
+}
+
 nmp.db.objectDel = function(key,objStore) {
    if (nmp.db.ok() && objStore && key){
       var db = nmp.db.db;
@@ -256,6 +261,27 @@ nmp.db.objectUpdateStats = function(key,objStore,desc) {
       }
       };
    };
+};
+
+nmp.db.radio.cleaner = function (desc) {
+  if (nmp.db.ok() && desc){
+    var db = nmp.db.db;
+    var objStore = nmp.db.radio.name
+    var obj = {};
+    var store = db.transaction(objStore).objectStore(objStore);
+    var keyRange = IDBKeyRange.only("browser");
+    var index = store.index("objOwner");
+    var cursorRequest = index.openCursor(keyRange);
+    var count = 0;
+    cursorRequest.onsuccess = function(e) {
+      var result = e.target.result;
+      count++;
+      if(!!result == false ) return;
+      result.value.store= "db";
+      //nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
+      result.continue();
+    }
+  }
 };
 
 nmp.db.radio.objectToggleFav = function (key,desc) {
