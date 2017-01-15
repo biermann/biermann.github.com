@@ -263,26 +263,6 @@ nmp.db.objectUpdateStats = function(key,objStore,desc) {
    };
 };
 
-nmp.db.radio.cleaner = function (desc) {
-  if (nmp.db.ok() && desc){
-    var db = nmp.db.db;
-    var objStore = nmp.db.radio.name
-    var obj = {};
-    var store = db.transaction(objStore).objectStore(objStore);
-    var keyRange = IDBKeyRange.only("browser");
-    var index = store.index("objOwner");
-    var cursorRequest = index.openCursor(keyRange);
-    var count = 0;
-    cursorRequest.onsuccess = function(e) {
-      var result = e.target.result;
-      count++;
-      if(!!result == false ) return;
-      result.value.store= "db";
-      //nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
-      result.continue();
-    }
-  }
-};
 
 nmp.db.radio.objectToggleFav = function (key,desc) {
   if (nmp.db.ok() && key !== null && desc){
@@ -319,7 +299,8 @@ nmp.db.radio.objectToggleFav = function (key,desc) {
         }
         if (obj.fav == "n/a") { 
           newObj.fav = "true"; 
-          newObj.objId =  JSON.stringify(new Date().getTime());
+          //newObj.objId =  JSON.stringify(new Date().getTime());
+          newObj.objId = nmp.db.radio.objectChecksum(obj)
     	  newObj.objOwner =  "browser";
           console.log('nmp.db.objectToggleFav ' +obj.fav+' '+newObj.fav+newObj.objId+newObj.objOwner);
           nmp.db.radio.objectAdd(newObj);
@@ -455,6 +436,35 @@ nmp.db.radioValid = function (obj) {
   return result;
 };
 
+nmp.db.radio.objectChecksum = function (obj){
+  var keys = Object.keys(obj).sort();
+  var output = [], prop;
+  var output2 = ""
+  for (var i = 0; i < keys.length; i++) {
+    prop = keys[i];
+    if (obj.hasOwnProperty(prop)){
+    for (var j in nmp.db.radio.checksumField) {
+      if (nmp.db.radio.checksumField[j] == prop){
+        output.push(prop);
+        output.push(obj[prop]);
+        //output2 += JSON.stringify(prop) + JSON.stringify(obj[prop]) + "-"
+        output2 += JSON.stringify(obj[prop]) 
+        console.log(prop+obj[prop]+"<-checksum");
+        console.log(output2+"<--checksum");
+      }
+    }}
+  }
+  var s = JSON.stringify(output2)
+  var chk = 0x12345678;
+  var len = s.length;
+  console.log(s+"<---checksum");
+  for (var i = 0; i < len; i++) {
+      chk += (s.charCodeAt(i) * (i + 1));
+  }
+
+  return (chk & 0xffffffff).toString(16);
+
+}
 
 fxosnetzradio.browserdb.objectAdd = function (obj) {
 	nmp.db.radio.objectAdd (obj);

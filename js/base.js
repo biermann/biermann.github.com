@@ -4,7 +4,7 @@ nmp.app = {};
 Object.defineProperty(nmp.app, 'version', {
   enumerable: true, 
   writable: false, 
-  value: "201701005", 
+  value: "20170114", 
   configurable: false
 });
 
@@ -194,6 +194,12 @@ Object.defineProperty(nmp.db.radio, 'field', {
   configurable: false
 });
 Object.defineProperty(nmp.db.radio, 'formField', {
+  enumerable: true, 
+  writable: false, 
+  value: ["src","desc","www","type","fav"], 
+  configurable: false
+});
+Object.defineProperty(nmp.db.radio, 'checksumField', {
   enumerable: true, 
   writable: false, 
   value: ["src","desc","www","type","fav"], 
