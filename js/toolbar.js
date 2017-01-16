@@ -17,6 +17,16 @@ nmp.app.toolbar = function (e) {
         }
 
 // menu
+    	var fav = document.querySelector("#toolbarFav");
+    	if (audio && fav) {
+        	fav.onclick = function () {		
+		   	nmp.app.vibrate();
+	         	//nmp.view.rotate('right');
+			nmp.view.update('fav');	
+       		}
+        }
+
+// menu
     	var menu = document.querySelector("#toolbarMenu");
     	if (audio && menu) {
         	menu.onclick = function () {		

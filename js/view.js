@@ -470,6 +470,7 @@ nmp.view.update = function (view) {
         nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
         result.continue();
       }
+      nmp.view.renderbuttonControl(elementId);
   }
 
 
@@ -1304,15 +1305,17 @@ nmp.view.eventClick = function (id,objStr,objStore,store,descriptor){
     nmp.app.update();
   }
   if (descriptor == "duplicate") {
-    obj.objId =  JSON.stringify(new Date().getTime());
     obj.objOwner =  "browser";
+    obj.objId =  JSON.stringify(new Date().getTime());
     if (store == "db") {nmp.db.radio.objectAdd(obj);}
     if (store == "storage") {nmp.storage.radio.objectAdd(obj);}
     nmp.app.update();
   }
   if (descriptor == "edit") {
     //console.log('nmp.view.eventClick2',obj,descriptor,objStore,id);
-    if (store == "db") {nmp.db.objectEdit(id,obj.objId,objStore);}
+    if (store == "db") {
+      nmp.db.objectEdit(id,obj.objId,objStore);
+    }
   }
   if (descriptor == "pause") {
     nmp.audio.pause("pause");

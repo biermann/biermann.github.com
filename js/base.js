@@ -131,7 +131,7 @@ Object.defineProperty(nmp.view, 'option', {
   writable: false, 
   //value: ["recent10","listIndexedDB","listStorage","icecastOgg","icecastMpeg","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
   //value: ["drawer","recent10","listIndexedDB","listStorage","biermann","myRadio","listMyRadio","fav","audio/ogg","audio/mpeg","status","settings"], 
-  value: ["drawer","listIndexedDB","biermann","fav","listFav","listMyRadio","status","settings"], 
+  value: ["drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
@@ -139,7 +139,7 @@ Object.defineProperty(nmp.view, 'list', {
   writable: false, 
   //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","lastUsed","usageCounter","objId","store"], 
   //value: ["desc","src","type","www","delete","edit","pause","stop","duplicate"], 
-  value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","store"], 
+  value: ["desc","src","type","www","delete","edit","pause","stop","duplicate","store","objId","fav"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'class', {

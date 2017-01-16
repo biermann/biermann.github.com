@@ -264,6 +264,9 @@ nmp.db.objectUpdateStats = function(key,objStore,desc) {
 };
 
 
+
+
+
 nmp.db.radio.objectToggleFav = function (key,desc) {
   if (nmp.db.ok() && key !== null && desc){
     var db = nmp.db.db;
@@ -443,21 +446,23 @@ nmp.db.radio.objectChecksum = function (obj){
   for (var i = 0; i < keys.length; i++) {
     prop = keys[i];
     if (obj.hasOwnProperty(prop)){
-    for (var j in nmp.db.radio.checksumField) {
-      if (nmp.db.radio.checksumField[j] == prop){
-        output.push(prop);
-        output.push(obj[prop]);
-        //output2 += JSON.stringify(prop) + JSON.stringify(obj[prop]) + "-"
-        output2 += JSON.stringify(obj[prop]) 
-        console.log(prop+obj[prop]+"<-checksum");
-        console.log(output2+"<--checksum");
-      }
-    }}
+      for (var j in nmp.db.radio.checksumField) {
+        if (nmp.db.radio.checksumField[j] == prop){
+          output.push(prop);
+          output.push(obj[prop]);
+          //output2 += JSON.stringify(prop) + JSON.stringify(obj[prop]) + "-"
+          //output2 += JSON.stringify(obj[prop]) 
+          output2 += obj[prop]
+          //console.log(prop+obj[prop]+"<-checksum");
+          //console.log(output2+"<--checksum");
+        }
+      } 
+    }
   }
   var s = JSON.stringify(output2)
   var chk = 0x12345678;
   var len = s.length;
-  console.log(s+"<---checksum");
+  //console.log(s+"<---checksum");
   for (var i = 0; i < len; i++) {
       chk += (s.charCodeAt(i) * (i + 1));
   }
@@ -469,7 +474,7 @@ nmp.db.radio.objectChecksum = function (obj){
 fxosnetzradio.browserdb.objectAdd = function (obj) {
 	nmp.db.radio.objectAdd (obj);
 };
-nmp.db.objectAdd = function (obj) {
+nmp.db.objectAdd = function (obj,objStore) {
 	nmp.db.radio.objectAdd (obj);
 };
 nmp.db.radio.objectAdd = function (obj) {
@@ -480,11 +485,11 @@ nmp.db.radio.objectAdd = function (obj) {
     var request = store.put(obj);
     request.onsuccess = function(e) {
       var result = e.target.result;
-//      console.log("obj put:",result);
+      console.log("nmp.db.radio.objectAdd - obj put:",result);
     }
     request.onerror = function(e) {
       var result = e.target.result;
-      console.log('db obj add error:',result);
+      console.log('nmp.db.radio.objectAdd - db obj add error:',result);
     }
   }
 }
@@ -647,6 +652,40 @@ fxosnetzradio.browserdb.renderform  = function (id) {
   form.appendChild(button);
 }
 
+nmp.db.radio.objectIdRecalc = function (objId,desc) {
+  var objStore = nmp.db.radio.name
+  console.log("nmp.db.objectIdRecalc"+objId+' requestor='+desc);
+  nmp.db.objectIdRecalc (objId,objStore,desc)
+}
+
+nmp.db.objectIdRecalc = function (objId,objStore,desc) {
+  if (nmp.db.ok() && objStore !== null && objId !== null && typeof objStore !== 'undefined'){
+    console.log("nmp.db.objectIdRecalc objId->"+objId+" store->"+objStore+' requestor='+desc);
+    var key = objId;
+    var oldObj = [];
+    var newObj = [];
+    var db = nmp.db.db;
+    var store = db.transaction(objStore).objectStore(objStore);
+    store.get(objId).onsuccess = function(e) {
+       oldObj  = e.target.result;
+       newObj  = e.target.result;
+       if (oldObj == null) {
+          console.log("obj not found: ",key,objStore);
+       }
+       else {
+        newObj.objId =  nmp.db.radio.objectChecksum(oldObj)
+        console.log("nmp.db.objectIdRecalc objStore->"+objStore+' requestor='+desc);
+        console.log("nmp.db.objectIdRecalc old key->"+key+" store->"+objStore+' requestor='+desc);
+        console.log("nmp.db.objectIdRecalc checksum(new key)->"+newObj.objId+' requestor='+desc);
+        if (newObj.objId != key ) {
+          nmp.db.objectAdd (newObj,objStore);
+	  nmp.db.objectDel (key,objStore); 
+	} 
+      }
+    }
+  }
+}
+
 
 fxosnetzradio.browserdb.objectEdit = function (elementId,objId,objStore) {
 	nmp.db.objectEdit (elementId,objId,objStore); 
@@ -719,18 +758,18 @@ nmp.db.objectEdit  = function (elementId,objId,objStore) {
 		
 	        }
              }
-
-         var db = nmp.db.db;
-         var store = db.transaction(objStore, "readwrite").objectStore(objStore);
-	 var request = store.put(newObj);
-         request.onsuccess = function(e) {
-            console.log("obj put:");
-	    update();
-         };
-         request.onerror = function(e) {
-            console.log(e.value);
-         };
-         });
+             var db = nmp.db.db;
+             var store = db.transaction(objStore, "readwrite").objectStore(objStore);
+	     var request = store.put(newObj);
+             nmp.db.radio.objectIdRecalc(newObj.objId,"nmp.db.objectEdit");
+             request.onsuccess = function(e) {
+               console.log("obj put:");
+	       update();
+             };
+             request.onerror = function(e) {
+               console.log(e.value);
+             };
+          });
           form.appendChild(button);
 	  element.appendChild(form);
 	}
