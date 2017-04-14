@@ -54,6 +54,8 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   writable: false, 
   configurable: false,
   value:   [
+    
+  { objId: "9", src: "http://stream.stadtfilter.net:8406/stadtfilter.mp3", desc: "Stadtfilter", www: 'http://stadtfilter.net/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "8", src: "http://ice.somafm.com/sf1033", desc: "SF 10-33", www: 'http://somafm.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "7", src: "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3", desc: "IRF", www: 'http://www.internationalradiofest.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "6", src: "http://germany-rinse.it.two.dnbradio.com:10128", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" },
