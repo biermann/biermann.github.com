@@ -32,7 +32,7 @@ nmp.app.toolbar = function (e) {
         	menu.onclick = function () {		
 		   	nmp.app.vibrate();
 	         	//nmp.view.rotate('right');
-			nmp.view.update('drawer');	
+			nmp.view.update('Launchpad');	
        		}
         }
 

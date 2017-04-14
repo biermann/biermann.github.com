@@ -735,6 +735,21 @@ nmp.view.update = function (view) {
       }
     }
 
+    if (view == "Launchpad" ) {
+      current.view = "Launchpad";
+      current.store = "storage";
+      var result = nmp.storage.current.updateField('view',current.view,'drawer view update 8474332');
+      element = document.getElementById(elementId);
+      while (element.firstChild) { element.removeChild(element.firstChild); }	
+      nmp.view.renderStatus (elementId);	
+      var array = nmp.storage.radio.name;
+      var temp = {  view: "n/a" }
+      for (var i in nmp.view.option) {
+	temp.view = nmp.view.option[i];
+      	nmp.view.renderDrawer2(elementId,temp);
+      }
+    }
+
     if (view == "audio/mpeg" ) {
       current.view = "audio/mpeg";
       var result = nmp.storage.current.updateField('view',current.view,'audio mpeg view update 8478432');

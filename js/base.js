@@ -58,12 +58,11 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   { objId: "9", src: "http://stream.stadtfilter.net:8406/stadtfilter.mp3", desc: "Stadtfilter", www: 'http://stadtfilter.net/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "8", src: "http://ice.somafm.com/sf1033", desc: "SF 10-33", www: 'http://somafm.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "7", src: "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3", desc: "IRF", www: 'http://www.internationalradiofest.com/', type: "audio/mpeg", objOwner: "biermann" },
-  { objId: "6", src: "http://germany-rinse.it.two.dnbradio.com:10128", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "4", src: "http://radio.hbr1.com:19800/tronic.ogg", desc: "HBR1 Tronic", www: 'http://www.hbr1.com/', type: "audio/ogg", objOwner: "biermann" },
   { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
   { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "biermann" },
-  { objId: "1", src: "http://88.198.34.209:13128/nometa.ogg", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/ogg", objOwner: "biermann" }
+  { objId: "1", src: "http://trace.dnbradio.com/dnbradio.mp3", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" }
 ]
 });
 
@@ -134,7 +133,7 @@ Object.defineProperty(nmp.view, 'option', {
   //value: ["recent10","listIndexedDB","listStorage","icecastOgg","icecastMpeg","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
   //value: ["drawer","recent10","listIndexedDB","listStorage","biermann","myRadio","listMyRadio","fav","audio/ogg","audio/mpeg","status","settings"], 
   //value: ["drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
-  value: ["Launchpad","drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
+  value: ["Launchpad","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
