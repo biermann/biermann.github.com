@@ -131,7 +131,8 @@ Object.defineProperty(nmp.view, 'option', {
   writable: false, 
   //value: ["recent10","listIndexedDB","listStorage","icecastOgg","icecastMpeg","biermann","myRadio","listMyRadio","audio/ogg","audio/mpeg","status","settings"], 
   //value: ["drawer","recent10","listIndexedDB","listStorage","biermann","myRadio","listMyRadio","fav","audio/ogg","audio/mpeg","status","settings"], 
-  value: ["drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
+  //value: ["drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
+  value: ["Launchpad","drawer","listIndexedDB","biermann","fav","listMyRadio","status","settings"], 
   configurable: false
 });
 Object.defineProperty(nmp.view, 'list', {
