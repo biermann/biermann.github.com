@@ -4,7 +4,7 @@ nmp.app = {};
 Object.defineProperty(nmp.app, 'version', {
   enumerable: true, 
   writable: false, 
-  value: "20170114", 
+  value: "20170414", 
   configurable: false
 });
 
