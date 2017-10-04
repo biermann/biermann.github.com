@@ -414,10 +414,10 @@ nmp.view.update = function (view) {
       nmp.view.renderbuttonControl(elementId);
     }
 
-    if (view == "audio/ogg" && nmp.db.ok()) {
-    current.view = "audio/ogg";
-    current.store= "db";
-    var result = nmp.storage.currentSet(current);
+    if (view == "audio/x-mpequrl" && nmp.db.ok()) {
+      current.view = "audio/x-mpequrl";
+      current.store = "db";
+      var result = nmp.storage.currentSet(current);
       element = document.getElementById(elementId);
       while (element.firstChild) { element.removeChild(element.firstChild); }	
       nmp.view.renderStatus (elementId);
@@ -426,24 +426,25 @@ nmp.view.update = function (view) {
       var objects = JSON.parse(localStorage.getItem(array));
       current.store = "storage";
       for (var i in objects) {
-    	objects[i].view = "audio/ogg" ; 
+    	objects[i].view = "audio/x-mpequrl" ; 
         objects[i].store = current.store ;
-        if (objects[i].type == "audio/ogg"){ nmp.view.renderbutton(elementId,objects[i],array,current.store);}
+        if (objects[i].type == "audio/x-mpequrl"){ nmp.view.renderbutton(elementId,objects[i],array,current.store);}
       }
 
       current.store= "db";
       var store = db.transaction(radioDBstore).objectStore(radioDBstore);
-      var keyRange = IDBKeyRange.only("audio/ogg");
+      var keyRange = IDBKeyRange.only("audio/x-mpequrl");
       var index = store.index("type");
       var cursorRequest = index.openCursor(keyRange);
-      index.openCursor(keyRange).onsuccess = function(e) {
-         var cursor = e.target.result;
-         if (cursor) {
-    	    cursor.value.view = "audio/ogg" ;  
-            cursor.value.store= "db";
-	    nmp.view.renderbutton(elementId,cursor.value,radioDBstore,current.store);
+      var count = 0;
+      cursorRequest.onsuccess = function(e) {
+         var result = e.target.result;
+         count++;
+         if(!!result == false ) return;
+    	    result.value.view = "audio/x-mpequrl" ;  
+            result.value.store= "db";
+	    nmp.view.renderbutton(elementId,result.value,radioDBstore,current.store);
             result.continue();
-    	 }
       };
       nmp.view.renderbuttonControl(elementId);
     }
