@@ -56,7 +56,7 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   value:   [
     
   { objId: "12", src: "https://centauri.shoutca.st/tunein/-stream/halfisen.pls", desc: "half is enough for iOS11", www: 'http://halfisenough.com/', type: "audio/x-mpequrl", objOwner: "biermann" },
-  { objId: "11", src: "https://audioasyl.net/m3u/live.php", desc: "Audioasyl.m3u for iOS11", www: 'http://audioasyl.net/', type: "audio/x-mpequrl", objOwner: "biermann" },
+  { objId: "11", src: "http://stream.audioasyl.net:8000/audioasyl", desc: "Audioasyl.m3u for iOS11", www: 'http://audioasyl.net/', type: "audio/x-mpequrl", objOwner: "biermann" },
   { objId: "10", src: "http://stream.srg-ssr.ch/drsvirus/mp3_128.m3u", desc: "Virus.m3u for iOS11", www: 'http://www.virus.ch/', type: "audio/x-mpequrl", objOwner: "biermann" },
   { objId: "9", src: "http://stream.stadtfilter.net:8406/stadtfilter.mp3", desc: "Stadtfilter", www: 'http://stadtfilter.net/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "8", src: "http://ice.somafm.com/sf1033", desc: "SF 10-33", www: 'http://somafm.com/', type: "audio/mpeg", objOwner: "biermann" },
