@@ -66,6 +66,7 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
   { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "biermann" },
   { objId: "1", src: "http://trace.dnbradio.com/dnbradio.mp3", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" }
+  ]
 });
 
 
