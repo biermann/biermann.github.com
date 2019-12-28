@@ -57,13 +57,13 @@ Object.defineProperty(nmp.app.radio, 'readonlyObj', {
   { objId: "13", src: "http://stream.srg-ssr.ch/m/drsvirus/mp3_128", desc: "Virus neu 201912", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
   { objId: "12", src: "https://centauri.shoutca.st/tunein/-stream/halfisen.pls", desc: "half is enough for iOS11", www: 'http://halfisenough.com/', type: "audio/x-mpequrl", objOwner: "biermann" },
   { objId: "11", src: "http://stream.audioasyl.net:8000/audioasyl", desc: "Audioasyl.m3u for iOS11", www: 'http://audioasyl.net/', type: "audio/x-mpequrl", objOwner: "biermann" },
-  { objId: "10", src: "http://stream.srg-ssr.ch/drsvirus/mp3_128.m3u", desc: "Virus.m3u for iOS11", www: 'http://www.virus.ch/', type: "audio/x-mpequrl", objOwner: "biermann" },
+  { objId: "10", src: "http://stream.srg-ssr.ch/drsvirus/mp3_128.m3u", desc: "alt Virus.m3u for iOS11", www: 'http://www.virus.ch/', type: "audio/x-mpequrl", objOwner: "biermann" },
   { objId: "9", src: "http://stream.stadtfilter.net:8406/stadtfilter.mp3", desc: "Stadtfilter", www: 'http://stadtfilter.net/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "8", src: "http://ice.somafm.com/sf1033", desc: "SF 10-33", www: 'http://somafm.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "7", src: "http://internationalradiofestival.ice.infomaniak.ch/radio-live.mp3", desc: "IRF", www: 'http://www.internationalradiofest.com/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "5", src: "http://livestream.lora.ch/lora.mp3", desc: "LoRa", www: 'http://www.lora.ch/', type: "audio/mpeg", objOwner: "biermann" },
   { objId: "4", src: "http://radio.hbr1.com:19800/tronic.ogg", desc: "HBR1 Tronic", www: 'http://www.hbr1.com/', type: "audio/ogg", objOwner: "biermann" },
-  { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
+  { objId: "3", src: "http://stream-4.ssatr.ch:80/virus/mp3", desc: "alt Virus", www: "http://www.virus.ch/", type: "audio/mpeg", objOwner: "biermann" },
   { objId: "2", src: "http://radio1190.colorado.edu:8000/low.ogg", desc: "Radio 1190", www: "http://www.radio1190.org/", type: "audio/ogg", objOwner: "biermann" },
   { objId: "1", src: "http://trace.dnbradio.com/dnbradio.mp3", desc: "DNBRadio", www: 'http://dnbradio.com/', type: "audio/mpeg", objOwner: "biermann" }
   ]
